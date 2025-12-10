@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { LayoutDashboard, List, Truck, PieChart, Settings, LogOut, Box, Menu, X, Mail, FlaskConical, GraduationCap } from 'lucide-react';
+import { LayoutDashboard, List, Truck, PieChart, Settings, LogOut, Box, Menu, X, Mail, FlaskConical, GraduationCap, Receipt } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
   const navItems = [
     { id: 'dashboard', label: 'Pulpit', icon: <LayoutDashboard size={20} /> },
     { id: 'orders', label: 'Zlecenia', icon: <List size={20} /> },
+    { id: 'settlements', label: 'Rozliczenia', icon: <Receipt size={20} /> },
     { id: 'mail', label: 'Poczta & API', icon: <Mail size={20} /> },
     { id: 'fleet', label: 'Flota i GPS', icon: <Truck size={20} /> },
     { id: 'finance', label: 'Raporty', icon: <PieChart size={20} /> },
