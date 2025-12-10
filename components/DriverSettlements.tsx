@@ -12,20 +12,22 @@ interface MonthlySettlement {
   totalProfit: number;
   totalKm: number;
   daysWorked: number;
-  // Driver compensation breakdown
-  baseSalary: number;
+  // Driver compensation breakdown (from real salary calculators)
+  baseSalary: number; // Wynagrodzenie za pracę w Polsce
   diems: number;
   crossBorder: number;
   nightRest: number;
   corridor: number;
   socialSecurity: number;
-  totalDriverCompensation: number;
+  totalDriverCompensation: number; // Gross salary (brutto)
+  netPayment?: number; // Net payment to driver (do wypłaty) - optional for real data
 }
 
 const DriverSettlements: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>('2023-01');
 
   // Calculate settlements for Serhii Yarovyi (D2) - Jan-Mar 2023
+  // REAL DATA from salary calculators (SerwisKadrowego.pl)
   const calculateMonthlySettlement = (year: number, month: number): MonthlySettlement | null => {
     const monthKey = `${year}-${String(month).padStart(2, '0')}`;
     const driverId = 'D2'; // Serhii Yarovyi
@@ -43,16 +45,6 @@ const DriverSettlements: React.FC = () => {
     const totalRevenue = monthOrders.reduce((sum, o) => sum + o.financials.freightPrice, 0);
     const totalKm = monthOrders.reduce((sum, o) => sum + o.route.distanceKm, 0);
     
-    // Driver compensation
-    const baseSalary = monthOrders.reduce((sum, o) => sum + o.financials.costs.driverBaseSalary, 0);
-    const diems = monthOrders.reduce((sum, o) => sum + o.financials.costs.driverDiems, 0);
-    const crossBorder = monthOrders.reduce((sum, o) => sum + o.financials.costs.crossBorderAllowance, 0);
-    const nightRest = monthOrders.reduce((sum, o) => sum + o.financials.costs.nightRestAllowance, 0);
-    const corridor = monthOrders.reduce((sum, o) => sum + o.financials.costs.corridorPay, 0);
-    const socialSecurity = monthOrders.reduce((sum, o) => sum + o.financials.costs.socialSecurity, 0);
-    
-    const totalDriverCompensation = baseSalary + diems + crossBorder + nightRest + corridor + socialSecurity;
-    
     // Total costs (all)
     const totalCosts = monthOrders.reduce((sum, o) => {
       const c = o.financials.costs;
@@ -63,8 +55,52 @@ const DriverSettlements: React.FC = () => {
     
     const totalProfit = totalRevenue - totalCosts;
     
-    // Estimate days worked (assume average 2 days per order)
-    const daysWorked = monthOrders.length * 2;
+    // REAL SALARY DATA FROM CALCULATORS (SerwisKadrowego.pl)
+    let daysWorked: number;
+    let totalDriverCompensation: number; // Total gross (brutto)
+    let netPayment: number; // Net payment to driver (do wypłaty)
+    let baseSalary: number; // Wynagrodzenie za pracę w Polsce
+    let foreignSalary: number; // Wynagrodzenie za pracę za granicą
+    
+    if (monthKey === '2023-01') {
+      // January 2023: 20 working days
+      daysWorked = 20;
+      baseSalary = 860; // 3700 PLN / 4.3 = ~860 EUR
+      foreignSalary = 1126; // 4841.82 PLN / 4.3 = ~1126 EUR
+      totalDriverCompensation = 1986; // 8541.82 PLN / 4.3 = ~1986 EUR (brutto)
+      netPayment = 1547; // 6650 PLN / 4.3 = ~1547 EUR (netto)
+    } else if (monthKey === '2023-02') {
+      // February 2023: 23 working days
+      daysWorked = 23;
+      baseSalary = 860; // 3700 PLN / 4.3
+      foreignSalary = 2047; // 8803.54 PLN / 4.3 = ~2047 EUR
+      totalDriverCompensation = 2908; // 12503.54 PLN / 4.3 = ~2908 EUR (brutto)
+      netPayment = 2279; // 9800 PLN / 4.3 = ~2279 EUR (netto)
+    } else if (monthKey === '2023-03') {
+      // March 2023: 25 working days
+      daysWorked = 25;
+      baseSalary = 860; // 3700 PLN / 4.3
+      foreignSalary = 1693; // 7278.82 PLN / 4.3 = ~1693 EUR
+      totalDriverCompensation = 2553; // 10978.82 PLN / 4.3 = ~2553 EUR (brutto)
+      netPayment = 2035; // 8750 PLN / 4.3 = ~2035 EUR (netto)
+    } else {
+      daysWorked = monthOrders.length * 2;
+      totalDriverCompensation = monthOrders.reduce((sum, o) => {
+        const c = o.financials.costs;
+        return sum + c.driverBaseSalary + c.driverDiems + c.crossBorderAllowance + 
+               c.nightRestAllowance + c.corridorPay + c.socialSecurity;
+      }, 0);
+      baseSalary = 860;
+      foreignSalary = totalDriverCompensation - baseSalary;
+      netPayment = totalDriverCompensation * 0.78; // Approximate net
+    }
+    
+    // Breakdown of compensation (approximate distribution)
+    const diems = monthOrders.reduce((sum, o) => sum + o.financials.costs.driverDiems, 0);
+    const crossBorder = monthOrders.reduce((sum, o) => sum + o.financials.costs.crossBorderAllowance, 0);
+    const nightRest = monthOrders.reduce((sum, o) => sum + o.financials.costs.nightRestAllowance, 0);
+    const corridor = monthOrders.reduce((sum, o) => sum + o.financials.costs.corridorPay, 0);
+    const socialSecurity = monthOrders.reduce((sum, o) => sum + o.financials.costs.socialSecurity, 0);
 
     return {
       month: monthKey,
@@ -255,6 +291,48 @@ const DriverSettlements: React.FC = () => {
             <p className="text-slate-600 text-xs font-bold uppercase mb-2">ZUS/Ubezp.</p>
             <p className="text-2xl font-black text-slate-800">{currentSettlement.socialSecurity.toFixed(0)} EUR</p>
             <p className="text-xs text-slate-500 mt-1">~{convertToPLN(currentSettlement.socialSecurity)} PLN</p>
+          </div>
+        </div>
+
+        {/* Real salary data from calculator */}
+        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-blue-100 text-xs uppercase font-bold mb-1">Dane rzeczywiste z kalkulatora płac</p>
+              <p className="text-white text-sm">SerwisKadrowego.pl - {new Date(currentSettlement.month + '-01').toLocaleDateString('pl-PL', { month: 'long', year: 'numeric' })}</p>
+            </div>
+            <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-lg">
+              <p className="text-xs font-bold">{currentSettlement.daysWorked} dni roboczych</p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
+              <p className="text-blue-100 text-xs font-bold uppercase mb-2">Wynagrodzenie brutto</p>
+              <p className="text-white text-3xl font-black mb-1">{currentSettlement.totalDriverCompensation.toLocaleString()} EUR</p>
+              <p className="text-blue-200 text-xs">~{convertToPLN(currentSettlement.totalDriverCompensation)} PLN</p>
+              <p className="text-blue-100 text-[10px] mt-2">Praca w PL + zagranica</p>
+            </div>
+
+            <div className="bg-emerald-500/30 backdrop-blur-sm border border-emerald-400/40 rounded-xl p-4">
+              <p className="text-emerald-100 text-xs font-bold uppercase mb-2">Kwota do wypłaty (netto)</p>
+              <p className="text-white text-3xl font-black mb-1">{currentSettlement.netPayment ? currentSettlement.netPayment.toLocaleString() : (currentSettlement.totalDriverCompensation * 0.78).toFixed(0)} EUR</p>
+              <p className="text-emerald-200 text-xs">~{convertToPLN(currentSettlement.netPayment || currentSettlement.totalDriverCompensation * 0.78)} PLN</p>
+              <p className="text-emerald-100 text-[10px] mt-2">Po odliczeniu ZUS i podatku</p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
+              <p className="text-blue-100 text-xs font-bold uppercase mb-2">Średnia dzienna (netto)</p>
+              <p className="text-white text-3xl font-black mb-1">{((currentSettlement.netPayment || currentSettlement.totalDriverCompensation * 0.78) / currentSettlement.daysWorked).toFixed(0)} EUR</p>
+              <p className="text-blue-200 text-xs">~{convertToPLN((currentSettlement.netPayment || currentSettlement.totalDriverCompensation * 0.78) / currentSettlement.daysWorked)} PLN/dzień</p>
+              <p className="text-blue-100 text-[10px] mt-2">Wypłata / dni robocze</p>
+            </div>
+          </div>
+
+          <div className="mt-4 bg-black/20 rounded-lg p-3 text-xs text-blue-100">
+            <p className="font-bold mb-1">📋 Źródło danych:</p>
+            <p>Kalkulator wynagrodzeń kierowców {currentSettlement.month === '2023-01' ? 'styczeń' : currentSettlement.month === '2023-02' ? 'luty' : 'marzec'} 2023 - Serhii Yarovyi.pdf</p>
+            <p className="mt-1">Rozliczenie uwzględnia: pakiet mobilności, diety zagraniczne, koszty uzyskania przychodu, ulgi podatkowe</p>
           </div>
         </div>
       </div>
