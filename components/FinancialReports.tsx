@@ -9,8 +9,31 @@ const FinancialReports: React.FC = () => {
   const [period, setPeriod] = useState<TimeRange>('DAY');
   const [fuelDelta, setFuelDelta] = useState(0); // symulacja wrażliwości ceny paliwa w %
 
-  // Filter Logic
-  const relevantOrders = MOCK_ORDERS.filter(o => o.status !== 'NEW');
+  // Filter Logic with period-based filtering
+  const relevantOrders = useMemo(() => {
+    const now = new Date();
+    return MOCK_ORDERS.filter(order => {
+      if (order.status === 'NEW') return false;
+      
+      const orderDate = new Date(order.dates.delivery);
+      
+      if (period === 'DAY') {
+        // Last 7 days
+        const daysAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
+        return daysAgo >= 0 && daysAgo <= 7;
+      } else if (period === 'WEEK') {
+        // Last 8 weeks
+        const weeksAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24 * 7));
+        return weeksAgo >= 0 && weeksAgo <= 8;
+      } else if (period === 'MONTH') {
+        // Last 12 months
+        return orderDate.getFullYear() >= now.getFullYear() - 1;
+      } else {
+        // Last 3 years (YEAR)
+        return orderDate.getFullYear() >= now.getFullYear() - 2;
+      }
+    });
+  }, [period]);
 
   // --- CALCULATIONS FOR MANAGERIAL ACCOUNTING ---
 
@@ -61,28 +84,8 @@ const FinancialReports: React.FC = () => {
   const trendData = useMemo(() => {
     const groupedData: Record<string, { name: string, Revenue: number, Profit: number, Costs: number, count: number }> = {};
 
-    // Filter orders by period
-    const now = new Date();
-    const filteredOrders = relevantOrders.filter(order => {
-        const orderDate = new Date(order.dates.delivery);
-        if (period === 'DAY') {
-            // Last 7 days
-            const daysAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
-            return daysAgo >= 0 && daysAgo <= 7;
-        } else if (period === 'WEEK') {
-            // Last 8 weeks
-            const weeksAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24 * 7));
-            return weeksAgo >= 0 && weeksAgo <= 8;
-        } else if (period === 'MONTH') {
-            // Last 12 months
-            return orderDate.getFullYear() >= now.getFullYear() - 1;
-        } else {
-            // Last 3 years
-            return orderDate.getFullYear() >= now.getFullYear() - 2;
-        }
-    });
-
-    filteredOrders.forEach(order => {
+    // relevantOrders is already filtered by period
+    relevantOrders.forEach(order => {
         const date = new Date(order.dates.delivery);
         let key = '';
         
@@ -151,7 +154,7 @@ const FinancialReports: React.FC = () => {
                     ))}
                 </div>
                 <p className="text-[11px] text-slate-500 leading-tight text-left md:text-right max-w-xs">
-                    Przełącznik zmienia tylko agregację trendu (dzienny/tyg./mies./rok) – dane symulacji what-if i kalkulacji marż pozostają bez zmian.
+                    Przełącznik filtruje wszystkie dane (KPI, trend, tabela) według wybranego okresu.
                 </p>
             </div>
         </header>
