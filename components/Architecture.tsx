@@ -409,46 +409,130 @@ const Architecture: React.FC = () => {
       {/* OVERVIEW TAB */}
       {activeTab === 'overview' && (
         <section className="space-y-6">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 md:p-8 rounded-2xl border border-blue-100">
-            <h2 className="text-2xl font-black text-slate-900 mb-4">Streszczenie pracy</h2>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              Praca magisterska prezentuje koncepcję i implementację zaawansowanego systemu informatycznego 
-              wspieranego sztuczną inteligencją dla przedsiębiorstwa transportowego FG Falke Sp. z o.o. 
-              System integruje funkcje zarządzania transportem (TMS), rachunkowości zarządczej oraz automatyzacji 
-              procesów logistycznych w celu wielowymiarowej oceny kosztów.
-            </p>
-            <p className="text-slate-700 leading-relaxed mb-4">
-              Głównym celem jest automatyzacja pełnego cyklu życia zlecenia transportowego – od pozyskania zamówienia 
-              poprzez email, przez monitorowanie realizacji w czasie rzeczywistym, weryfikację dokumentów z wykorzystaniem 
-              OCR i GPT-4, aż po automatyczne wystawianie faktur i szczegółową analizę rentowności z podziałem na 
-              koszty zmienne i stałe.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-              <div className="bg-white p-5 rounded-xl border border-blue-200">
-                <h3 className="font-bold text-slate-800 mb-3 flex items-center">
-                  <ChartPie className="mr-2 text-blue-600" size={18} />
+          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6 md:p-8 rounded-2xl border-2 border-blue-200 shadow-lg">
+            <div className="mb-6">
+              <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm mb-3">
+                Streszczenie Pracy Magisterskiej
+              </div>
+              <h2 className="text-3xl font-black text-slate-900 mb-4 leading-tight">
+                Wielowymiarowa Ocena Kosztów w Przedsiębiorstwie Logistycznym
+                <br />
+                <span className="text-2xl text-blue-700">z Wykorzystaniem Systemów Informatycznych</span>
+              </h2>
+            </div>
+            
+            <div className="space-y-4 text-slate-700 leading-relaxed">
+              <p>
+                <strong className="text-slate-900">Przedmiot pracy:</strong> Niniejsza praca magisterska prezentuje kompleksową 
+                koncepcję projektowania, implementacji i wdrożenia zaawansowanego systemu informatycznego wspomaganego 
+                sztuczną inteligencją dla przedsiębiorstwa transportowego FG Falke Sp. z o.o. System łączy funkcje 
+                zarządzania transportem (TMS), rachunkowości zarządczej oraz automatyzacji procesów logistycznych 
+                w celu umożliwienia wielowymiarowej oceny kosztów operacyjnych.
+              </p>
+              
+              <p>
+                <strong className="text-slate-900">Problem badawczy:</strong> FG Falke, mikroprzedsiębiorstwo działające w branży 
+                międzynarodowego transportu drogowego (cross-trade: relacje Niemcy–Szwajcaria), boryka się z problemem 
+                fragmentacji systemów IT. Dane o przychodach (wFirma), kosztach floty (DBK Telematics), wynagrodzeniach 
+                kierowców (usługi MAWEX) oraz planowaniu tras (Impargo TMS) przechowywane są w odrębnych silosach. 
+                Prowadzi to do opóźnień w analizie rentowności zleceń, konieczności ręcznego łączenia danych 
+                oraz wysokich kosztów usług zewnętrznych.
+              </p>
+              
+              <p>
+                <strong className="text-slate-900">Cel pracy:</strong> Głównym celem jest zaprojektowanie i implementacja 
+                zintegrowanego systemu FalkeTMS, który automatyzuje pełny cykl życia zlecenia transportowego:
+              </p>
+              <ul className="list-disc list-inside space-y-2 pl-4">
+                <li>Pozyskanie zlecenia z e-maila z wykorzystaniem GPT-4 (ekstrakcja strukturalna danych)</li>
+                <li>Monitorowanie realizacji w czasie rzeczywistym (integracja z GPS/telematyką DBK)</li>
+                <li>Weryfikacja dokumentów przewozowych (OCR + AI dla CMR, faktur kosztowych, paragonów)</li>
+                <li>Automatyczne wystawianie faktur sprzedażowych (integracja z wFirma API)</li>
+                <li>Szczegółowa analiza rentowności per zlecenie z podziałem na koszty zmienne i stałe</li>
+                <li>Symulacje "what-if" dla scenariuszy zmian kosztów (np. wzrost cen paliwa, wydłużenie trasy)</li>
+              </ul>
+              
+              <p>
+                <strong className="text-slate-900">Metodyka:</strong> Praca opiera się na badaniach literaturowych dotyczących 
+                logistyki i kosztów logistycznych (Rozdział 1), analizie środowiska biznesowego FG Falke (Rozdział 2), 
+                projektowaniu architektury systemu AI/TMS (Rozdział 3) oraz symulacjach na rzeczywistych danych 
+                operacyjnych z I kwartału 2023 (Rozdział 4).
+              </p>
+              
+              <p>
+                <strong className="text-slate-900">Wyniki:</strong> Implementacja systemu FalkeTMS przyniosła wymierne korzyści:
+              </p>
+              <ul className="list-disc list-inside space-y-2 pl-4">
+                <li><strong>Finansowe:</strong> Oszczędności min. 8,000 PLN miesięcznie (~96,000 PLN rocznie)</li>
+                <li><strong>Operacyjne:</strong> Redukcja czasu fakturowania o 60-70%, uniknięcie zatrudnienia 1 etatu administracyjnego</li>
+                <li><strong>Analityczne:</strong> Wielowymiarowa analiza kosztów w czasie rzeczywistym (per zlecenie/kierowca/klient/trasa)</li>
+                <li><strong>Jakościowe:</strong> Automatyczna walidacja dokumentów, redukcja błędów, szybsza analiza rentowności</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div className="bg-white p-5 rounded-xl border-2 border-blue-200 shadow-sm">
+                <h3 className="font-bold text-slate-900 mb-3 flex items-center text-lg">
+                  <ChartPie className="mr-2 text-blue-600" size={20} />
                   Cele pracy
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  <li className="flex items-start"><span className="text-blue-600 mr-2">•</span>Identyfikacja obszarów generowania kosztów logistycznych</li>
-                  <li className="flex items-start"><span className="text-blue-600 mr-2">•</span>Projektowanie architektury systemu AI/TMS</li>
-                  <li className="flex items-start"><span className="text-blue-600 mr-2">•</span>Implementacja integracji z systemami zewnętrznymi</li>
-                  <li className="flex items-start"><span className="text-blue-600 mr-2">•</span>Automatyzacja kontrolingu logistycznego</li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span>Identyfikacja obszarów generowania kosztów logistycznych w FG Falke</li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span>Projektowanie architektury systemu AI/TMS zintegrowanego z istniejącymi narzędziami</li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span>Implementacja integracji API (wFirma, DBK, Impargo, WhatsApp, OCR)</li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span>Automatyzacja kontrolingu logistycznego i rachunkowości zarządczej</li>
+                  <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span>Ocena efektywności wdrożenia na podstawie symulacji</li>
                 </ul>
               </div>
-              <div className="bg-white p-5 rounded-xl border border-emerald-200">
-                <h3 className="font-bold text-slate-800 mb-3 flex items-center">
-                  <CheckCircle2 className="mr-2 text-emerald-600" size={18} />
-                  Zakres pracy
+              <div className="bg-white p-5 rounded-xl border-2 border-emerald-200 shadow-sm">
+                <h3 className="font-bold text-slate-900 mb-3 flex items-center text-lg">
+                  <BookOpen className="mr-2 text-emerald-600" size={20} />
+                  Struktura pracy
                 </h3>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  <li className="flex items-start"><span className="text-emerald-600 mr-2">•</span>Rozdział 1: Teoria kosztów logistycznych</li>
-                  <li className="flex items-start"><span className="text-emerald-600 mr-2">•</span>Rozdział 2: Charakterystyka FG Falke</li>
-                  <li className="flex items-start"><span className="text-emerald-600 mr-2">•</span>Rozdział 3: Projekt systemu AI</li>
-                  <li className="flex items-start"><span className="text-emerald-600 mr-2">•</span>Podsumowanie i wnioski</li>
+                  <li className="flex items-start"><span className="text-emerald-600 mr-2 font-bold">1.</span><strong>Rozdział 1:</strong> Logistyka i koszty logistyczne (teoria)</li>
+                  <li className="flex items-start"><span className="text-emerald-600 mr-2 font-bold">2.</span><strong>Rozdział 2:</strong> FG Falke Sp. z o.o. (charakterystyka firmy)</li>
+                  <li className="flex items-start"><span className="text-emerald-600 mr-2 font-bold">3.</span><strong>Rozdział 3:</strong> Projekt systemu AI (architektura FalkeTMS)</li>
+                  <li className="flex items-start"><span className="text-emerald-600 mr-2 font-bold">4.</span><strong>Rozdział 4:</strong> Badania symulacyjne i wyniki</li>
+                  <li className="flex items-start"><span className="text-emerald-600 mr-2 font-bold">✓</span><strong>Podsumowanie</strong> i wnioski końcowe</li>
+                </ul>
+              </div>
+              <div className="bg-white p-5 rounded-xl border-2 border-purple-200 shadow-sm">
+                <h3 className="font-bold text-slate-900 mb-3 flex items-center text-lg">
+                  <CheckCircle2 className="mr-2 text-purple-600" size={20} />
+                  Kluczowe wyniki
+                </h3>
+                <ul className="space-y-2 text-sm text-slate-700">
+                  <li className="flex items-start"><span className="text-purple-600 mr-2 font-bold">✓</span>Redukcja czasu fakturowania o 60-70%</li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2 font-bold">✓</span>Oszczędności 96,000 PLN rocznie</li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2 font-bold">✓</span>Analiza rentowności w czasie rzeczywistym</li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2 font-bold">✓</span>Automatyczna walidacja dokumentów (OCR+AI)</li>
+                  <li className="flex items-start"><span className="text-purple-600 mr-2 font-bold">✓</span>Symulacje "what-if" dla optymalizacji tras i kosztów</li>
                 </ul>
               </div>
             </div>
+          
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Bibliografia główna</h3>
+            <ul className="space-y-2 text-sm text-slate-700">
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                <span><strong>Gołembska E. (red.):</strong> "Kompendium wiedzy o logistyce", PWN 2013</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                <span><strong>Dokumentacja operacyjna FG Falke Sp. z o.o.:</strong> Dane z systemów wFirma, DBK Telematics, kalkulatory płacowe (Q1 2023)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                <span><strong>Repozytorium kodu źródłowego:</strong> <a href="https://github.com/ChesterVip/FalkeTMS" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">github.com/ChesterVip/FalkeTMS</a></span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                <span><strong>Wdrożenie produkcyjne:</strong> <a href="https://falke-tms.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">falke-tms.vercel.app</a></span>
+              </li>
+            </ul>
           </div>
         </section>
       )}

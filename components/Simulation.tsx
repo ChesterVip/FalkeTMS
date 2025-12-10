@@ -111,65 +111,140 @@ const Simulation: React.FC = () => {
 
   return (
     <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
-      <header className="space-y-2">
+      <header className="space-y-3 pb-6 border-b-2 border-slate-200">
         <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-slate-500">
           <FlaskConical size={16} className="text-blue-600" />
-          <span>Rozdział 4 – symulacje i wyniki</span>
+          <span>Rozdział 4 – Badania Symulacyjne i Wyniki</span>
         </div>
-        <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-          Metodyka badań symulacyjnych (4.1) i wyniki (4.2–4.3)
+        <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          Symulacyjna Ocena Rentowności i Efektywności FalkeTMS
         </h1>
-        <p className="text-slate-600 max-w-4xl">
-          Panel prezentuje mock danych użytych w pracy magisterskiej: analiza ex-post rentowności,
-          scenariusze what-if (paliwo +10%, warianty trasy) oraz test ofertowania AI vs tradycyjnie.
-          Wszystko uruchomione w środowisku testowym na kopii danych – brak wpływu na operacje produkcyjne.
+        <p className="text-slate-700 max-w-4xl leading-relaxed">
+          Rozdział 4 przedstawia metodykę badań symulacyjnych (4.1), analizę kosztów i rentowności rzeczywistych
+          zleceń transportowych FG Falke (4.2) oraz ocenę efektywności wdrożenia systemu FalkeTMS (4.3).
+          Dane pochodzą z rzeczywistych rozliczeń kierowców i raportów księgowych za I kwartał 2023.
         </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+            <p className="text-xs font-bold text-blue-700 uppercase mb-1">4.1 Metodyka</p>
+            <p className="text-sm text-slate-700">Analiza "what-if" na danych rzeczywistych FG Falke</p>
+          </div>
+          <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-700 uppercase mb-1">4.2 Symulacje</p>
+            <p className="text-sm text-slate-700">15 rzeczywistych zleceń transportowych Q1 2023</p>
+          </div>
+          <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
+            <p className="text-xs font-bold text-purple-700 uppercase mb-1">4.3 Efektywność</p>
+            <p className="text-sm text-slate-700">Oszczędności 8,000 PLN/mies. (96,000 PLN/rok)</p>
+          </div>
+        </div>
       </header>
 
-      {/* Metodyka 4.1 */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-bold text-slate-500 uppercase">Zbiór danych</p>
-            <ClipboardCheck size={16} className="text-emerald-600" />
-          </div>
-          <p className="text-lg font-black text-slate-900">64 zlecenia</p>
-          <p className="text-sm text-slate-600">historyczne FG Falke (ostatnie 12 miesięcy), plan vs. wykonanie kosztów.</p>
+      {/* 4.1 Metodyka badań symulacyjnych */}
+      <section className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg p-6 md:p-8 space-y-6">
+        <div>
+          <h2 className="text-2xl font-black text-slate-900 mb-2 flex items-center">
+            <ClipboardCheck className="mr-3 text-blue-600" size={24} />
+            4.1 Metodyka badań symulacyjnych
+          </h2>
+          <p className="text-slate-700 leading-relaxed">
+            Przedmiotem badań jest analiza typu "what-if" przeprowadzona na rzeczywistych danych operacyjnych 
+            firmy FG Falke Sp. z o.o. Dane źródłowe pochodzą z systemu FalkeTMS oraz arkuszy kalkulacyjnych 
+            wynagrodzeń kierowców (styczeń–marzec 2023).
+          </p>
         </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-bold text-slate-500 uppercase">Scenariusze</p>
-            <BarChart3 size={16} className="text-blue-600" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-bold text-blue-700 uppercase">Źródła danych</p>
+              <ClipboardCheck size={16} className="text-blue-600" />
+            </div>
+            <ul className="text-sm text-slate-700 space-y-2">
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2 font-bold">•</span>
+                <span><strong>FalkeTMS:</strong> 15 zleceń transportowych Q1 2023</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2 font-bold">•</span>
+                <span><strong>Kalkulatory płac:</strong> Rozliczenia kierowcy Serhii Yarovyi</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-blue-600 mr-2 font-bold">•</span>
+                <span><strong>wFirma:</strong> Raporty księgowe przychodów i kosztów</span>
+              </li>
+            </ul>
           </div>
-          <ul className="text-sm text-slate-700 space-y-1">
-            <li>• Ex-post marża na wykonanych zleceniach.</li>
-            <li>• What-if: paliwo +10%, alternatywna trasa.</li>
-            <li>• Test ofertowania AI vs manual.</li>
-          </ul>
-        </div>
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-bold text-slate-500 uppercase">Kryteria oceny</p>
-            <Gauge size={16} className="text-purple-600" />
+          
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-bold text-emerald-700 uppercase">Scenariusze</p>
+              <BarChart3 size={16} className="text-emerald-600" />
+            </div>
+            <ul className="text-sm text-slate-700 space-y-2">
+              <li className="flex items-start">
+                <span className="text-emerald-600 mr-2 font-bold">•</span>
+                <span>Analiza bazowa 3 relacji (PL→CH, PL→BE, PL→DE)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-600 mr-2 font-bold">•</span>
+                <span>Scenariusz: wydłużenie trasy o 10%</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-600 mr-2 font-bold">•</span>
+                <span>Scenariusz: wzrost cen paliwa o 20%</span>
+              </li>
+            </ul>
           </div>
-          <ul className="text-sm text-slate-700 space-y-1">
-            <li>• Trafność wykrycia nierentownych tras.</li>
-            <li>• Oszczędność czasu (oferta AI).</li>
-            <li>• Poprawa średniej marży %.</li>
-          </ul>
+          
+          <div className="bg-purple-50 border border-purple-200 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-bold text-purple-700 uppercase">Kryteria oceny</p>
+              <Gauge size={16} className="text-purple-600" />
+            </div>
+            <ul className="text-sm text-slate-700 space-y-2">
+              <li className="flex items-start">
+                <span className="text-purple-600 mr-2 font-bold">•</span>
+                <span>Rentowność zleceń (marża %)</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-600 mr-2 font-bold">•</span>
+                <span>Wrażliwość na zmiany kosztów</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-purple-600 mr-2 font-bold">•</span>
+                <span>Efektywność implementacji FalkeTMS</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      {/* Wyniki ex-post */}
-      <section className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900">Analiza ex-post rentowności (4.2a)</h2>
-            <p className="text-sm text-slate-500">Porównanie założeń z rzeczywistymi marżami (mock danych).</p>
+      {/* 4.2 Symulacja kalkulacji kosztów i rentowności */}
+      <section className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg overflow-hidden">
+        <div className="px-6 py-5 border-b-2 border-slate-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <h2 className="text-2xl font-black text-slate-900 mb-2 flex items-center">
+            <BarChart3 className="mr-3 text-blue-600" size={24} />
+            4.2 Symulacja kalkulacji kosztów i rentowności
+          </h2>
+          <p className="text-slate-700 leading-relaxed mb-4">
+            Analiza przeprowadzona na trzech rzeczywistych relacjach transportowych FG Falke z uwzględnieniem 
+            pełnej struktury kosztów zmiennych i stałych. Dane pochodzą z rzeczywistych rozliczeń Q1 2023.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+            <div className="bg-white p-3 rounded-lg border border-blue-200">
+              <p className="font-bold text-blue-900">Polska → Szwajcaria</p>
+              <p className="text-slate-600">~2200 km • 10,000 PLN • marża ~21%</p>
+            </div>
+            <div className="bg-white p-3 rounded-lg border border-emerald-200">
+              <p className="font-bold text-emerald-900">Polska → Belgia</p>
+              <p className="text-slate-600">~1500 km • 7,000 PLN • marża ~15.7%</p>
+            </div>
+            <div className="bg-white p-3 rounded-lg border border-amber-200">
+              <p className="font-bold text-amber-900">Polska → Niemcy</p>
+              <p className="text-slate-600">~800 km • 3,500 PLN • marża ~5-6%</p>
+            </div>
           </div>
-          <span className="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-bold">
-            Wykryto 2 przypadki ryzyka
-          </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
@@ -213,13 +288,17 @@ const Simulation: React.FC = () => {
         </div>
       </section>
 
-      {/* What-if paliwo +10% */}
-      <section className="bg-white border border-slate-200 rounded-2xl shadow-sm">
-        <div className="px-6 py-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      {/* Scenariusze What-If */}
+      <section className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg">
+        <div className="px-6 py-5 border-b-2 border-slate-200 bg-gradient-to-r from-amber-50 to-orange-50">
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Scenariusz what-if: paliwo +10% (4.2b)</h2>
-            <p className="text-sm text-slate-500">
-              Symulacja wrażliwości kosztów – ile zleceń spadnie poniżej progu opłacalności 8%.
+            <h2 className="text-2xl font-black text-slate-900 mb-2 flex items-center">
+              <AlertTriangle className="mr-3 text-amber-600" size={24} />
+              Scenariusze "What-If" (Analiza Wrażliwości)
+            </h2>
+            <p className="text-slate-700 leading-relaxed mb-4">
+              Symulacja wpływu zmian parametrów operacyjnych na rentowność zleceń transportowych.
+              Analiza obejmuje dwa kluczowe scenariusze identyfikowane w pracy magisterskiej (Rozdział 4.2).
             </p>
           </div>
           <div className="flex items-center space-x-2 text-xs font-bold bg-amber-50 text-amber-700 px-3 py-1 rounded-full">
@@ -227,21 +306,100 @@ const Simulation: React.FC = () => {
             <span>+10% fuel shock</span>
           </div>
         </div>
-        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-            <p className="text-xs font-bold text-slate-500 uppercase mb-1">Średnia marża (bazowa)</p>
-            <p className="text-2xl font-black text-slate-900">{(averageMargin * 100).toFixed(1)}%</p>
-            <p className="text-xs text-slate-500">na podstawie mock danych</p>
+        <div className="p-6 space-y-6">
+          {/* Scenariusz 1: Wydłużenie trasy o 10% */}
+          <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-5">
+            <h3 className="text-lg font-bold text-blue-900 mb-3 flex items-center">
+              <Route size={18} className="mr-2" />
+              Scenariusz 1: Wydłużenie trasy o 10%
+            </h3>
+            <p className="text-sm text-slate-700 mb-4">
+              <strong>Relacja:</strong> Polska → Belgia (bazowo ~1500 km, po wydłużeniu ~1650 km)
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white p-4 rounded-lg border border-blue-200">
+                <p className="text-xs font-bold text-blue-700 uppercase mb-1">Marża bazowa</p>
+                <p className="text-3xl font-black text-slate-900">15.7%</p>
+                <p className="text-xs text-slate-600">Przychód: 7,000 PLN</p>
+              </div>
+              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                <p className="text-xs font-bold text-amber-700 uppercase mb-1">Marża po +10% km</p>
+                <p className="text-3xl font-black text-amber-700">~7%</p>
+                <p className="text-xs text-amber-700">Spadek: -8.7 pp</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                <p className="text-xs font-bold text-red-700 uppercase mb-1">Wpływ</p>
+                <p className="text-base font-bold text-red-700 leading-tight">Drastyczny spadek rentowności</p>
+                <p className="text-xs text-red-700">Zlecenie wymaga renegocjacji</p>
+              </div>
+            </div>
+            <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200 text-sm text-slate-700">
+              <strong>Wniosek:</strong> Wydłużenie trasy o 10% (150 km) powoduje niemal dwukrotny spadek marży. 
+              Zwiększone koszty paliwa, myta i czasu pracy kierowcy znacząco obniżają opłacalność.
+            </div>
           </div>
-          <div className="p-4 rounded-xl border border-amber-100 bg-amber-50">
-            <p className="text-xs font-bold text-amber-700 uppercase mb-1">Po wzroście paliwa</p>
-            <p className="text-2xl font-black text-amber-700">{(averageMarginAdjusted * 100).toFixed(1)}%</p>
-            <p className="text-xs text-amber-700">spadek {(averageMarginAdjusted - averageMargin).toFixed(2)} pp</p>
-          </div>
-          <div className="p-4 rounded-xl border border-red-100 bg-red-50">
-            <p className="text-xs font-bold text-red-700 uppercase mb-1">Zlecenia &lt; 8%</p>
-            <p className="text-2xl font-black text-red-700">{impacted.length}</p>
-            <p className="text-xs text-red-700">do renegocjacji / odrzucenia</p>
+          
+          {/* Scenariusz 2: Wzrost cen paliwa o 20% */}
+          <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-5">
+            <h3 className="text-lg font-bold text-purple-900 mb-3 flex items-center">
+              <Fuel size={18} className="mr-2" />
+              Scenariusz 2: Wzrost cen paliwa o 20%
+            </h3>
+            <p className="text-sm text-slate-700 mb-4">
+              Symulacja wpływu znacznego wzrostu kosztów paliwa na rentowność zleceń (paliwo stanowi ~40% kosztów całkowitych).
+            </p>
+            
+            <div className="space-y-4">
+              {/* Polska → Szwajcaria */}
+              <div className="bg-white p-4 rounded-lg border border-purple-200">
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-bold text-slate-800">Polska → Szwajcaria (~2200 km)</h4>
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">Relacja 1</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Bazowa</p>
+                    <p className="text-2xl font-black text-emerald-600">21%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Po +20% paliwa</p>
+                    <p className="text-2xl font-black text-amber-600">~12%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-red-700 uppercase mb-1">Spadek</p>
+                    <p className="text-2xl font-black text-red-600">-9 pp</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Polska → Belgia */}
+              <div className="bg-white p-4 rounded-lg border border-purple-200">
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-bold text-slate-800">Polska → Belgia (~1500 km)</h4>
+                  <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-bold">Relacja 2</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Bazowa</p>
+                    <p className="text-2xl font-black text-emerald-600">15.7%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Po +20% paliwa</p>
+                    <p className="text-2xl font-black text-amber-600">~9%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-red-700 uppercase mb-1">Spadek</p>
+                    <p className="text-2xl font-black text-red-600">-6.7 pp</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-3 bg-white rounded-lg border border-purple-200 text-sm text-slate-700">
+              <strong>Wniosek:</strong> Wzrost cen paliwa o 20% prowadzi do spadku marży o 6.7–9 punktów procentowych. 
+              Paliwo stanowiące ~40% kosztów całkowitych ma kluczowy wpływ na rentowność. 
+              Konieczne jest monitorowanie cen i ewentualne przeindeksowanie stawek frachtowych.
+            </div>
           </div>
         </div>
         <div className="px-6 pb-6">
@@ -337,42 +495,90 @@ const Simulation: React.FC = () => {
         </div>
       </section>
 
-      {/* Test ofertowania 4.2c / 4.3 */}
-      <section className="bg-slate-900 text-slate-100 rounded-2xl p-6 md:p-8 border border-slate-800 shadow-lg">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold flex items-center">
-              <Timer size={18} className="mr-2 text-emerald-400" />
-              Test ofertowania: AI vs tradycyjnie
+      {/* 4.3 Ocena efektywności wdrożenia FalkeTMS */}
+      <section className="bg-gradient-to-br from-emerald-900 to-teal-900 text-white rounded-2xl p-6 md:p-8 border-2 border-emerald-800 shadow-xl">
+        <div className="mb-6">
+          <h2 className="text-2xl md:text-3xl font-black flex items-center mb-3">
+            <CheckCircle size={28} className="mr-3 text-emerald-300" />
+            4.3 Ocena Efektywności Wdrożenia FalkeTMS
+          </h2>
+          <p className="text-emerald-100 leading-relaxed">
+            Analiza korzyści z implementacji systemu FalkeTMS w przedsiębiorstwie FG Falke Sp. z o.o. 
+            Oszacowanie oszczędności finansowych i operacyjnych na podstawie rzeczywistych danych z Q1 2023.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+            <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Czas fakturowania</p>
+            <p className="text-3xl font-black text-white mb-1">-60-70%</p>
+            <p className="text-xs text-emerald-200">Redukcja czasu przetwarzania faktur</p>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+            <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Uniknięte zatrudnienie</p>
+            <p className="text-3xl font-black text-white mb-1">~6,000 PLN</p>
+            <p className="text-xs text-emerald-200">Miesięcznie / 1 etat administracyjny</p>
+          </div>
+          <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+            <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Outsourcing</p>
+            <p className="text-3xl font-black text-white mb-1">~1,500 PLN</p>
+            <p className="text-xs text-emerald-200">Miesięcznie / redukcja kosztów zewn.</p>
+          </div>
+          <div className="bg-emerald-500/30 backdrop-blur-sm border-2 border-emerald-300 rounded-xl p-5">
+            <p className="text-xs uppercase tracking-wider text-emerald-100 mb-2 font-bold">Całkowite oszczędności</p>
+            <p className="text-3xl font-black text-white mb-1">8,000 PLN</p>
+            <p className="text-xs text-emerald-100 font-bold">Miesięcznie • 96,000 PLN rocznie</p>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-white/5 border border-white/20 rounded-xl p-5">
+            <h3 className="font-bold text-emerald-300 mb-3 flex items-center">
+              <Timer size={18} className="mr-2" />
+              Przyspieszenie procesów
             </h3>
-            <p className="text-sm text-slate-300">
-              Symulacja 10 zapytań: czas przygotowania oferty i odrzucanie zleceń o niskiej marży.
-            </p>
+            <ul className="space-y-2 text-sm text-emerald-100">
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Przetwarzanie faktur:</strong> redukcja czasu o 60-70%</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Obsługa dokumentów:</strong> automatyzacja OCR i e-archiwizacja</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Analiza rentowności:</strong> z dni do minut</span>
+              </li>
+            </ul>
           </div>
-          <span className="text-[10px] bg-emerald-500/20 text-emerald-200 px-2 py-1 rounded-full font-bold">
-            100% tryb testowy
-          </span>
+          <div className="bg-white/5 border border-white/20 rounded-xl p-5">
+            <h3 className="font-bold text-emerald-300 mb-3 flex items-center">
+              <CheckCircle size={18} className="mr-2" />
+              Korzyści jakościowe
+            </h3>
+            <ul className="space-y-2 text-sm text-emerald-100">
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Redukcja błędów:</strong> automatyczna walidacja danych</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Bieżąca analiza:</strong> real-time kontrola marży per zlecenie</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-emerald-400 mr-2 font-bold">•</span>
+                <span><strong>Lepsze decyzje:</strong> szybki dostęp do danych o rentowności</span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-xs uppercase tracking-wider text-slate-400 mb-1">Śr. czas oferty (AI)</p>
-            <p className="text-2xl font-black text-emerald-300">1m 40s</p>
-            <p className="text-xs text-slate-400">vs manual: 12m 10s (-86%)</p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-xs uppercase tracking-wider text-slate-400 mb-1">Odrzucone nierentowne</p>
-            <p className="text-2xl font-black text-amber-200">3 / 10</p>
-            <p className="text-xs text-slate-400">AI wykryło marżę &lt; 5% i zasugerowało odmowę</p>
-          </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-xs uppercase tracking-wider text-slate-400 mb-1">Poprawa marży</p>
-            <p className="text-2xl font-black text-emerald-300">+2.4 pp</p>
-            <p className="text-xs text-slate-400">średnia marża po automatycznej selekcji</p>
-          </div>
-        </div>
-        <div className="mt-6 text-xs text-slate-400 flex items-center space-x-2">
-          <CheckCircle size={14} className="text-emerald-400" />
-          <span>Badanie ma charakter symulowany – pełna separacja od systemów produkcyjnych (WFirma/DBK/Impargo).</span>
+        
+        <div className="p-4 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-sm text-emerald-100">
+          <strong className="text-emerald-200">Podsumowanie:</strong> Implementacja systemu FalkeTMS przynosi wymierne korzyści 
+          finansowe (min. 96,000 PLN rocznie) oraz operacyjne (przyspieszenie procesów, redukcja błędów, lepsza kontrola kosztów). 
+          System pozwala na wielowymiarową ocenę kosztów w czasie rzeczywistym, co jest kluczowe dla małego przedsiębiorstwa 
+          transportowego operującego na rynku międzynarodowym.
         </div>
       </section>
     </div>
