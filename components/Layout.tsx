@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { LayoutDashboard, List, Truck, PieChart, Settings, LogOut, Box, Menu, X, Mail, Network, FlaskConical } from 'lucide-react';
+import { LayoutDashboard, List, Truck, PieChart, Settings, LogOut, Box, Menu, X, Mail, Network, FlaskConical, GraduationCap } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,6 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
     { id: 'finance', label: 'Raporty', icon: <PieChart size={20} /> },
     { id: 'simulation', label: 'Symulacje (4.x)', icon: <FlaskConical size={20} /> },
     { id: 'architecture', label: 'Architektura', icon: <Network size={20} /> },
+    { id: 'thesis', label: 'Praca magisterska', icon: <GraduationCap size={20} /> },
     { id: 'settings', label: 'Ustawienia', icon: <Settings size={20} /> },
   ];
 

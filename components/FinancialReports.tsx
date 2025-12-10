@@ -113,16 +113,21 @@ const FinancialReports: React.FC = () => {
                 <h1 className="text-2xl md:text-3xl font-bold text-slate-800">Rachunkowość Zarządcza</h1>
                 <p className="text-slate-500 mt-1">Analiza marż pokrycia, kosztów stałych i zmiennych</p>
             </div>
-            <div className="flex bg-white rounded-lg p-1 border border-slate-200 shadow-sm overflow-x-auto">
-                {(['DAY', 'WEEK', 'MONTH', 'YEAR'] as TimeRange[]).map((t) => (
-                    <button
-                        key={t}
-                        onClick={() => setPeriod(t)}
-                        className={`px-4 py-2 rounded-md text-sm font-bold transition-all whitespace-nowrap ${period === t ? 'bg-slate-800 text-white shadow' : 'text-slate-500 hover:bg-slate-50'}`}
-                    >
-                        {t === 'DAY' ? 'Dzień' : t === 'WEEK' ? 'Tydzień' : t === 'MONTH' ? 'Miesiąc' : 'Rok'}
-                    </button>
-                ))}
+            <div className="flex flex-col items-start md:items-end space-y-2">
+                <div className="flex bg-white rounded-lg p-1 border border-slate-200 shadow-sm overflow-x-auto">
+                    {(['DAY', 'WEEK', 'MONTH', 'YEAR'] as TimeRange[]).map((t) => (
+                        <button
+                            key={t}
+                            onClick={() => setPeriod(t)}
+                            className={`px-4 py-2 rounded-md text-sm font-bold transition-all whitespace-nowrap ${period === t ? 'bg-slate-800 text-white shadow' : 'text-slate-500 hover:bg-slate-50'}`}
+                        >
+                            {t === 'DAY' ? 'Dzień' : t === 'WEEK' ? 'Tydzień' : t === 'MONTH' ? 'Miesiąc' : 'Rok'}
+                        </button>
+                    ))}
+                </div>
+                <p className="text-[11px] text-slate-500 leading-tight text-left md:text-right max-w-xs">
+                    Przełącznik zmienia tylko agregację trendu (dzienny/tyg./mies./rok) – dane symulacji what-if i kalkulacji marż pozostają bez zmian.
+                </p>
             </div>
         </header>
 
