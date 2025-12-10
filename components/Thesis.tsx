@@ -212,7 +212,7 @@ const Thesis: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300">
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">Kanały: WhatsApp + SMS fallback + Teams</div>
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">OCR: CMR, faktury kosztowe, paragony za paliwo</div>
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10">Cele SLA: faktura ≤ 24h po dostawie, alert marży < 10%</div>
+          <div className="p-3 rounded-xl bg-white/5 border border-white/10">Cele SLA: faktura &lt;= 24h po dostawie, alert marży &lt; 10%</div>
         </div>
       </section>
 
@@ -293,7 +293,7 @@ const Thesis: React.FC = () => {
           </div>
           <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 flex items-center space-x-2">
             <AlertCircle size={14} className="text-amber-600" />
-            <span>Niska marża (< 8%) wymaga renegocjacji lub ładunku powrotnego.</span>
+            <span>Niska marża (&lt; 8%) wymaga renegocjacji lub ładunku powrotnego.</span>
           </div>
         </div>
       </section>
