@@ -291,5 +291,207 @@ export const MOCK_ORDERS: Order[] = [
           { status: OrderStatus.NEW, timestamp: '2024-05-24T12:00:00', description: 'Ładunek powrotny', user: 'Jan Spedytor' },
           { status: OrderStatus.PLANNED, timestamp: '2024-05-24T12:15:00', description: 'Przypisano do D1 po rozładunku w Zurichu', user: 'System' }
       ]
+  },
+  {
+      id: 'ORD-2024-006',
+      clientName: 'Stały kontrakt Lyon',
+      route: { from: 'Freiburg, DE', to: 'Lyon, FR', distanceKm: 520, eta: '2024-05-28 15:00' },
+      cargo: { description: 'Towar neutralny (stały kontrakt)', weightKg: 21000, pallets: 30 },
+      dates: { pickup: '2024-05-27', delivery: '2024-05-28' },
+      financials: {
+        freightPrice: 1500,
+        currency: 'EUR',
+        costs: { 
+            fuel: 530, 
+            adBlue: 20,
+            tolls: 210, 
+            driverDiems: 120,
+            crossBorderAllowance: 80,
+            nightRestAllowance: 65,
+            corridorPay: 35,
+            maintenance: 45,
+            driverBaseSalary: 140, 
+            socialSecurity: 90,
+            leasing: 82, 
+            insurance: 24,
+            overhead: 36,
+            currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V2',
+      history: [
+          { status: OrderStatus.NEW, timestamp: '2024-05-26T09:00:00', description: 'Stały kontrakt tygodniowy', user: 'System' },
+          { status: OrderStatus.DELIVERED, timestamp: '2024-05-28T14:30:00', description: 'Dostawa potwierdzona (GPS + CMR)', user: 'System AI' },
+          { status: OrderStatus.COMPLETED, timestamp: '2024-05-28T15:00:00', description: 'Analiza ex-post: marża 1.5%', user: 'Jan Spedytor' },
+      ]
+  },
+  {
+      id: 'ORD-2024-007',
+      clientName: 'Siemens AG',
+      route: { from: 'Hamburg, DE', to: 'Paris, FR', distanceKm: 910, eta: '2024-01-13 18:00' },
+      cargo: { description: 'Sprzęt elektroniczny', weightKg: 18000, pallets: 28 },
+      dates: { pickup: '2024-01-12', delivery: '2024-01-13' },
+      financials: {
+        freightPrice: 2100,
+        currency: 'EUR',
+        costs: {
+            fuel: 540, adBlue: 20, tolls: 260, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 70, corridorPay: 38, maintenance: 54,
+            driverBaseSalary: 120, socialSecurity: 78, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D1',
+      vehicleId: 'V3',
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-01-11T10:00:00', description: 'Planowanie styczniowe', user: 'System' },
+          { status: OrderStatus.COMPLETED, timestamp: '2024-01-13T18:10:00', description: 'Faktura wysłana', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2024-008',
+      clientName: 'BASF',
+      route: { from: 'Lodz, PL', to: 'Koln, DE', distanceKm: 940, eta: '2024-02-19 17:00' },
+      cargo: { description: 'Chemia przemysłowa', weightKg: 20000, pallets: 30 },
+      dates: { pickup: '2024-02-18', delivery: '2024-02-19' },
+      financials: {
+        freightPrice: 1750,
+        currency: 'EUR',
+        costs: {
+            fuel: 520, adBlue: 18, tolls: 210, driverDiems: 120, crossBorderAllowance: 80, nightRestAllowance: 60, corridorPay: 32, maintenance: 46,
+            driverBaseSalary: 115, socialSecurity: 74, leasing: 82, insurance: 24, overhead: 34, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-02-17T09:00:00', description: 'Trasa cross-border', user: 'Jan Spedytor' },
+          { status: OrderStatus.COMPLETED, timestamp: '2024-02-19T17:05:00', description: 'Dokumenty CMR potwierdzone', user: 'System AI' }
+      ]
+  },
+  {
+      id: 'ORD-2024-009',
+      clientName: 'Nestle DE',
+      route: { from: 'Frankfurt, DE', to: 'Vienna, AT', distanceKm: 720, eta: '2024-03-06 12:00' },
+      cargo: { description: 'Żywność pakowana', weightKg: 16000, pallets: 26 },
+      dates: { pickup: '2024-03-05', delivery: '2024-03-06' },
+      financials: {
+        freightPrice: 1450,
+        currency: 'EUR',
+        costs: {
+            fuel: 430, adBlue: 16, tolls: 170, driverDiems: 110, crossBorderAllowance: 70, nightRestAllowance: 55, corridorPay: 24, maintenance: 42,
+            driverBaseSalary: 110, socialSecurity: 70, leasing: 78, insurance: 22, overhead: 32, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D3',
+      vehicleId: 'V2',
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-03-04T11:00:00', description: 'Planowanie marzec', user: 'System' },
+          { status: OrderStatus.COMPLETED, timestamp: '2024-03-06T12:10:00', description: 'Faktura wystawiona', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2024-010',
+      clientName: 'IKEA SE',
+      route: { from: 'Gdansk, PL', to: 'Stockholm, SE', distanceKm: 980, eta: '2024-04-16 20:00' },
+      cargo: { description: 'Meble płaskopaki', weightKg: 17000, pallets: 30 },
+      dates: { pickup: '2024-04-15', delivery: '2024-04-16' },
+      financials: {
+        freightPrice: 1920,
+        currency: 'EUR',
+        costs: {
+            fuel: 560, adBlue: 22, tolls: 190, driverDiems: 130, crossBorderAllowance: 85, nightRestAllowance: 65, corridorPay: 30, maintenance: 50,
+            driverBaseSalary: 118, socialSecurity: 76, leasing: 82, insurance: 24, overhead: 34, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-04-14T08:30:00', description: 'Prom + trasa SE', user: 'System' },
+          { status: OrderStatus.COMPLETED, timestamp: '2024-04-16T20:15:00', description: 'Dostawa + faktura', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2024-011',
+      clientName: 'ZF Friedrichshafen',
+      route: { from: 'Poznan, PL', to: 'Turin, IT', distanceKm: 1180, eta: '2024-06-03 18:00' },
+      cargo: { description: 'Podzespoły automotive', weightKg: 19000, pallets: 29 },
+      dates: { pickup: '2024-06-02', delivery: '2024-06-03' },
+      financials: {
+        freightPrice: 2250,
+        currency: 'EUR',
+        costs: {
+            fuel: 620, adBlue: 24, tolls: 280, driverDiems: 150, crossBorderAllowance: 95, nightRestAllowance: 75, corridorPay: 40, maintenance: 56,
+            driverBaseSalary: 125, socialSecurity: 80, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.IN_TRANSIT,
+      driverId: 'D1',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-06-01T12:00:00', description: 'Przygotowanie do wyjazdu IT', user: 'System' },
+          { status: OrderStatus.IN_TRANSIT, timestamp: '2024-06-02T13:00:00', description: 'Wyjazd z Poznania', user: 'DBK Telematics' }
+      ]
+  },
+  {
+      id: 'ORD-2024-012',
+      clientName: 'Carrefour FR',
+      route: { from: 'Lille, FR', to: 'Lyon, FR', distanceKm: 720, eta: '2024-06-16 10:00' },
+      cargo: { description: 'FMCG paletowe', weightKg: 15000, pallets: 25 },
+      dates: { pickup: '2024-06-15', delivery: '2024-06-16' },
+      financials: {
+        freightPrice: 1380,
+        currency: 'EUR',
+        costs: {
+            fuel: 410, adBlue: 15, tolls: 160, driverDiems: 105, crossBorderAllowance: 0, nightRestAllowance: 50, corridorPay: 20, maintenance: 40,
+            driverBaseSalary: 105, socialSecurity: 68, leasing: 78, insurance: 22, overhead: 30, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.PLANNED,
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2024-06-14T09:00:00', description: 'Załadunek krajowy FR', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-201',
+      clientName: 'Volkswagen',
+      route: { from: 'Hannover, DE', to: 'Bratislava, SK', distanceKm: 900, eta: '2023-11-23 17:00' },
+      cargo: { description: 'Moduły silników', weightKg: 19500, pallets: 30 },
+      dates: { pickup: '2023-11-22', delivery: '2023-11-23' },
+      financials: {
+        freightPrice: 1820,
+        currency: 'EUR',
+        costs: {
+            fuel: 510, adBlue: 18, tolls: 210, driverDiems: 115, crossBorderAllowance: 78, nightRestAllowance: 62, corridorPay: 30, maintenance: 44,
+            driverBaseSalary: 112, socialSecurity: 72, leasing: 78, insurance: 22, overhead: 30, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2023-11-21T10:00:00', description: 'Planowanie Q4', user: 'System' },
+          { status: OrderStatus.COMPLETED, timestamp: '2023-11-23T17:05:00', description: 'Faktura ING', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-202',
+      clientName: 'Bosch',
+      route: { from: 'Stuttgart, DE', to: 'Prague, CZ', distanceKm: 520, eta: '2023-12-11 14:00' },
+      cargo: { description: 'Elementy mechaniczne', weightKg: 14000, pallets: 22 },
+      dates: { pickup: '2023-12-10', delivery: '2023-12-11' },
+      financials: {
+        freightPrice: 1180,
+        currency: 'EUR',
+        costs: {
+            fuel: 360, adBlue: 12, tolls: 150, driverDiems: 95, crossBorderAllowance: 60, nightRestAllowance: 48, corridorPay: 20, maintenance: 34,
+            driverBaseSalary: 100, socialSecurity: 66, leasing: 78, insurance: 22, overhead: 28, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      history: [
+          { status: OrderStatus.PLANNED, timestamp: '2023-12-09T15:00:00', description: 'Plan grudzień', user: 'System' },
+          { status: OrderStatus.COMPLETED, timestamp: '2023-12-11T14:05:00', description: 'Zaksięgowano', user: 'System' }
+      ]
   }
 ];

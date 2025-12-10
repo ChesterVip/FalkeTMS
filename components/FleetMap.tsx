@@ -1,8 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MOCK_DRIVERS, MOCK_VEHICLES } from '../constants';
 import { MapPin, Navigation, Truck, User, AlertTriangle } from 'lucide-react';
 
 const FleetMap: React.FC = () => {
+    const [mapUrl, setMapUrl] = useState<string | null>(null);
+
+    // Generujemy prosty PNG w locie (canvas -> dataURL), żeby zawsze mieć widoczną "mapę" offline.
+    useEffect(() => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024;
+        canvas.height = 640;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Tło
+        ctx.fillStyle = '#dce2ea';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Gradienty
+        const grad1 = ctx.createRadialGradient(250, 200, 50, 250, 200, 320);
+        grad1.addColorStop(0, 'rgba(59,130,246,0.25)');
+        grad1.addColorStop(1, 'rgba(59,130,246,0)');
+        ctx.fillStyle = grad1;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const grad2 = ctx.createRadialGradient(780, 340, 60, 780, 340, 320);
+        grad2.addColorStop(0, 'rgba(16,185,129,0.28)');
+        grad2.addColorStop(1, 'rgba(16,185,129,0)');
+        ctx.fillStyle = grad2;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Siatka
+        ctx.strokeStyle = 'rgba(148,163,184,0.32)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x <= canvas.width; x += 80) {
+            ctx.beginPath();
+            ctx.moveTo(x + 0.5, 0);
+            ctx.lineTo(x + 0.5, canvas.height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= canvas.height; y += 80) {
+            ctx.beginPath();
+            ctx.moveTo(0, y + 0.5);
+            ctx.lineTo(canvas.width, y + 0.5);
+            ctx.stroke();
+        }
+
+        setMapUrl(canvas.toDataURL('image/png'));
+    }, []);
+
     // Deterministyczne mocki pozycji powiązane z pojazdami
     const baseCoords = [
         { top: '32%', left: '38%' },
@@ -64,19 +110,20 @@ const FleetMap: React.FC = () => {
             </div>
 
             {/* Map Area - Top on Mobile, Right on Desktop */}
-            <div className="flex-1 bg-slate-200 relative overflow-hidden group h-1/2 md:h-full min-h-[360px]">
-                {/* Simulated Map Background */}
-                <div className="absolute inset-0"
-                     style={{
-                         backgroundImage: `
-                            linear-gradient(135deg, rgba(59,130,246,0.08), rgba(56,189,248,0.06)),
-                            radial-gradient(#cbd5e1 1px, transparent 1px)
-                         `,
-                         backgroundSize: '100% 100%, 22px 22px',
-                         backgroundColor: '#e5e7eb'
-                     }}
-                ></div>
-                
+            <div
+                className="flex-1 relative overflow-hidden group h-1/2 md:h-full min-h-[420px] bg-slate-200"
+                style={
+                    mapUrl
+                        ? { backgroundImage: `url(${mapUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                        : undefined
+                }
+            >
+                {!mapUrl && (
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm font-medium">
+                        Generowanie mapy...
+                    </div>
+                )}
+
                 {/* Decorative Map Elements */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl md:text-8xl font-black text-slate-300/50 pointer-events-none select-none tracking-widest">
                     MAPA
