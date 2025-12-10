@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line } from 'recharts';
 import { MOCK_ORDERS } from '../constants';
 import { TimeRange } from '../types';
-import { TrendingUp, TrendingDown, DollarSign, Wallet, Calendar, PieChart as PieChartIcon, Activity, Truck, Bot } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, Wallet, Calendar, PieChart as PieChartIcon, Truck } from 'lucide-react';
 
 const FinancialReports: React.FC = () => {
   const [period, setPeriod] = useState<TimeRange>('DAY');
@@ -385,82 +385,6 @@ const FinancialReports: React.FC = () => {
                             <Legend verticalAlign="bottom" height={36}/>
                         </PieChart>
                     </ResponsiveContainer>
-                </div>
-            </div>
-        </div>
-
-        {/* SYSTEM EFFICIENCY GAINS (Chapter 4.3) */}
-        <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl shadow-xl overflow-hidden">
-            <div className="px-6 py-5 bg-black/10 border-b border-white/10">
-                <div className="flex items-start justify-between">
-                    <div className="text-white">
-                        <h3 className="font-black text-xl mb-1 flex items-center">
-                            <Bot className="mr-2" size={24}/>
-                            Efektywność wdrożenia FalkeTMS (AI System)
-                        </h3>
-                        <p className="text-blue-100 text-sm">Oszczędności operacyjne po implementacji systemu (Rozdział 4.3 Pracy Magisterskiej)</p>
-                    </div>
-                    <div className="text-right text-white">
-                        <p className="text-xs uppercase font-bold text-blue-200">Oszczędności miesięczne</p>
-                        <p className="text-3xl font-black">8,000 <span className="text-lg text-blue-200">PLN</span></p>
-                    </div>
-                </div>
-            </div>
-            <div className="px-6 py-6 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
-                        <p className="text-blue-100 text-xs font-bold uppercase mb-2">Redukcja czasu przetwarzania faktur</p>
-                        <p className="text-white text-3xl font-black mb-1">60-70%</p>
-                        <p className="text-blue-200 text-xs">Automatyzacja OCR + AI ekstrakcja danych</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
-                        <p className="text-blue-100 text-xs font-bold uppercase mb-2">Uniknięto zatrudnienia</p>
-                        <p className="text-white text-3xl font-black mb-1">1 <span className="text-lg text-blue-200">osoba</span></p>
-                        <p className="text-blue-200 text-xs">Oszczędność: ~6,000 PLN/mies.</p>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
-                        <p className="text-blue-100 text-xs font-bold uppercase mb-2">Redukcja kosztów outsourcingu</p>
-                        <p className="text-white text-3xl font-black mb-1">~1,500 <span className="text-lg text-blue-200">PLN</span></p>
-                        <p className="text-blue-200 text-xs">Mniej zleceń zewnętrznych (księgowość, OCR)</p>
-                    </div>
-                    <div className="bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/30 rounded-xl p-4">
-                        <p className="text-emerald-100 text-xs font-bold uppercase mb-2">Oszczędności roczne</p>
-                        <p className="text-emerald-50 text-3xl font-black mb-1">96,000 <span className="text-lg text-emerald-200">PLN</span></p>
-                        <p className="text-emerald-200 text-xs">8,000 PLN × 12 miesięcy</p>
-                    </div>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
-                    <h4 className="text-white font-bold text-sm mb-3 uppercase tracking-wide">Dodatkowe korzyści wdrożenia systemu</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                        <div className="bg-black/20 rounded-lg p-3 border border-white/10">
-                            <p className="text-emerald-300 font-bold mb-1">✓ Automatyczne generowanie dokumentów</p>
-                            <p className="text-blue-100">CMR, faktury, listy przewozowe - bez interwencji manualnej</p>
-                        </div>
-                        <div className="bg-black/20 rounded-lg p-3 border border-white/10">
-                            <p className="text-emerald-300 font-bold mb-1">✓ OCR + e-archiwizacja</p>
-                            <p className="text-blue-100">Skanowanie, weryfikacja i archiwizacja dokumentów z WhatsApp i email</p>
-                        </div>
-                        <div className="bg-black/20 rounded-lg p-3 border border-white/10">
-                            <p className="text-emerald-300 font-bold mb-1">✓ Przyspieszenie analizy rentowności</p>
-                            <p className="text-blue-100">Natychmiastowe raporty marż, analiza what-if, alerty o niskich marżach</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="bg-amber-500/20 backdrop-blur-sm border border-amber-400/30 rounded-xl p-4">
-                    <div className="flex items-center space-x-3">
-                        <div className="bg-amber-400 text-amber-900 rounded-full p-2">
-                            <Activity size={20}/>
-                        </div>
-                        <div className="text-white">
-                            <p className="font-bold text-sm">Podsumowanie rozdziału 4.3 Pracy Magisterskiej</p>
-                            <p className="text-amber-100 text-xs mt-1">
-                                Wdrożenie systemu FalkeTMS pozwoliło na znaczną redukcję kosztów operacyjnych (<strong>min. 8,000 PLN/mies.</strong>), 
-                                automatyzację procesów fakturowania (60-70% szybciej), uniknięcie dodatkowych zatrudnień oraz przyspieszenie analiz rentowności zleceń.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

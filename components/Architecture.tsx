@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Brain, Database, Network, Server, Shield, Smartphone, Workflow, Zap, Mail, MessageSquare, FileText, TrendingUp, MapPin, GraduationCap, BookOpen, Building2, CheckCircle2, Layers, ChartPie, AlertCircle, Fuel, Route as RouteIcon, Truck, ShieldCheck } from 'lucide-react';
+import { Brain, Database, Network, Server, Shield, Smartphone, Workflow, Zap, Mail, MessageSquare, FileText, TrendingUp, MapPin, GraduationCap, BookOpen, Building2, CheckCircle2, Layers, ChartPie, AlertCircle, Fuel, Route as RouteIcon, Truck, ShieldCheck, FlaskConical, BarChart3, ClipboardCheck, Gauge, Timer, Bot, Activity, ArrowUpRight, Sparkles } from 'lucide-react';
 
 const Architecture: React.FC = () => {
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'architecture' | 'overview' | 'theory' | 'company' | 'system' | 'implementation'>('architecture');
+  const [activeTab, setActiveTab] = useState<'architecture' | 'overview' | 'theory' | 'company' | 'system' | 'implementation' | 'simulations' | 'efficiency'>('architecture');
   
   const layers = [
     {
@@ -218,6 +218,8 @@ const Architecture: React.FC = () => {
     { id: 'company', label: 'Przedsiębiorstwo', icon: <Building2 size={16} /> },
     { id: 'system', label: 'System AI', icon: <Brain size={16} /> },
     { id: 'implementation', label: 'Wdrożenie', icon: <CheckCircle2 size={16} /> },
+    { id: 'simulations', label: 'Symulacje (4.2)', icon: <FlaskConical size={16} /> },
+    { id: 'efficiency', label: 'Efektywność (4.3)', icon: <Bot size={16} /> },
   ];
 
   return (
@@ -962,6 +964,383 @@ const Architecture: React.FC = () => {
               <span>Efekt końcowy: raport rentowności per zlecenie/klient/kierowca dostępny bez ręcznego łączenia danych.</span>
             </div>
           </section>
+        </section>
+      )}
+
+      {/* SIMULATIONS TAB (Rozdział 4.2) */}
+      {activeTab === 'simulations' && (
+        <section className="space-y-6">
+          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6 md:p-8 rounded-2xl border-2 border-blue-200 shadow-lg">
+            <div className="mb-6">
+              <div className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm mb-3 flex items-center">
+                <FlaskConical size={16} className="mr-2" />
+                Rozdział 4.2 - Symulacje
+              </div>
+              <h2 className="text-3xl font-black text-slate-900 mb-3 leading-tight">
+                Symulacja Kalkulacji Kosztów i Rentowności
+              </h2>
+              <p className="text-slate-700 leading-relaxed">
+                Analiza przeprowadzona na trzech rzeczywistych relacjach transportowych FG Falke z uwzględnieniem 
+                pełnej struktury kosztów zmiennych i stałych. Dane pochodzą z rzeczywistych rozliczeń Q1 2023.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-white p-4 rounded-xl border-2 border-blue-200 shadow-sm">
+                <h3 className="font-bold text-blue-900 mb-2">Polska → Szwajcaria</h3>
+                <div className="space-y-1 text-sm text-slate-700">
+                  <p><strong>Dystans:</strong> ~2200 km</p>
+                  <p><strong>Przychód:</strong> 10,000 PLN (~2,300 EUR)</p>
+                  <p><strong>Koszty:</strong> ~7,900 PLN (~1,837 EUR)</p>
+                  <p className="text-emerald-700 font-bold text-lg">Marża: ~21%</p>
+                </div>
+              </div>
+              <div className="bg-white p-4 rounded-xl border-2 border-emerald-200 shadow-sm">
+                <h3 className="font-bold text-emerald-900 mb-2">Polska → Belgia</h3>
+                <div className="space-y-1 text-sm text-slate-700">
+                  <p><strong>Dystans:</strong> ~1500 km</p>
+                  <p><strong>Przychód:</strong> 7,000 PLN (~1,600 EUR)</p>
+                  <p><strong>Koszty:</strong> ~5,900 PLN (~1,372 EUR)</p>
+                  <p className="text-emerald-700 font-bold text-lg">Marża: ~15.7%</p>
+                </div>
+              </div>
+              <div className="bg-white p-4 rounded-xl border-2 border-amber-200 shadow-sm">
+                <h3 className="font-bold text-amber-900 mb-2">Polska → Niemcy</h3>
+                <div className="space-y-1 text-sm text-slate-700">
+                  <p><strong>Dystans:</strong> ~800 km</p>
+                  <p><strong>Przychód:</strong> 3,500 PLN (~800 EUR)</p>
+                  <p><strong>Koszty:</strong> ~3,300 PLN (~767 EUR)</p>
+                  <p className="text-amber-700 font-bold text-lg">Marża: ~5-6%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Scenariusz 1: Wydłużenie trasy */}
+          <div className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg overflow-hidden">
+            <div className="px-6 py-5 border-b-2 border-slate-200 bg-gradient-to-r from-amber-50 to-orange-50">
+              <h3 className="text-2xl font-black text-slate-900 mb-2 flex items-center">
+                <RouteIcon className="mr-3 text-amber-600" size={24} />
+                Scenariusz 1: Wydłużenie trasy o 10%
+              </h3>
+              <p className="text-slate-700">
+                Symulacja wpływu wydłużenia trasy na rentowność zlecenia Polska → Belgia
+              </p>
+            </div>
+            <div className="p-6">
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-5 mb-4">
+                <p className="text-sm text-slate-700 mb-4">
+                  <strong>Relacja:</strong> Polska → Belgia (bazowo ~1500 km, po wydłużeniu ~1650 km)
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white p-4 rounded-lg border border-blue-200">
+                    <p className="text-xs font-bold text-blue-700 uppercase mb-1">Marża bazowa</p>
+                    <p className="text-4xl font-black text-slate-900">15.7%</p>
+                    <p className="text-xs text-slate-600 mt-1">Przychód: 7,000 PLN</p>
+                  </div>
+                  <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                    <p className="text-xs font-bold text-amber-700 uppercase mb-1">Marża po +10% km</p>
+                    <p className="text-4xl font-black text-amber-700">~7%</p>
+                    <p className="text-xs text-amber-700 mt-1">Spadek: -8.7 pp</p>
+                  </div>
+                  <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                    <p className="text-xs font-bold text-red-700 uppercase mb-1">Wpływ</p>
+                    <p className="text-base font-bold text-red-700 leading-tight">Drastyczny spadek rentowności</p>
+                    <p className="text-xs text-red-700 mt-1">Wymaga renegocjacji</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm text-slate-700">
+                <strong className="text-slate-900">Wniosek:</strong> Wydłużenie trasy o 10% (150 km) powoduje niemal dwukrotny spadek marży. 
+                Zwiększone koszty paliwa, myta i czasu pracy kierowcy znacząco obniżają opłacalność.
+              </div>
+            </div>
+          </div>
+
+          {/* Scenariusz 2: Wzrost paliwa */}
+          <div className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg overflow-hidden">
+            <div className="px-6 py-5 border-b-2 border-slate-200 bg-gradient-to-r from-purple-50 to-pink-50">
+              <h3 className="text-2xl font-black text-slate-900 mb-2 flex items-center">
+                <Fuel className="mr-3 text-purple-600" size={24} />
+                Scenariusz 2: Wzrost cen paliwa o 20%
+              </h3>
+              <p className="text-slate-700">
+                Symulacja wpływu znacznego wzrostu kosztów paliwa (paliwo stanowi ~40% kosztów całkowitych)
+              </p>
+            </div>
+            <div className="p-6 space-y-4">
+              {/* Polska → Szwajcaria */}
+              <div className="bg-white p-4 rounded-lg border-2 border-purple-200">
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="font-bold text-slate-800">Polska → Szwajcaria (~2200 km)</h4>
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-bold">Relacja 1</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Bazowa</p>
+                    <p className="text-3xl font-black text-emerald-600">21%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Po +20% paliwa</p>
+                    <p className="text-3xl font-black text-amber-600">~12%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-red-700 uppercase mb-1">Spadek</p>
+                    <p className="text-3xl font-black text-red-600">-9 pp</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Polska → Belgia */}
+              <div className="bg-white p-4 rounded-lg border-2 border-purple-200">
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="font-bold text-slate-800">Polska → Belgia (~1500 km)</h4>
+                  <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-bold">Relacja 2</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Bazowa</p>
+                    <p className="text-3xl font-black text-emerald-600">15.7%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase mb-1">Po +20% paliwa</p>
+                    <p className="text-3xl font-black text-amber-600">~9%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-red-700 uppercase mb-1">Spadek</p>
+                    <p className="text-3xl font-black text-red-600">-6.7 pp</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm text-slate-700">
+                <strong className="text-slate-900">Wniosek:</strong> Wzrost cen paliwa o 20% prowadzi do spadku marży o 6.7–9 punktów procentowych. 
+                Paliwo stanowiące ~40% kosztów całkowitych ma kluczowy wpływ na rentowność. 
+                Konieczne jest monitorowanie cen i ewentualne przeindeksowanie stawek frachtowych.
+              </div>
+            </div>
+          </div>
+
+          {/* Podsumowanie analiz */}
+          <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-6 md:p-8 border-2 border-slate-700 shadow-xl">
+            <h3 className="text-2xl font-black mb-4 flex items-center">
+              <BarChart3 className="mr-3 text-blue-400" size={24} />
+              Wnioski z symulacji (Rozdział 4.2)
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-5">
+                <h4 className="font-bold text-emerald-300 mb-3">Kluczowe obserwacje:</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2">•</span>
+                    <span>Relacje długodystansowe (PL→CH) oferują najwyższą marżę (~21%)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2">•</span>
+                    <span>Krótkie trasy (PL→DE) mają minimalną rentowność (~5-6%)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2">•</span>
+                    <span>Paliwo stanowi ~40% kosztów całkowitych</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2">•</span>
+                    <span>Wydłużenie trasy o 10% może obniżyć marżę o połowę</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-white/10 border border-white/20 rounded-xl p-5">
+                <h4 className="font-bold text-amber-300 mb-3">Rekomendacje:</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li className="flex items-start">
+                    <span className="text-amber-400 mr-2">•</span>
+                    <span>Automatyczne alerty przy marży poniżej 8%</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-400 mr-2">•</span>
+                    <span>Mechanizmy indeksacji cen w kontraktach długoterminowych</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-400 mr-2">•</span>
+                    <span>Optymalizacja tras dla minimalizacji kosztów myta</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-amber-400 mr-2">•</span>
+                    <span>Monitorowanie cen paliwa w czasie rzeczywistym</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* EFFICIENCY TAB (Rozdział 4.3) */}
+      {activeTab === 'efficiency' && (
+        <section className="space-y-6">
+          <div className="bg-gradient-to-br from-emerald-900 to-teal-900 text-white rounded-2xl p-6 md:p-8 border-2 border-emerald-800 shadow-xl">
+            <div className="mb-6">
+              <div className="inline-block bg-emerald-500 text-white px-4 py-2 rounded-lg font-bold text-sm mb-3 flex items-center">
+                <Bot size={16} className="mr-2" />
+                Rozdział 4.3 - Ocena Efektywności
+              </div>
+              <h2 className="text-3xl md:text-4xl font-black mb-3 leading-tight">
+                Efektywność Wdrożenia FalkeTMS (AI System)
+              </h2>
+              <p className="text-emerald-100 leading-relaxed">
+                Analiza korzyści z implementacji systemu FalkeTMS w przedsiębiorstwie FG Falke Sp. z o.o. 
+                Oszacowanie oszczędności finansowych i operacyjnych na podstawie rzeczywistych danych z Q1 2023.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+                <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Czas fakturowania</p>
+                <p className="text-4xl font-black text-white mb-1">-60-70%</p>
+                <p className="text-xs text-emerald-200">Redukcja czasu przetwarzania faktur</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+                <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Uniknięte zatrudnienie</p>
+                <p className="text-4xl font-black text-white mb-1">~6,000 PLN</p>
+                <p className="text-xs text-emerald-200">Miesięcznie / 1 etat administracyjny</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5">
+                <p className="text-xs uppercase tracking-wider text-emerald-200 mb-2">Outsourcing</p>
+                <p className="text-4xl font-black text-white mb-1">~1,500 PLN</p>
+                <p className="text-xs text-emerald-200">Miesięcznie / redukcja kosztów zewn.</p>
+              </div>
+              <div className="bg-emerald-500/30 backdrop-blur-sm border-2 border-emerald-300 rounded-xl p-5">
+                <p className="text-xs uppercase tracking-wider text-emerald-100 mb-2 font-bold">Całkowite oszczędności</p>
+                <p className="text-4xl font-black text-white mb-1">8,000 PLN</p>
+                <p className="text-xs text-emerald-100 font-bold">Miesięcznie • 96,000 PLN rocznie</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white/5 border border-white/20 rounded-xl p-5">
+                <h3 className="font-bold text-emerald-300 mb-3 flex items-center text-lg">
+                  <Timer size={20} className="mr-2" />
+                  Przyspieszenie procesów
+                </h3>
+                <ul className="space-y-2 text-sm text-emerald-100">
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Przetwarzanie faktur:</strong> redukcja czasu o 60-70%</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Obsługa dokumentów:</strong> automatyzacja OCR i e-archiwizacja</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Analiza rentowności:</strong> z dni do minut</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-white/5 border border-white/20 rounded-xl p-5">
+                <h3 className="font-bold text-emerald-300 mb-3 flex items-center text-lg">
+                  <CheckCircle2 size={20} className="mr-2" />
+                  Korzyści jakościowe
+                </h3>
+                <ul className="space-y-2 text-sm text-emerald-100">
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Redukcja błędów:</strong> automatyczna walidacja danych</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Bieżąca analiza:</strong> real-time kontrola marży per zlecenie</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-emerald-400 mr-2 font-bold">•</span>
+                    <span><strong>Lepsze decyzje:</strong> szybki dostęp do danych o rentowności</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Szczegółowy breakdown oszczędności */}
+          <div className="bg-white border-2 border-slate-200 rounded-2xl shadow-lg p-6">
+            <h3 className="text-2xl font-black text-slate-900 mb-4 flex items-center">
+              <Activity className="mr-3 text-blue-600" size={24} />
+              Szczegółowy breakdown oszczędności miesięcznych
+            </h3>
+            <div className="space-y-3">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-bold text-blue-900">Automatyczne generowanie dokumentów</p>
+                    <p className="text-sm text-slate-700">CMR, faktury, listy przewozowe - bez interwencji manualnej</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-slate-500 uppercase">Czas zaoszczędzony</p>
+                    <p className="text-2xl font-black text-blue-700">~15h/mies.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-bold text-emerald-900">OCR + e-archiwizacja</p>
+                    <p className="text-sm text-slate-700">Skanowanie, weryfikacja i archiwizacja dokumentów z WhatsApp i email</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-slate-500 uppercase">Redukcja outsourcingu</p>
+                    <p className="text-2xl font-black text-emerald-700">~1,500 PLN</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-bold text-purple-900">Przyspieszenie analizy rentowności</p>
+                    <p className="text-sm text-slate-700">Natychmiastowe raporty marż, analiza what-if, alerty o niskich marżach</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-slate-500 uppercase">Uniknięte zatrudnienie</p>
+                    <p className="text-2xl font-black text-purple-700">~6,000 PLN</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Podsumowanie rozdziału 4.3 */}
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-6">
+            <div className="flex items-start space-x-4">
+              <div className="bg-amber-400 text-amber-900 rounded-full p-3 flex-shrink-0">
+                <Activity size={24}/>
+              </div>
+              <div>
+                <h3 className="font-bold text-xl text-slate-900 mb-2">Podsumowanie rozdziału 4.3 Pracy Magisterskiej</h3>
+                <p className="text-slate-700 leading-relaxed">
+                  Wdrożenie systemu FalkeTMS pozwoliło na znaczną redukcję kosztów operacyjnych 
+                  (<strong className="text-amber-900">min. 8,000 PLN/mies., czyli 96,000 PLN rocznie</strong>), 
+                  automatyzację procesów fakturowania (60-70% szybciej), uniknięcie dodatkowych zatrudnień 
+                  oraz przyspieszenie analiz rentowności zleceń. System umożliwia wielowymiarową ocenę kosztów 
+                  w czasie rzeczywistym, co jest kluczowe dla małego przedsiębiorstwa transportowego operującego 
+                  na rynku międzynarodowym.
+                </p>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-white p-3 rounded-lg border border-amber-200">
+                    <p className="text-xs text-slate-500 uppercase font-bold">ROI (12 miesięcy)</p>
+                    <p className="text-2xl font-black text-amber-700">96,000 PLN</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-emerald-200">
+                    <p className="text-xs text-slate-500 uppercase font-bold">Czas zwrotu inwestycji</p>
+                    <p className="text-2xl font-black text-emerald-700">&lt; 6 mies.</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-blue-200">
+                    <p className="text-xs text-slate-500 uppercase font-bold">Efektywność</p>
+                    <p className="text-2xl font-black text-blue-700">+60-70%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       )}
     </div>
