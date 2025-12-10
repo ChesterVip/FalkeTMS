@@ -57,27 +57,49 @@ const FinancialReports: React.FC = () => {
   const revenuePerKm = totalKm > 0 ? totalRevenue / totalKm : 0;
   const costPerKm = totalKm > 0 ? (totalVariableCosts + totalFixedCosts) / totalKm : 0;
 
-  // --- DYNAMIC TREND DATA AGGREGATION ---
+  // --- DYNAMIC TREND DATA AGGREGATION with proper filtering ---
   const trendData = useMemo(() => {
-    const groupedData: Record<string, { name: string, Revenue: number, Profit: number, Costs: number }> = {};
+    const groupedData: Record<string, { name: string, Revenue: number, Profit: number, Costs: number, count: number }> = {};
 
-    relevantOrders.forEach(order => {
+    // Filter orders by period
+    const now = new Date();
+    const filteredOrders = relevantOrders.filter(order => {
+        const orderDate = new Date(order.dates.delivery);
+        if (period === 'DAY') {
+            // Last 7 days
+            const daysAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24));
+            return daysAgo >= 0 && daysAgo <= 7;
+        } else if (period === 'WEEK') {
+            // Last 8 weeks
+            const weeksAgo = Math.floor((now.getTime() - orderDate.getTime()) / (1000 * 60 * 60 * 24 * 7));
+            return weeksAgo >= 0 && weeksAgo <= 8;
+        } else if (period === 'MONTH') {
+            // Last 12 months
+            return orderDate.getFullYear() >= now.getFullYear() - 1;
+        } else {
+            // Last 3 years
+            return orderDate.getFullYear() >= now.getFullYear() - 2;
+        }
+    });
+
+    filteredOrders.forEach(order => {
         const date = new Date(order.dates.delivery);
         let key = '';
         
         if (period === 'DAY') {
-            key = date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
+            key = date.toLocaleDateString('pl-PL', { day: '2-digit', month: 'short' });
         } else if (period === 'WEEK') {
-            const week = Math.ceil(date.getDate() / 7); // Simplified week
-            key = `Tydzień ${week}`;
+            const weekStart = new Date(date);
+            weekStart.setDate(date.getDate() - date.getDay() + 1);
+            key = `W${Math.ceil((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000))}`;
         } else if (period === 'MONTH') {
-            key = date.toLocaleDateString('pl-PL', { month: 'long' });
+            key = date.toLocaleDateString('pl-PL', { month: 'short', year: '2-digit' });
         } else {
             key = date.getFullYear().toString();
         }
 
         if (!groupedData[key]) {
-            groupedData[key] = { name: key, Revenue: 0, Profit: 0, Costs: 0 };
+            groupedData[key] = { name: key, Revenue: 0, Profit: 0, Costs: 0, count: 0 };
         }
 
         const costs = order.financials.costs;
@@ -87,9 +109,12 @@ const FinancialReports: React.FC = () => {
         groupedData[key].Revenue += order.financials.freightPrice;
         groupedData[key].Costs += totalOrderCost;
         groupedData[key].Profit += profit;
+        groupedData[key].count += 1;
     });
 
-    return Object.values(groupedData).sort((a, b) => a.name.localeCompare(b.name));
+    return Object.values(groupedData)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .slice(-10); // Show last 10 periods for better visibility
   }, [relevantOrders, period]);
 
   // Waterfall Data (Cascade)
@@ -236,23 +261,61 @@ const FinancialReports: React.FC = () => {
 
         {/* Dynamic Trends Chart */}
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-             <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center">
-                <TrendingUp className="mr-2 text-blue-500" size={20}/>
-                Trend Rentowności ({period === 'DAY' ? 'Dzienny' : period === 'WEEK' ? 'Tygodniowy' : 'Miesięczny'})
-            </h3>
-            <div className="h-64 w-full">
+             <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-slate-800 flex items-center">
+                    <TrendingUp className="mr-2 text-blue-500" size={20}/>
+                    Trend Rentowności ({period === 'DAY' ? 'Dzienny' : period === 'WEEK' ? 'Tygodniowy' : period === 'MONTH' ? 'Miesięczny' : 'Roczny'})
+                </h3>
+                <div className="text-xs text-slate-500 text-right">
+                    <p>Zleceń w okresie: {trendData.reduce((acc, d) => acc + (d.count || 0), 0)}</p>
+                    <p>Punktów danych: {trendData.length}</p>
+                </div>
+             </div>
+            <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={trendData}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} dy={10} />
+                        <XAxis 
+                            dataKey="name" 
+                            axisLine={false} 
+                            tickLine={false} 
+                            tick={{fill: '#94a3b8', fontSize: 11}} 
+                            dy={10} 
+                            angle={period === 'DAY' ? -45 : 0}
+                            textAnchor={period === 'DAY' ? 'end' : 'middle'}
+                        />
                         <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
-                        <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
-                        <Legend />
-                        <Line type="monotone" dataKey="Revenue" stroke="#3b82f6" strokeWidth={3} dot={{r: 4}} name="Przychód" />
-                        <Line type="monotone" dataKey="Costs" stroke="#cbd5e1" strokeWidth={2} name="Koszty" />
-                        <Line type="monotone" dataKey="Profit" stroke="#10b981" strokeWidth={3} dot={{r: 4}} name="Zysk" />
+                        <Tooltip 
+                            contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}}
+                            formatter={(value: number) => [`${value.toFixed(0)} EUR`, '']}
+                            labelFormatter={(label) => `Okres: ${label}`}
+                        />
+                        <Legend wrapperStyle={{paddingTop: '10px'}} />
+                        <Line type="monotone" dataKey="Revenue" stroke="#3b82f6" strokeWidth={3} dot={{r: 5, fill: '#3b82f6'}} name="Przychód" />
+                        <Line type="monotone" dataKey="Costs" stroke="#f59e0b" strokeWidth={2} dot={{r: 4, fill: '#f59e0b'}} name="Koszty" strokeDasharray="5 5" />
+                        <Line type="monotone" dataKey="Profit" stroke="#10b981" strokeWidth={3} dot={{r: 5, fill: '#10b981'}} name="Zysk" />
                     </LineChart>
                 </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-3 text-xs">
+                <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    <p className="text-blue-600 font-bold uppercase mb-1">Średni przychód</p>
+                    <p className="text-xl font-black text-blue-700">
+                        {trendData.length > 0 ? (trendData.reduce((acc, d) => acc + d.Revenue, 0) / trendData.length).toFixed(0) : '0'} EUR
+                    </p>
+                </div>
+                <div className="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                    <p className="text-amber-600 font-bold uppercase mb-1">Średnie koszty</p>
+                    <p className="text-xl font-black text-amber-700">
+                        {trendData.length > 0 ? (trendData.reduce((acc, d) => acc + d.Costs, 0) / trendData.length).toFixed(0) : '0'} EUR
+                    </p>
+                </div>
+                <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100">
+                    <p className="text-emerald-600 font-bold uppercase mb-1">Średni zysk</p>
+                    <p className="text-xl font-black text-emerald-700">
+                        {trendData.length > 0 ? (trendData.reduce((acc, d) => acc + d.Profit, 0) / trendData.length).toFixed(0) : '0'} EUR
+                    </p>
+                </div>
             </div>
         </div>
 
