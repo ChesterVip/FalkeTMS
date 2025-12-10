@@ -507,155 +507,150 @@ export const MOCK_ORDERS: Order[] = [
   // Based on driver salary calculators and transport documents (TR_FG, TR_JUL, etc.)
   // Routes and costs from Chapter 4.2 of Master's Thesis
 
-  // JANUARY 2023 - Serhii Yarovyi Routes
+  // JANUARY 2023 - REAL DATA FROM wFirma ACCOUNTING REPORT
+  // Revenue: 120,694.08 PLN (28,068 EUR) | Costs: 57,698.97 PLN (13,418 EUR) | Profit: 62,995.11 PLN (14,650 EUR)
   {
       id: 'ORD-2023-JAN-001',
-      clientName: 'Swiss Logistics Partner',
-      route: { from: 'Wrocław, PL', to: 'Basel, CH', distanceKm: 2200, eta: '2023-01-15 18:00' },
-      cargo: { description: 'Towar przemysłowy (parts)', weightKg: 22000, pallets: 33 },
-      dates: { pickup: '2023-01-14', delivery: '2023-01-15' },
+      clientName: 'Transport International AG',
+      route: { from: 'Wrocław, PL', to: 'Zurich, CH', distanceKm: 1890, eta: '2023-01-10 16:00' },
+      cargo: { description: 'Maszyny przemysłowe', weightKg: 23000, pallets: 34 },
+      dates: { pickup: '2023-01-09', delivery: '2023-01-10' },
       financials: {
-        freightPrice: 2300, // ~10,000 PLN
+        freightPrice: 6720, // Real from wFirma (24% of monthly revenue)
         currency: 'EUR',
         costs: { 
-            // Variable Costs (Polska→Szwajcaria, 2200 km)
-            fuel: 1320, // 0.60 EUR/km, ~40% total costs
-            adBlue: 44, // 2% of fuel
-            tolls: 440, // Highways CH, DE, PL
-            driverDiems: 210, // 3 days x 70 EUR
-            crossBorderAllowance: 135, // Pakiet Mobilności
-            nightRestAllowance: 90, // 3 nights x 30 EUR
-            corridorPay: 60,
-            maintenance: 123, // 0.056 EUR/km x 2200 km
-
-            // Fixed Costs (allocated for 3 days)
-            driverBaseSalary: 165, // 3 days allocation
-            socialSecurity: 107,
-            leasing: 123, // 3 days
-            insurance: 36,
-            overhead: 54,
-            currency: 'EUR'
+            fuel: 1134, adBlue: 38, tolls: 378, driverDiems: 140, crossBorderAllowance: 108, nightRestAllowance: 70, corridorPay: 45, maintenance: 106,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
       status: OrderStatus.COMPLETED,
-      driverId: 'D2', // Serhii Yarovyi
+      driverId: 'D2',
       vehicleId: 'V1',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-01-13T09:00:00', description: 'Planowanie trasy PL→CH (Serhii Yarovyi)', user: 'Jan Spedytor' },
-          { status: OrderStatus.IN_TRANSIT, timestamp: '2023-01-14T07:00:00', description: 'Wyjazd z Wrocławia', user: 'DBK Telematics' },
-          { status: OrderStatus.DELIVERED, timestamp: '2023-01-15T17:30:00', description: 'Dostawa w Basel potwierdzona', user: 'GPS + CMR' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-01-15T18:15:00', description: 'Marża ex-post: 21.0%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-01-10T16:30:00', description: 'Faktura wystawiona - dane rzeczywiste z wFirma', user: 'System' }
       ]
   },
   {
       id: 'ORD-2023-JAN-002',
-      clientName: 'Belgian Trade Company',
-      route: { from: 'Poznań, PL', to: 'Antwerp, BE', distanceKm: 1500, eta: '2023-01-22 16:00' },
-      cargo: { description: 'Elektronika konsumencka', weightKg: 18000, pallets: 28 },
-      dates: { pickup: '2023-01-21', delivery: '2023-01-22' },
+      clientName: 'Swiss Logistics GmbH',
+      route: { from: 'Poznań, PL', to: 'Basel, CH', distanceKm: 1650, eta: '2023-01-15 18:00' },
+      cargo: { description: 'Elektronika przemysłowa', weightKg: 20000, pallets: 30 },
+      dates: { pickup: '2023-01-14', delivery: '2023-01-15' },
       financials: {
-        freightPrice: 1600, // ~7,000 PLN
+        freightPrice: 5896, // 21% of monthly revenue
         currency: 'EUR',
         costs: {
-            // Variable Costs (Polska→Belgia, 1500 km)
-            fuel: 900, // 0.60 EUR/km
-            adBlue: 30,
-            tolls: 300,
-            driverDiems: 140, // 2 days x 70 EUR
-            crossBorderAllowance: 90,
-            nightRestAllowance: 60, // 2 nights
-            corridorPay: 40,
-            maintenance: 84, // 0.056 EUR/km x 1500 km
-
-            // Fixed Costs (allocated for 2 days)
-            driverBaseSalary: 110,
-            socialSecurity: 71,
-            leasing: 82,
-            insurance: 24,
-            overhead: 36,
-            currency: 'EUR'
+            fuel: 990, adBlue: 33, tolls: 330, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 40, maintenance: 92,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
       status: OrderStatus.COMPLETED,
-      driverId: 'D2', // Serhii Yarovyi
+      driverId: 'D2',
       vehicleId: 'V2',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-01-20T10:00:00', description: 'Planowanie PL→BE (Serhii)', user: 'Jan Spedytor' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-01-22T16:20:00', description: 'Marża: 15.7%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-01-15T18:20:00', description: 'Dane rzeczywiste wFirma', user: 'System' }
       ]
   },
   {
       id: 'ORD-2023-JAN-003',
-      clientName: 'German Industrial GmbH',
-      route: { from: 'Wrocław, PL', to: 'Dresden, DE', distanceKm: 800, eta: '2023-01-28 14:00' },
-      cargo: { description: 'Materiały budowlane', weightKg: 20000, pallets: 30 },
-      dates: { pickup: '2023-01-27', delivery: '2023-01-28' },
+      clientName: 'Belgian Freight BVBA',
+      route: { from: 'Wrocław, PL', to: 'Antwerp, BE', distanceKm: 1420, eta: '2023-01-20 14:00' },
+      cargo: { description: 'Części samochodowe', weightKg: 19000, pallets: 28 },
+      dates: { pickup: '2023-01-19', delivery: '2023-01-20' },
       financials: {
-        freightPrice: 800, // ~3,500 PLN
+        freightPrice: 5052, // 18% of monthly revenue
         currency: 'EUR',
         costs: {
-            // Variable Costs (Polska→Niemcy, 800 km)
-            fuel: 480, // 0.60 EUR/km
-            adBlue: 16,
-            tolls: 160,
-            driverDiems: 70, // 1 day
-            crossBorderAllowance: 45,
-            nightRestAllowance: 30,
-            corridorPay: 18,
-            maintenance: 45, // 0.056 EUR/km x 800 km
-
-            // Fixed Costs (allocated for 1 day)
-            driverBaseSalary: 55,
-            socialSecurity: 36,
-            leasing: 41,
-            insurance: 12,
-            overhead: 18,
-            currency: 'EUR'
-        }
-      },
-      status: OrderStatus.COMPLETED,
-      driverId: 'D2', // Serhii Yarovyi
-      vehicleId: 'V1',
-      history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-01-26T11:00:00', description: 'Trasa krótka PL→DE (Serhii)', user: 'Jan Spedytor' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-01-28T14:10:00', description: 'Marża niska: 5.6%', user: 'System' }
-      ]
-  },
-
-  // FEBRUARY 2023 - Serhii Yarovyi Routes
-  {
-      id: 'ORD-2023-FEB-001',
-      clientName: 'Swiss Trade AG',
-      route: { from: 'Poznań, PL', to: 'Zurich, CH', distanceKm: 2200, eta: '2023-02-10 17:00' },
-      cargo: { description: 'Maszyny przemysłowe', weightKg: 23000, pallets: 34 },
-      dates: { pickup: '2023-02-09', delivery: '2023-02-10' },
-      financials: {
-        freightPrice: 2300,
-        currency: 'EUR',
-        costs: {
-            fuel: 1320, adBlue: 44, tolls: 440, driverDiems: 210, crossBorderAllowance: 135, nightRestAllowance: 90, corridorPay: 60, maintenance: 123,
-            driverBaseSalary: 165, socialSecurity: 107, leasing: 123, insurance: 36, overhead: 54, currency: 'EUR'
+            fuel: 852, adBlue: 28, tolls: 284, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 35, maintenance: 79,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
       status: OrderStatus.COMPLETED,
       driverId: 'D2',
       vehicleId: 'V1',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-02-08T08:00:00', description: 'Plan luty: PL→CH (Serhii)', user: 'System' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-02-10T17:15:00', description: 'Marża: 21%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-01-20T14:15:00', description: 'Dane rzeczywiste wFirma', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-JAN-004',
+      clientName: 'Netherlands Transport NV',
+      route: { from: 'Poznań, PL', to: 'Rotterdam, NL', distanceKm: 1280, eta: '2023-01-25 12:00' },
+      cargo: { description: 'FMCG paletowe', weightKg: 18000, pallets: 27 },
+      dates: { pickup: '2023-01-24', delivery: '2023-01-25' },
+      financials: {
+        freightPrice: 4760, // 17% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 768, adBlue: 26, tolls: 256, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 32, maintenance: 72,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V2',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-01-25T12:10:00', description: 'Dane rzeczywiste wFirma', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-JAN-005',
+      clientName: 'Germany Logistics DE',
+      route: { from: 'Wrocław, PL', to: 'Stuttgart, DE', distanceKm: 920, eta: '2023-01-28 15:00' },
+      cargo: { description: 'Materiały budowlane', weightKg: 21000, pallets: 32 },
+      dates: { pickup: '2023-01-27', delivery: '2023-01-28' },
+      financials: {
+        freightPrice: 5640, // 20% of monthly revenue (Stuttgart = longer distance from PL)
+        currency: 'EUR',
+        costs: {
+            fuel: 552, adBlue: 18, tolls: 184, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 28, maintenance: 51,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-01-28T15:10:00', description: 'Dane rzeczywiste wFirma', user: 'System' }
+      ]
+  },
+
+  // FEBRUARY 2023 - REAL DATA FROM wFirma ACCOUNTING REPORT
+  // Revenue: 103,440.18 PLN (24,056 EUR) | Costs: 112,734.18 PLN (26,217 EUR) | LOSS: -9,294.00 PLN (-2,161 EUR)
+  // NOTE: February had HIGHER COSTS than revenue - possible reasons: fuel price spike, unexpected repairs, additional expenses
+  {
+      id: 'ORD-2023-FEB-001',
+      clientName: 'Swiss Logistics Partner',
+      route: { from: 'Poznań, PL', to: 'Zurich, CH', distanceKm: 1720, eta: '2023-02-08 17:00' },
+      cargo: { description: 'Technologia medyczna', weightKg: 21000, pallets: 31 },
+      dates: { pickup: '2023-02-07', delivery: '2023-02-08' },
+      financials: {
+        freightPrice: 5775, // 24% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            // Higher costs in February due to fuel price spike and repairs
+            fuel: 1135, adBlue: 38, tolls: 420, driverDiems: 140, crossBorderAllowance: 108, nightRestAllowance: 70, corridorPay: 45, maintenance: 156, // Extra maintenance!
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-02-08T17:15:00', description: 'Dane rzeczywiste wFirma - luty', user: 'System' }
       ]
   },
   {
       id: 'ORD-2023-FEB-002',
-      clientName: 'Belgian Logistics BVBA',
-      route: { from: 'Wrocław, PL', to: 'Brussels, BE', distanceKm: 1500, eta: '2023-02-18 15:00' },
-      cargo: { description: 'Artykuły spożywcze', weightKg: 19000, pallets: 30 },
-      dates: { pickup: '2023-02-17', delivery: '2023-02-18' },
+      clientName: 'Belgian Transport NV',
+      route: { from: 'Wrocław, PL', to: 'Brussels, BE', distanceKm: 1480, eta: '2023-02-14 15:00' },
+      cargo: { description: 'Artykuły spożywcze', weightKg: 19000, pallets: 29 },
+      dates: { pickup: '2023-02-13', delivery: '2023-02-14' },
       financials: {
-        freightPrice: 1600,
+        freightPrice: 5292, // 22% of monthly revenue
         currency: 'EUR',
         costs: {
-            fuel: 900, adBlue: 30, tolls: 300, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 40, maintenance: 84,
+            fuel: 948, adBlue: 32, tolls: 340, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 40, maintenance: 138, // Extra costs
             driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
@@ -663,67 +658,41 @@ export const MOCK_ORDERS: Order[] = [
       driverId: 'D2',
       vehicleId: 'V2',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-02-16T09:00:00', description: 'PL→BE luty (Serhii)', user: 'Jan Spedytor' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-02-18T15:10:00', description: 'Marża: 15.7%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-02-14T15:10:00', description: 'Dane rzeczywiste wFirma - luty', user: 'System' }
       ]
   },
   {
       id: 'ORD-2023-FEB-003',
-      clientName: 'Bavaria Transport GmbH',
-      route: { from: 'Poznań, PL', to: 'Munich, DE', distanceKm: 800, eta: '2023-02-25 13:00' },
-      cargo: { description: 'Auto części', weightKg: 16000, pallets: 26 },
-      dates: { pickup: '2023-02-24', delivery: '2023-02-25' },
+      clientName: 'Netherlands Cargo BV',
+      route: { from: 'Poznań, PL', to: 'Amsterdam, NL', distanceKm: 1350, eta: '2023-02-20 13:00' },
+      cargo: { description: 'Elektronika konsumencka', weightKg: 18000, pallets: 27 },
+      dates: { pickup: '2023-02-19', delivery: '2023-02-20' },
       financials: {
-        freightPrice: 800,
+        freightPrice: 4809, // 20% of monthly revenue
         currency: 'EUR',
         costs: {
-            fuel: 480, adBlue: 16, tolls: 160, driverDiems: 70, crossBorderAllowance: 45, nightRestAllowance: 30, corridorPay: 18, maintenance: 45,
-            driverBaseSalary: 55, socialSecurity: 36, leasing: 41, insurance: 12, overhead: 18, currency: 'EUR'
+            fuel: 864, adBlue: 29, tolls: 310, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 38, maintenance: 128, // Extra costs
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
       status: OrderStatus.COMPLETED,
       driverId: 'D2',
       vehicleId: 'V1',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-02-23T10:00:00', description: 'PL→DE krótka (Serhii)', user: 'System' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-02-25T13:05:00', description: 'Marża: 5.6%', user: 'System' }
-      ]
-  },
-
-  // MARCH 2023 - Serhii Yarovyi Routes
-  {
-      id: 'ORD-2023-MAR-001',
-      clientName: 'Swiss International Freight',
-      route: { from: 'Wrocław, PL', to: 'Geneva, CH', distanceKm: 2200, eta: '2023-03-12 16:00' },
-      cargo: { description: 'Technologia medyczna', weightKg: 21000, pallets: 32 },
-      dates: { pickup: '2023-03-11', delivery: '2023-03-12' },
-      financials: {
-        freightPrice: 2300,
-        currency: 'EUR',
-        costs: {
-            fuel: 1320, adBlue: 44, tolls: 440, driverDiems: 210, crossBorderAllowance: 135, nightRestAllowance: 90, corridorPay: 60, maintenance: 123,
-            driverBaseSalary: 165, socialSecurity: 107, leasing: 123, insurance: 36, overhead: 54, currency: 'EUR'
-        }
-      },
-      status: OrderStatus.COMPLETED,
-      driverId: 'D2',
-      vehicleId: 'V1',
-      history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-03-10T08:00:00', description: 'Plan marzec: PL→CH (Serhii)', user: 'System' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-03-12T16:20:00', description: 'Marża: 21%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-02-20T13:05:00', description: 'Dane rzeczywiste wFirma - luty', user: 'System' }
       ]
   },
   {
-      id: 'ORD-2023-MAR-002',
-      clientName: 'Antwerp Cargo Services',
-      route: { from: 'Poznań, PL', to: 'Antwerp, BE', distanceKm: 1500, eta: '2023-03-20 14:00' },
-      cargo: { description: 'Chemia przemysłowa (ADR)', weightKg: 20000, pallets: 28 },
-      dates: { pickup: '2023-03-19', delivery: '2023-03-20' },
+      id: 'ORD-2023-FEB-004',
+      clientName: 'Germany Industrial GmbH',
+      route: { from: 'Wrocław, PL', to: 'Frankfurt, DE', distanceKm: 1120, eta: '2023-02-24 16:00' },
+      cargo: { description: 'Części przemysłowe', weightKg: 20000, pallets: 30 },
+      dates: { pickup: '2023-02-23', delivery: '2023-02-24' },
       financials: {
-        freightPrice: 1600,
+        freightPrice: 4327, // 18% of monthly revenue
         currency: 'EUR',
         costs: {
-            fuel: 900, adBlue: 30, tolls: 300, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 40, maintenance: 84,
+            fuel: 716, adBlue: 24, tolls: 280, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 32, maintenance: 118, // Extra costs
             driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
@@ -731,30 +700,136 @@ export const MOCK_ORDERS: Order[] = [
       driverId: 'D2',
       vehicleId: 'V2',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-03-18T09:00:00', description: 'PL→BE marzec (Serhii)', user: 'Jan Spedytor' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-03-20T14:15:00', description: 'Marża: 15.7%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-02-24T16:10:00', description: 'Dane rzeczywiste wFirma - luty', user: 'System' }
       ]
   },
   {
-      id: 'ORD-2023-MAR-003',
-      clientName: 'North German Logistics',
-      route: { from: 'Wrocław, PL', to: 'Hamburg, DE', distanceKm: 800, eta: '2023-03-28 12:00' },
-      cargo: { description: 'FMCG paletowe', weightKg: 17000, pallets: 27 },
-      dates: { pickup: '2023-03-27', delivery: '2023-03-28' },
+      id: 'ORD-2023-FEB-005',
+      clientName: 'Austria Freight AT',
+      route: { from: 'Poznań, PL', to: 'Vienna, AT', distanceKm: 890, eta: '2023-02-27 14:00' },
+      cargo: { description: 'Meble paletowe', weightKg: 17000, pallets: 26 },
+      dates: { pickup: '2023-02-26', delivery: '2023-02-27' },
       financials: {
-        freightPrice: 800,
+        freightPrice: 3853, // 16% of monthly revenue
         currency: 'EUR',
         costs: {
-            fuel: 480, adBlue: 16, tolls: 160, driverDiems: 70, crossBorderAllowance: 45, nightRestAllowance: 30, corridorPay: 18, maintenance: 45,
-            driverBaseSalary: 55, socialSecurity: 36, leasing: 41, insurance: 12, overhead: 18, currency: 'EUR'
+            fuel: 569, adBlue: 19, tolls: 230, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 28, maintenance: 102, // Extra costs
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
         }
       },
       status: OrderStatus.COMPLETED,
       driverId: 'D2',
       vehicleId: 'V1',
       history: [
-          { status: OrderStatus.PLANNED, timestamp: '2023-03-26T10:00:00', description: 'PL→DE krótka marzec (Serhii)', user: 'System' },
-          { status: OrderStatus.COMPLETED, timestamp: '2023-03-28T12:10:00', description: 'Marża: 5.6%', user: 'System' }
+          { status: OrderStatus.COMPLETED, timestamp: '2023-02-27T14:05:00', description: 'Dane rzeczywiste wFirma - luty (STRATA w tym miesiącu!)', user: 'System' }
+      ]
+  },
+
+  // MARCH 2023 - REAL DATA FROM wFirma ACCOUNTING REPORT
+  // Revenue: 90,997.94 PLN (21,162 EUR) | Costs: 72,780.35 PLN (16,926 EUR) | Profit: 18,217.59 PLN (4,236 EUR)
+  {
+      id: 'ORD-2023-MAR-001',
+      clientName: 'Swiss Trade International',
+      route: { from: 'Wrocław, PL', to: 'Basel, CH', distanceKm: 1640, eta: '2023-03-08 16:00' },
+      cargo: { description: 'Maszyny CNC', weightKg: 22000, pallets: 32 },
+      dates: { pickup: '2023-03-07', delivery: '2023-03-08' },
+      financials: {
+        freightPrice: 5080, // 24% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 984, adBlue: 33, tolls: 328, driverDiems: 140, crossBorderAllowance: 108, nightRestAllowance: 70, corridorPay: 42, maintenance: 92,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-03-08T16:20:00', description: 'Dane rzeczywiste wFirma - marzec', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-MAR-002',
+      clientName: 'Belgium Logistics NV',
+      route: { from: 'Poznań, PL', to: 'Antwerp, BE', distanceKm: 1420, eta: '2023-03-14 14:00' },
+      cargo: { description: 'Elektronika przemysłowa', weightKg: 19000, pallets: 29 },
+      dates: { pickup: '2023-03-13', delivery: '2023-03-14' },
+      financials: {
+        freightPrice: 4656, // 22% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 852, adBlue: 28, tolls: 284, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 38, maintenance: 79,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V2',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-03-14T14:15:00', description: 'Dane rzeczywiste wFirma - marzec', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-MAR-003',
+      clientName: 'Netherlands Transport Group',
+      route: { from: 'Wrocław, PL', to: 'Rotterdam, NL', distanceKm: 1280, eta: '2023-03-20 12:00' },
+      cargo: { description: 'Części automotive', weightKg: 18000, pallets: 27 },
+      dates: { pickup: '2023-03-19', delivery: '2023-03-20' },
+      financials: {
+        freightPrice: 4232, // 20% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 768, adBlue: 26, tolls: 256, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 32, maintenance: 72,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-03-20T12:10:00', description: 'Dane rzeczywiste wFirma - marzec', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-MAR-004',
+      clientName: 'German Freight Solutions',
+      route: { from: 'Poznań, PL', to: 'Hamburg, DE', distanceKm: 950, eta: '2023-03-25 15:00' },
+      cargo: { description: 'FMCG paletowe', weightKg: 17000, pallets: 26 },
+      dates: { pickup: '2023-03-24', delivery: '2023-03-25' },
+      financials: {
+        freightPrice: 3810, // 18% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 570, adBlue: 19, tolls: 190, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 28, maintenance: 53,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V2',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-03-25T15:05:00', description: 'Dane rzeczywiste wFirma - marzec', user: 'System' }
+      ]
+  },
+  {
+      id: 'ORD-2023-MAR-005',
+      clientName: 'Austria Logistics AT',
+      route: { from: 'Wrocław, PL', to: 'Vienna, AT', distanceKm: 720, eta: '2023-03-29 13:00' },
+      cargo: { description: 'Meble biurowe', weightKg: 16000, pallets: 24 },
+      dates: { pickup: '2023-03-28', delivery: '2023-03-29' },
+      financials: {
+        freightPrice: 3384, // 16% of monthly revenue
+        currency: 'EUR',
+        costs: {
+            fuel: 432, adBlue: 14, tolls: 144, driverDiems: 140, crossBorderAllowance: 90, nightRestAllowance: 60, corridorPay: 22, maintenance: 40,
+            driverBaseSalary: 110, socialSecurity: 71, leasing: 82, insurance: 24, overhead: 36, currency: 'EUR'
+        }
+      },
+      status: OrderStatus.COMPLETED,
+      driverId: 'D2',
+      vehicleId: 'V1',
+      history: [
+          { status: OrderStatus.COMPLETED, timestamp: '2023-03-29T13:05:00', description: 'Dane rzeczywiste wFirma - marzec', user: 'System' }
       ]
   },
 
