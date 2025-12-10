@@ -7,6 +7,7 @@ import { TrendingUp, TrendingDown, DollarSign, Wallet, Calendar, PieChart as Pie
 
 const FinancialReports: React.FC = () => {
   const [period, setPeriod] = useState<TimeRange>('DAY');
+  const [fuelDelta, setFuelDelta] = useState(0); // symulacja wrażliwości ceny paliwa w %
 
   // Filter Logic
   const relevantOrders = MOCK_ORDERS.filter(o => o.status !== 'NEW');
@@ -16,14 +17,17 @@ const FinancialReports: React.FC = () => {
   // 1. Revenue (Przychód)
   const totalRevenue = relevantOrders.reduce((acc, o) => acc + o.financials.freightPrice, 0);
 
-  // 2. Variable Costs
+  // 2. Variable Costs (Mobility Package included)
   const totalFuel = relevantOrders.reduce((acc, o) => acc + o.financials.costs.fuel, 0);
   const totalTolls = relevantOrders.reduce((acc, o) => acc + o.financials.costs.tolls, 0);
   const totalDiems = relevantOrders.reduce((acc, o) => acc + o.financials.costs.driverDiems, 0);
+  const totalCrossBorder = relevantOrders.reduce((acc, o) => acc + o.financials.costs.crossBorderAllowance, 0);
+  const totalNight = relevantOrders.reduce((acc, o) => acc + o.financials.costs.nightRestAllowance, 0);
+  const totalCorridor = relevantOrders.reduce((acc, o) => acc + o.financials.costs.corridorPay, 0);
   const totalAdBlue = relevantOrders.reduce((acc, o) => acc + o.financials.costs.adBlue, 0);
   const totalMaint = relevantOrders.reduce((acc, o) => acc + o.financials.costs.maintenance, 0);
   
-  const totalVariableCosts = totalFuel + totalTolls + totalDiems + totalAdBlue + totalMaint;
+  const totalVariableCosts = totalFuel + totalTolls + totalDiems + totalCrossBorder + totalNight + totalCorridor + totalAdBlue + totalMaint;
 
   // 3. Contribution Margin I
   const contributionMargin1 = totalRevenue - totalVariableCosts;
@@ -33,13 +37,20 @@ const FinancialReports: React.FC = () => {
   const totalLeasing = relevantOrders.reduce((acc, o) => acc + o.financials.costs.leasing, 0);
   const totalInsurance = relevantOrders.reduce((acc, o) => acc + o.financials.costs.insurance, 0);
   const totalBaseSalary = relevantOrders.reduce((acc, o) => acc + o.financials.costs.driverBaseSalary, 0);
+  const totalSocial = relevantOrders.reduce((acc, o) => acc + o.financials.costs.socialSecurity, 0);
   const totalOverhead = relevantOrders.reduce((acc, o) => acc + o.financials.costs.overhead, 0);
 
-  const totalFixedCosts = totalLeasing + totalInsurance + totalBaseSalary + totalOverhead;
+  const totalFixedCosts = totalLeasing + totalInsurance + totalBaseSalary + totalSocial + totalOverhead;
 
   // 5. EBIT
   const ebit = contributionMargin1 - totalFixedCosts;
   const ebitMargin = totalRevenue > 0 ? (ebit / totalRevenue) * 100 : 0;
+
+  // What-if: zmiana ceny paliwa
+  const adjustedFuel = totalFuel * (1 + fuelDelta / 100);
+  const adjustedVariable = adjustedFuel + (totalVariableCosts - totalFuel);
+  const adjustedContribution = totalRevenue - adjustedVariable;
+  const adjustedEbit = adjustedContribution - totalFixedCosts;
 
   // 6. Unit Economics
   const totalKm = relevantOrders.reduce((acc, o) => acc + o.route.distanceKm, 0);
@@ -70,7 +81,7 @@ const FinancialReports: React.FC = () => {
         }
 
         const costs = order.financials.costs;
-        const totalOrderCost = costs.fuel + costs.adBlue + costs.tolls + costs.driverDiems + costs.maintenance + costs.driverBaseSalary + costs.leasing + costs.insurance + costs.overhead;
+        const totalOrderCost = costs.fuel + costs.adBlue + costs.tolls + costs.driverDiems + costs.crossBorderAllowance + costs.nightRestAllowance + costs.corridorPay + costs.maintenance + costs.driverBaseSalary + costs.socialSecurity + costs.leasing + costs.insurance + costs.overhead;
         const profit = order.financials.freightPrice - totalOrderCost;
 
         groupedData[key].Revenue += order.financials.freightPrice;
@@ -86,11 +97,11 @@ const FinancialReports: React.FC = () => {
       { name: 'Przychód', start: 0, end: totalRevenue, value: totalRevenue, fill: '#3b82f6' },
       { name: 'Paliwo & AdBlue', start: totalRevenue, end: totalRevenue - (totalFuel + totalAdBlue), value: -(totalFuel + totalAdBlue), fill: '#f59e0b' },
       { name: 'Opłaty Drogowe', start: totalRevenue - (totalFuel + totalAdBlue), end: totalRevenue - (totalFuel + totalAdBlue) - totalTolls, value: -totalTolls, fill: '#f59e0b' },
-      { name: 'Kierowca (Diety)', start: totalRevenue - (totalFuel + totalAdBlue) - totalTolls, end: contributionMargin1, value: -totalDiems, fill: '#f59e0b' },
+      { name: 'Pakiet Mobilności', start: totalRevenue - (totalFuel + totalAdBlue) - totalTolls, end: totalRevenue - (totalFuel + totalAdBlue) - totalTolls - (totalDiems + totalCrossBorder + totalNight + totalCorridor), value: -(totalDiems + totalCrossBorder + totalNight + totalCorridor), fill: '#f59e0b' },
       { name: 'Marża Pokrycia I', start: 0, end: contributionMargin1, value: contributionMargin1, fill: '#10b981', isTotal: true }, 
-      { name: 'Kierowca (Podstawa)', start: contributionMargin1, end: contributionMargin1 - totalBaseSalary, value: -totalBaseSalary, fill: '#8b5cf6' },
-      { name: 'Leasing & Ubezp.', start: contributionMargin1 - totalBaseSalary, end: contributionMargin1 - totalBaseSalary - (totalLeasing + totalInsurance), value: -(totalLeasing + totalInsurance), fill: '#8b5cf6' },
-      { name: 'Biuro', start: contributionMargin1 - totalBaseSalary - (totalLeasing + totalInsurance), end: ebit, value: -totalOverhead, fill: '#8b5cf6' },
+      { name: 'Kierowca (Podstawa + ZUS)', start: contributionMargin1, end: contributionMargin1 - (totalBaseSalary + totalSocial), value: -(totalBaseSalary + totalSocial), fill: '#8b5cf6' },
+      { name: 'Leasing & Ubezp.', start: contributionMargin1 - (totalBaseSalary + totalSocial), end: contributionMargin1 - (totalBaseSalary + totalSocial) - (totalLeasing + totalInsurance), value: -(totalLeasing + totalInsurance), fill: '#8b5cf6' },
+      { name: 'Biuro', start: contributionMargin1 - (totalBaseSalary + totalSocial) - (totalLeasing + totalInsurance), end: ebit, value: -totalOverhead, fill: '#8b5cf6' },
       { name: 'Zysk (EBIT)', start: 0, end: ebit, value: ebit, fill: ebit > 0 ? '#10b981' : '#ef4444', isResult: true }
   ];
 
@@ -175,7 +186,35 @@ const FinancialReports: React.FC = () => {
                     <p className="text-3xl font-black text-amber-400">{costPerKm.toFixed(2)} EUR<span className="text-lg text-slate-500">/km</span></p>
                 </div>
              </div>
-             
+
+             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center space-y-4">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-slate-600 flex items-center">
+                        <Calendar className="mr-2 text-amber-500" size={16}/> What-if: zmiana ceny paliwa
+                    </h3>
+                    <span className="text-xs font-mono text-slate-500">{fuelDelta > 0 ? '+' : ''}{fuelDelta}%</span>
+                </div>
+                <input 
+                    type="range" 
+                    min={-20} 
+                    max={30} 
+                    step={1} 
+                    value={fuelDelta}
+                    onChange={(e) => setFuelDelta(Number(e.target.value))}
+                    className="w-full accent-amber-500"
+                />
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                        <p className="text-amber-700 font-bold text-xs uppercase">Zm. koszt paliwa</p>
+                        <p className="font-black text-amber-700">{(adjustedFuel - totalFuel).toFixed(0)} EUR</p>
+                    </div>
+                    <div className={`p-3 rounded-xl border ${adjustedEbit >= 0 ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : 'bg-red-50 border-red-100 text-red-700'}`}>
+                        <p className="font-bold text-xs uppercase">EBIT (symulacja)</p>
+                        <p className="font-black">{adjustedEbit.toFixed(0)} EUR</p>
+                    </div>
+                </div>
+             </div>
+
              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
                 <h3 className="text-sm font-bold text-slate-600 mb-3 flex items-center">
                     <Truck className="mr-2 text-blue-500" size={16}/> Efektywność Paliwowa Floty
@@ -279,6 +318,40 @@ const FinancialReports: React.FC = () => {
             </div>
         </div>
 
+        {/* Driver Settlements (Mobility Package) */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+                <div>
+                    <h3 className="font-bold text-slate-800">Rozliczenia kierowców (Pakiet Mobilności)</h3>
+                    <p className="text-xs text-slate-500">Diety, dodatki transgraniczne, noclegi, korytarzowe, ZUS</p>
+                </div>
+                <div className="text-right text-xs font-mono text-slate-500">
+                    <p>Diety: {totalDiems.toFixed(0)} EUR</p>
+                    <p>Transgraniczne: {totalCrossBorder.toFixed(0)} EUR</p>
+                    <p>Nocleg+Korytarz: {(totalNight + totalCorridor).toFixed(0)} EUR</p>
+                    <p>ZUS/Ubezp.: {totalSocial.toFixed(0)} EUR</p>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-6 text-sm">
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
+                    <p className="text-emerald-600 text-xs font-bold uppercase">Koszt km (kierowcy)</p>
+                    <p className="text-2xl font-black text-emerald-700">{totalKm > 0 ? ((totalDiems + totalCrossBorder + totalNight + totalCorridor + totalBaseSalary + totalSocial) / totalKm).toFixed(2) : '0.00'} EUR/km</p>
+                </div>
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                    <p className="text-blue-600 text-xs font-bold uppercase">Diety / zlecenie</p>
+                    <p className="text-2xl font-black text-blue-700">{(relevantOrders.length ? totalDiems / relevantOrders.length : 0).toFixed(0)} EUR</p>
+                </div>
+                <div className="bg-amber-50 border border-amber-100 rounded-xl p-4">
+                    <p className="text-amber-600 text-xs font-bold uppercase">Transgraniczne / zlecenie</p>
+                    <p className="text-2xl font-black text-amber-700">{(relevantOrders.length ? totalCrossBorder / relevantOrders.length : 0).toFixed(0)} EUR</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-100 rounded-xl p-4">
+                    <p className="text-slate-600 text-xs font-bold uppercase">Noclegi + korytarz</p>
+                    <p className="text-2xl font-black text-slate-800">{(totalNight + totalCorridor).toFixed(0)} EUR</p>
+                </div>
+            </div>
+        </div>
+
         {/* Detailed Table */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
              <div className="px-6 py-5 border-b border-slate-200 bg-slate-50">
@@ -292,8 +365,8 @@ const FinancialReports: React.FC = () => {
                              <th className="px-6 py-4">Data</th>
                              <th className="px-6 py-4 text-right">Fracht</th>
                              <th className="px-6 py-4 text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
-                             <th className="px-6 py-4 text-right font-bold text-emerald-700 bg-emerald-50/30">Marża I</th>
-                             <th className="px-6 py-4 text-right text-purple-600 bg-purple-50/30">K. Stałe</th>
+                            <th className="px-6 py-4 text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
+                            <th className="px-6 py-4 text-right text-purple-600 bg-purple-50/30">K. Stałe</th>
                              <th className="px-6 py-4 text-right font-black">EBIT</th>
                              <th className="px-6 py-4 text-center">ROS %</th>
                          </tr>
@@ -301,8 +374,8 @@ const FinancialReports: React.FC = () => {
                      <tbody className="divide-y divide-slate-50">
                         {relevantOrders.map(o => {
                             const c = o.financials.costs;
-                            const varCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.maintenance;
-                            const fixCost = c.driverBaseSalary + c.leasing + c.insurance + c.overhead;
+                            const varCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.crossBorderAllowance + c.nightRestAllowance + c.corridorPay + c.maintenance;
+                            const fixCost = c.driverBaseSalary + c.socialSecurity + c.leasing + c.insurance + c.overhead;
                             const cm1 = o.financials.freightPrice - varCost;
                             const orderEbit = cm1 - fixCost;
                             const ros = (orderEbit / o.financials.freightPrice) * 100;

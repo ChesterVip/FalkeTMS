@@ -162,7 +162,7 @@ const MailIntegration: React.FC = () => {
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
                                                             <span className="text-slate-500 block text-xs mb-1">Trasa</span>
-                                                            <span className="text-emerald-400">Berlin -> Zurich</span>
+                                                            <span className="text-emerald-400">Berlin → Zurich</span>
                                                         </div>
                                                         <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
                                                             <span className="text-slate-500 block text-xs mb-1">Fracht</span>

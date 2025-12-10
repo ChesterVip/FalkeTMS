@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { MOCK_ORDERS, MOCK_DRIVERS } from '../constants';
-import { TrendingUp, Truck, Users, Package, AlertCircle, ArrowUpRight } from 'lucide-react';
+import { MOCK_ORDERS, MOCK_DRIVERS, MOCK_ALERTS, MOCK_INTEGRATIONS } from '../constants';
+import { TrendingUp, Truck, Users, Package, AlertCircle, ArrowUpRight, Shield, Radio } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const revenueData = MOCK_ORDERS
     .filter(o => o.status === 'COMPLETED' || o.status === 'IN_TRANSIT')
     .map(o => {
       const c = o.financials.costs;
-      const totalCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.maintenance + c.driverBaseSalary + c.leasing + c.insurance + c.overhead;
+      const totalCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.crossBorderAllowance + c.nightRestAllowance + c.corridorPay + c.maintenance + c.driverBaseSalary + c.socialSecurity + c.leasing + c.insurance + c.overhead;
       return {
         name: o.id.split('-')[2],
         Revenue: o.financials.freightPrice,
@@ -23,6 +23,7 @@ const Dashboard: React.FC = () => {
   const totalProfit = revenueData.reduce((acc, curr) => acc + curr.Profit, 0);
   const activeOrders = MOCK_ORDERS.filter(o => o.status === 'IN_TRANSIT' || o.status === 'PLANNED').length;
   const availableDrivers = MOCK_DRIVERS.filter(d => d.status === 'AVAILABLE').length;
+  const runningIntegrations = MOCK_INTEGRATIONS.filter(i => i.status !== 'DOWN').length;
 
   const KPICard = ({ title, value, icon: Icon, colorClass, bgClass, trend }: any) => (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between hover:shadow-md transition-shadow duration-300">
@@ -134,6 +135,70 @@ const Dashboard: React.FC = () => {
             <div className="mt-4 p-3 bg-blue-50/50 rounded-lg border border-blue-100 text-xs text-slate-600 flex items-start space-x-2">
                 <AlertCircle size={14} className="mt-0.5 text-blue-500 flex-shrink-0" />
                 <span className="leading-relaxed">AI Prediction: Serhii ma najwyższą szansę na dowiezienie ładunku przed czasem z najniższym spalaniem.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Integracje i alerty */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="xl:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center">
+              <Radio className="mr-2 text-emerald-600" size={18}/>
+              Integracje w trybie live
+            </h3>
+            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">
+              {runningIntegrations}/{MOCK_INTEGRATIONS.length} online
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {MOCK_INTEGRATIONS.map(integration => (
+              <div key={integration.id} className="p-4 rounded-xl border border-slate-200 hover:border-blue-200 transition-all bg-gradient-to-br from-white to-slate-50 shadow-sm">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <p className="font-semibold text-slate-800">{integration.name}</p>
+                    <p className="text-xs text-slate-500">{integration.desc}</p>
+                  </div>
+                  <span className={`text-[10px] px-2 py-1 rounded-full font-bold border ${
+                    integration.status === 'OK'
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                      : 'bg-amber-50 text-amber-700 border-amber-100'
+                  }`}>
+                    {integration.status}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 font-mono">Latency: {integration.latency}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center">
+              <Shield className="mr-2 text-amber-500" size={18}/>
+              Alerty AI / SLA
+            </h3>
+            <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full font-bold">live</span>
+          </div>
+          <div className="space-y-3">
+            {MOCK_ALERTS.map(alert => (
+              <div key={alert.id} className="p-3 rounded-xl border border-slate-200 hover:border-blue-200 transition-colors">
+                <div className="flex justify-between items-start mb-1">
+                  <p className="text-sm font-semibold text-slate-800">{alert.title}</p>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    alert.severity === 'high' ? 'bg-red-100 text-red-700' :
+                    alert.severity === 'medium' ? 'bg-amber-100 text-amber-700' :
+                    'bg-slate-100 text-slate-500'
+                  }`}>{alert.severity}</span>
+                </div>
+                <p className="text-xs text-slate-600">{alert.description}</p>
+                <p className="text-[10px] text-slate-400 mt-1">{alert.time}</p>
+              </div>
+            ))}
+            <div className="flex items-center text-xs text-blue-600 font-semibold bg-blue-50 px-3 py-2 rounded-lg border border-blue-100">
+              <ArrowUpRight size={12} className="mr-1"/> Plan: automatyczne przekierowanie alertów do Teams/Email.
             </div>
           </div>
         </div>

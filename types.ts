@@ -15,11 +15,15 @@ export interface CostBreakdown {
   fuel: number;
   adBlue: number;
   tolls: number; // Opłaty drogowe
-  driverDiems: number; // Diety i ryczałty (zmienne)
+  driverDiems: number; // Diety (delegacje)
+  crossBorderAllowance: number; // Dodatek transgraniczny (Pakiet Mobilności)
+  nightRestAllowance: number; // Ryczalt za nocleg (kabina/hotel)
+  corridorPay: number; // Dodatek korytarzowy / wyrównanie lokalne
   maintenance: number; // Eksploatacja bieżąca (opony, płyny)
 
   // Fixed Costs (Koszty Stałe - alokowane na dzień/zlecenie)
   driverBaseSalary: number; // Podstawa wynagrodzenia
+  socialSecurity: number; // Składki ZUS/ubezp. od delegacji
   leasing: number; // Rata leasingowa
   insurance: number; // Ubezpieczenia (OC/AC/OCP)
   overhead: number; // Koszty biura, księgowość, telematyka

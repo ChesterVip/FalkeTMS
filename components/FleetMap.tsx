@@ -1,17 +1,33 @@
 import React from 'react';
 import { MOCK_DRIVERS, MOCK_VEHICLES } from '../constants';
-import { MapPin, Navigation, Truck, User } from 'lucide-react';
+import { MapPin, Navigation, Truck, User, AlertTriangle } from 'lucide-react';
 
 const FleetMap: React.FC = () => {
-    // Simulated positions for the "Map" background
-    const positions = [
-        { id: 'V1', top: '40%', left: '60%', name: 'V1 (DAF)', status: 'ACTIVE', driver: 'Jan Kowalski' },
-        { id: 'V2', top: '70%', left: '45%', name: 'V2 (Iveco)', status: 'ACTIVE', driver: 'Serhii Yarovyi' },
-        { id: 'V3', top: '45%', left: '80%', name: 'V3 (DAF)', status: 'SERVICE', driver: 'Tomasz Nowak' },
+    // Deterministyczne mocki pozycji powiązane z pojazdami
+    const baseCoords = [
+        { top: '32%', left: '38%' },
+        { top: '48%', left: '62%' },
+        { top: '58%', left: '28%' },
+        { top: '42%', left: '78%' },
+        { top: '68%', left: '52%' },
     ];
 
+    const positions = MOCK_VEHICLES.map((vehicle, idx) => {
+        const driver = MOCK_DRIVERS.find(d => d.id === `D${idx + 1}`);
+        const coords = baseCoords[idx % baseCoords.length];
+        return {
+            id: vehicle.id,
+            top: coords.top,
+            left: coords.left,
+            name: `${vehicle.id} (${vehicle.model.split(' ')[0]})`,
+            status: vehicle.status,
+            driver: driver?.name || 'Brak kierowcy',
+            location: driver?.currentLocation || 'Baza',
+        };
+    });
+
     return (
-        <div className="flex flex-col-reverse md:flex-row h-full overflow-hidden">
+        <div className="flex flex-col-reverse md:flex-row h-full min-h-[70vh] overflow-hidden bg-slate-50">
             {/* Sidebar List - Bottom on Mobile, Left on Desktop */}
             <div className="w-full md:w-80 bg-white border-t md:border-t-0 md:border-r border-slate-200 flex flex-col z-10 shadow-lg h-1/2 md:h-full">
                 <div className="p-4 border-b border-slate-200 bg-white sticky top-0 z-10">
@@ -48,12 +64,16 @@ const FleetMap: React.FC = () => {
             </div>
 
             {/* Map Area - Top on Mobile, Right on Desktop */}
-            <div className="flex-1 bg-slate-200 relative overflow-hidden group h-1/2 md:h-full">
-                {/* Simulated Map Background - CSS Pattern */}
-                <div className="absolute inset-0 bg-[#e5e7eb]" 
+            <div className="flex-1 bg-slate-200 relative overflow-hidden group h-1/2 md:h-full min-h-[360px]">
+                {/* Simulated Map Background */}
+                <div className="absolute inset-0"
                      style={{
-                         backgroundImage: 'radial-gradient(#9ca3af 1px, transparent 1px)',
-                         backgroundSize: '20px 20px'
+                         backgroundImage: `
+                            linear-gradient(135deg, rgba(59,130,246,0.08), rgba(56,189,248,0.06)),
+                            radial-gradient(#cbd5e1 1px, transparent 1px)
+                         `,
+                         backgroundSize: '100% 100%, 22px 22px',
+                         backgroundColor: '#e5e7eb'
                      }}
                 ></div>
                 
@@ -64,6 +84,12 @@ const FleetMap: React.FC = () => {
                 <div className="absolute bottom-4 right-4 text-[10px] text-slate-500 bg-white/80 backdrop-blur px-2 py-1 rounded shadow-sm">© OpenStreetMap Contributors</div>
 
                 {/* Vehicles on Map */}
+                {positions.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-medium space-x-2">
+                        <AlertTriangle size={16} className="text-amber-500" />
+                        <span>Brak danych GPS (tryb demo)</span>
+                    </div>
+                )}
                 {positions.map(pos => (
                     <div 
                         key={pos.id}
@@ -76,6 +102,7 @@ const FleetMap: React.FC = () => {
                         <div className="mt-2 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-lg text-xs font-bold text-slate-800 whitespace-nowrap flex flex-col items-center border border-slate-200">
                             <span>{pos.name}</span>
                             <span className="text-[9px] text-slate-500 font-normal">{pos.driver}</span>
+                            <span className="text-[9px] text-blue-500 font-semibold">{pos.location}</span>
                         </div>
                     </div>
                 ))}

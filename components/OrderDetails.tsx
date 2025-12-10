@@ -59,7 +59,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order: initialOrder, onBack
 
   const calculateProfit = () => {
       const costs = order.financials.costs;
-      const totalCost = costs.fuel + costs.adBlue + costs.tolls + costs.driverDiems + costs.maintenance + costs.driverBaseSalary + costs.leasing + costs.insurance + costs.overhead;
+      const totalCost = costs.fuel + costs.adBlue + costs.tolls + costs.driverDiems + costs.crossBorderAllowance + costs.nightRestAllowance + costs.corridorPay + costs.maintenance + costs.driverBaseSalary + costs.socialSecurity + costs.leasing + costs.insurance + costs.overhead;
       const profit = order.financials.freightPrice - totalCost;
       const margin = (profit / order.financials.freightPrice) * 100;
       return { totalCost, profit, margin };
@@ -353,7 +353,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order: initialOrder, onBack
                         {[
                             { label: 'Paliwo (Est. wg telematyki)', value: order.financials.costs.fuel },
                             { label: 'Opłaty Drogowe (Impargo)', value: order.financials.costs.tolls },
-                            { label: 'Wynagrodzenie Kierowcy (Dniówki + Podstawa)', value: order.financials.costs.driverBaseSalary + order.financials.costs.driverDiems },
+                            { label: 'Diety + Pakiet Mobilności', value: order.financials.costs.driverDiems + order.financials.costs.crossBorderAllowance + order.financials.costs.nightRestAllowance + order.financials.costs.corridorPay },
+                            { label: 'Wynagrodzenie Kierowcy (Podstawa + ZUS)', value: order.financials.costs.driverBaseSalary + order.financials.costs.socialSecurity },
                             { label: 'Leasing / Amortyzacja', value: order.financials.costs.leasing },
                             { label: 'Inne (AdBlue, Serwis, Ubezp., Biuro)', value: order.financials.costs.adBlue + order.financials.costs.maintenance + order.financials.costs.insurance + order.financials.costs.overhead },
                         ].map((item, i) => (

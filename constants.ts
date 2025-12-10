@@ -61,6 +61,42 @@ Pozdrawiam, Hans Muller (Logistics GmbH)`,
     }
 ];
 
+export const MOCK_ALERTS = [
+  {
+    id: 'A1',
+    type: 'GPS',
+    severity: 'medium',
+    title: 'Opóźnienie na trasie Zurich -> Bern',
+    description: 'Kierowca D1 raportuje +35 min. System wysłał aktualizację ETA do klienta.',
+    time: '5 min temu'
+  },
+  {
+    id: 'A2',
+    type: 'OCR',
+    severity: 'low',
+    title: 'CMR wymaga uwagi',
+    description: 'Brak podpisu odbiorcy na skanie ORD-2024-005. Oznaczono do ręcznej weryfikacji.',
+    time: '12 min temu'
+  },
+  {
+    id: 'A3',
+    type: 'FINANCE',
+    severity: 'high',
+    title: 'Niska marża na ORD-2024-002',
+    description: 'Prognozowana marża 6.5%. Rekomendacja: renegocjacja stawki lub dobranie ładunku powrotnego.',
+    time: '17 min temu'
+  },
+];
+
+export const MOCK_INTEGRATIONS = [
+  { id: 'wfirma', name: 'wFirma', status: 'OK', latency: '320 ms', desc: 'Fakturowanie i księgowość online' },
+  { id: 'dbk', name: 'DBK Telematics', status: 'OK', latency: '180 ms', desc: 'GPS, spalanie, czasy pracy' },
+  { id: 'impargo', name: 'Impargo TMS', status: 'OK', latency: '240 ms', desc: 'Optymalizacja tras, opłaty drogowe' },
+  { id: 'wa', name: 'WhatsApp Business API', status: 'OK', latency: '420 ms', desc: 'Dwustronna komunikacja z kierowcami' },
+  { id: 'smtp', name: 'Email / IMAP', status: 'WARN', latency: '950 ms', desc: 'Skanowanie skrzynek order@ i faktury@' },
+  { id: 'ocr', name: 'OCR + GPT-4', status: 'OK', latency: '1.2 s', desc: 'Ekstrakcja z PDF/CMR, walidacja' },
+];
+
 export const MOCK_ORDERS: Order[] = [
   {
     id: 'ORD-2024-001',
@@ -69,21 +105,25 @@ export const MOCK_ORDERS: Order[] = [
     cargo: { description: 'Części maszyn (Machine Parts)', weightKg: 22000, pallets: 33 },
     dates: { pickup: '2024-05-24', delivery: '2024-05-25' },
     financials: {
-      freightPrice: 1800,
+      freightPrice: 1650,
       currency: 'EUR',
       costs: { 
           // Variable
-          fuel: 480, 
-          adBlue: 20,
-          tolls: 250, 
-          driverDiems: 120, // 2 dni * 60 EUR
-          maintenance: 40, // ~0.05 EUR/km
+          fuel: 520, 
+          adBlue: 24,
+          tolls: 260, 
+          driverDiems: 140, // 2 dni * 70 EUR (wyższe stawki)
+          crossBorderAllowance: 90, // Pakiet Mobilności
+          nightRestAllowance: 60,
+          corridorPay: 40,
+          maintenance: 48, // ~0.056 EUR/km
 
           // Fixed (Allocated for 2 days)
-          driverBaseSalary: 100, 
-          leasing: 80, 
-          insurance: 20,
-          overhead: 30,
+          driverBaseSalary: 110, 
+          socialSecurity: 70,
+          leasing: 82, 
+          insurance: 24,
+          overhead: 36,
           currency: 'EUR'
       }
     },
@@ -116,18 +156,22 @@ export const MOCK_ORDERS: Order[] = [
     cargo: { description: 'Rolki papieru', weightKg: 18000, pallets: 20 },
     dates: { pickup: '2024-05-26', delivery: '2024-05-26' },
     financials: {
-      freightPrice: 1200,
+      freightPrice: 1050,
       currency: 'EUR',
       costs: { 
-          fuel: 220, 
-          adBlue: 10,
-          tolls: 150, 
-          driverDiems: 60, // 1 dzien
-          maintenance: 20,
-          driverBaseSalary: 50, 
-          leasing: 40, 
-          insurance: 10,
-          overhead: 15,
+          fuel: 245, 
+          adBlue: 12,
+          tolls: 155, 
+          driverDiems: 70, // 1 dzien
+          crossBorderAllowance: 45,
+          nightRestAllowance: 30,
+          corridorPay: 20,
+          maintenance: 26,
+          driverBaseSalary: 58, 
+          socialSecurity: 40,
+          leasing: 42, 
+          insurance: 12,
+          overhead: 18,
           currency: 'EUR'
       }
     },
@@ -146,18 +190,22 @@ export const MOCK_ORDERS: Order[] = [
     cargo: { description: 'Opony samochodowe', weightKg: 10000, pallets: 33 },
     dates: { pickup: '2024-05-22', delivery: '2024-05-22' },
     financials: {
-      freightPrice: 650,
+      freightPrice: 580,
       currency: 'EUR',
       costs: { 
-          fuel: 140, 
-          adBlue: 5,
-          tolls: 80, 
+          fuel: 165, 
+          adBlue: 7,
+          tolls: 90, 
           driverDiems: 60, 
-          maintenance: 15,
-          driverBaseSalary: 50, 
+          crossBorderAllowance: 30,
+          nightRestAllowance: 25,
+          corridorPay: 15,
+          maintenance: 22,
+          driverBaseSalary: 55, 
+          socialSecurity: 32,
           leasing: 40, 
-          insurance: 10,
-          overhead: 15,
+          insurance: 11,
+          overhead: 16,
           currency: 'EUR'
       }
     },
@@ -185,18 +233,22 @@ export const MOCK_ORDERS: Order[] = [
       cargo: { description: 'Meble', weightKg: 12000, pallets: 28 },
       dates: { pickup: '2024-05-20', delivery: '2024-05-21' },
       financials: {
-        freightPrice: 900,
+        freightPrice: 820,
         currency: 'EUR',
         costs: {
-            fuel: 300,
-            adBlue: 15,
-            tolls: 120,
-            driverDiems: 60,
-            maintenance: 25,
-            driverBaseSalary: 50,
-            leasing: 40,
-            insurance: 10,
-            overhead: 15,
+            fuel: 330,
+            adBlue: 18,
+            tolls: 135,
+            driverDiems: 70,
+            crossBorderAllowance: 40,
+            nightRestAllowance: 35,
+            corridorPay: 18,
+            maintenance: 32,
+            driverBaseSalary: 55,
+            socialSecurity: 34,
+            leasing: 42,
+            insurance: 11,
+            overhead: 17,
             currency: 'EUR'
         }
       },
@@ -213,18 +265,22 @@ export const MOCK_ORDERS: Order[] = [
       cargo: { description: 'Czekolada', weightKg: 15000, pallets: 33 },
       dates: { pickup: '2024-05-26', delivery: '2024-05-27' },
       financials: {
-        freightPrice: 1100,
+        freightPrice: 980,
         currency: 'EUR',
         costs: { 
-            fuel: 210, 
-            adBlue: 10,
-            tolls: 100, 
-            driverDiems: 60,
-            maintenance: 20,
-            driverBaseSalary: 50, 
-            leasing: 40, 
-            insurance: 10,
-            overhead: 15,
+            fuel: 235, 
+            adBlue: 12,
+            tolls: 115, 
+            driverDiems: 70,
+            crossBorderAllowance: 45,
+            nightRestAllowance: 30,
+            corridorPay: 18,
+            maintenance: 26,
+            driverBaseSalary: 55, 
+            socialSecurity: 34,
+            leasing: 42, 
+            insurance: 11,
+            overhead: 17,
             currency: 'EUR'
         }
       },

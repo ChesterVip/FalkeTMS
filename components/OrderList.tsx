@@ -9,10 +9,18 @@ interface OrderListProps {
 
 const OrderList: React.FC<OrderListProps> = ({ onSelectOrder }) => {
   const [filter, setFilter] = useState<string>('ALL');
+  const [query, setQuery] = useState('');
 
-  const filteredOrders = filter === 'ALL' 
+  const filteredOrders = (filter === 'ALL' 
     ? MOCK_ORDERS 
-    : MOCK_ORDERS.filter(o => o.status === filter);
+    : MOCK_ORDERS.filter(o => o.status === filter))
+    .filter(o => {
+        const q = query.toLowerCase();
+        return o.clientName.toLowerCase().includes(q) 
+            || o.route.from.toLowerCase().includes(q) 
+            || o.route.to.toLowerCase().includes(q) 
+            || o.id.toLowerCase().includes(q);
+    });
 
   const getStatusColor = (status: OrderStatus) => {
     switch (status) {
@@ -30,6 +38,18 @@ const OrderList: React.FC<OrderListProps> = ({ onSelectOrder }) => {
         <div>
             <h2 className="text-2xl font-bold text-slate-800">Zlecenia Transportowe</h2>
             <p className="text-sm text-slate-500">Zarządzaj aktywnymi przewozami</p>
+        </div>
+        <div className="w-full md:w-80">
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Szukaj klient/trasy</label>
+            <div className="mt-1 flex items-center bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+                <input 
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="np. Zurich, IKEA, ORD-2024"
+                    className="flex-1 text-sm outline-none"
+                />
+                <ArrowRight size={16} className="text-slate-300" />
+            </div>
         </div>
         
         {/* Mobile Scrollable Filters */}
