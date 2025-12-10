@@ -9,7 +9,6 @@ import FleetMap from './components/FleetMap';
 import MailIntegration from './components/MailIntegration';
 import Architecture from './components/Architecture';
 import Simulation from './components/Simulation';
-import Thesis from './components/Thesis';
 import { Order } from './types';
 import { MOCK_INTEGRATIONS } from './constants';
 import { Bot } from 'lucide-react';
@@ -43,8 +42,6 @@ const App: React.FC = () => {
         return <Simulation />;
       case 'architecture':
         return <Architecture />;
-      case 'thesis':
-        return <Thesis />;
       case 'settings':
          return (
           <div className="p-6 md:p-10 max-w-6xl mx-auto space-y-6">

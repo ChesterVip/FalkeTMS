@@ -97,13 +97,21 @@ export const MOCK_INTEGRATIONS = [
   { id: 'ocr', name: 'OCR + GPT-4', status: 'OK', latency: '1.2 s', desc: 'Ekstrakcja z PDF/CMR, walidacja' },
 ];
 
+// Helper function to generate dates dynamically
+const generateDate = (daysAgo: number): string => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  return date.toISOString().split('T')[0];
+};
+
 export const MOCK_ORDERS: Order[] = [
+  // RECENT ORDERS (last 7 days) - for DAILY view
   {
     id: 'ORD-2024-001',
     clientName: 'Logistics GmbH',
-    route: { from: 'Berlin, DE', to: 'Zurich, CH', distanceKm: 850, eta: '2024-05-25 14:00' },
+    route: { from: 'Berlin, DE', to: 'Zurich, CH', distanceKm: 850, eta: generateDate(0) + ' 14:00' },
     cargo: { description: 'Części maszyn (Machine Parts)', weightKg: 22000, pallets: 33 },
-    dates: { pickup: '2024-05-24', delivery: '2024-05-25' },
+    dates: { pickup: generateDate(1), delivery: generateDate(0) },
     financials: {
       freightPrice: 1650,
       currency: 'EUR',
@@ -152,9 +160,9 @@ export const MOCK_ORDERS: Order[] = [
   {
     id: 'ORD-2024-002',
     clientName: 'Swiss Trade AG',
-    route: { from: 'Monachium, DE', to: 'Bern, CH', distanceKm: 420, eta: '2024-05-26 10:00' },
+    route: { from: 'Monachium, DE', to: 'Bern, CH', distanceKm: 420, eta: generateDate(2) + ' 10:00' },
     cargo: { description: 'Rolki papieru', weightKg: 18000, pallets: 20 },
-    dates: { pickup: '2024-05-26', delivery: '2024-05-26' },
+    dates: { pickup: generateDate(2), delivery: generateDate(2) },
     financials: {
       freightPrice: 1050,
       currency: 'EUR',
@@ -186,9 +194,9 @@ export const MOCK_ORDERS: Order[] = [
   {
     id: 'ORD-2024-003',
     clientName: 'AutoParts PL',
-    route: { from: 'Wrocław, PL', to: 'Drezno, DE', distanceKm: 280, eta: '2024-05-22 16:00' },
+    route: { from: 'Wrocław, PL', to: 'Drezno, DE', distanceKm: 280, eta: generateDate(3) + ' 16:00' },
     cargo: { description: 'Opony samochodowe', weightKg: 10000, pallets: 33 },
-    dates: { pickup: '2024-05-22', delivery: '2024-05-22' },
+    dates: { pickup: generateDate(3), delivery: generateDate(3) },
     financials: {
       freightPrice: 580,
       currency: 'EUR',
@@ -229,9 +237,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-004',
       clientName: 'IKEA Distribution',
-      route: { from: 'Warszawa, PL', to: 'Berlin, DE', distanceKm: 580, eta: '2024-05-21 12:00' },
+      route: { from: 'Warszawa, PL', to: 'Berlin, DE', distanceKm: 580, eta: generateDate(5) + ' 12:00' },
       cargo: { description: 'Meble', weightKg: 12000, pallets: 28 },
-      dates: { pickup: '2024-05-20', delivery: '2024-05-21' },
+      dates: { pickup: generateDate(6), delivery: generateDate(5) },
       financials: {
         freightPrice: 820,
         currency: 'EUR',
@@ -261,9 +269,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-005',
       clientName: 'Nestle CH',
-      route: { from: 'Zurich, CH', to: 'Frankfurt, DE', distanceKm: 400, eta: '2024-05-26 18:00' },
+      route: { from: 'Zurich, CH', to: 'Frankfurt, DE', distanceKm: 400, eta: generateDate(7) + ' 18:00' },
       cargo: { description: 'Czekolada', weightKg: 15000, pallets: 33 },
-      dates: { pickup: '2024-05-26', delivery: '2024-05-27' },
+      dates: { pickup: generateDate(7), delivery: generateDate(7) },
       financials: {
         freightPrice: 980,
         currency: 'EUR',
@@ -295,9 +303,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-006',
       clientName: 'Stały kontrakt Lyon',
-      route: { from: 'Freiburg, DE', to: 'Lyon, FR', distanceKm: 520, eta: '2024-05-28 15:00' },
+      route: { from: 'Freiburg, DE', to: 'Lyon, FR', distanceKm: 520, eta: generateDate(14) + ' 15:00' },
       cargo: { description: 'Towar neutralny (stały kontrakt)', weightKg: 21000, pallets: 30 },
-      dates: { pickup: '2024-05-27', delivery: '2024-05-28' },
+      dates: { pickup: generateDate(15), delivery: generateDate(14) },
       financials: {
         freightPrice: 1500,
         currency: 'EUR',
@@ -330,9 +338,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-007',
       clientName: 'Siemens AG',
-      route: { from: 'Hamburg, DE', to: 'Paris, FR', distanceKm: 910, eta: '2024-01-13 18:00' },
+      route: { from: 'Hamburg, DE', to: 'Paris, FR', distanceKm: 910, eta: generateDate(21) + ' 18:00' },
       cargo: { description: 'Sprzęt elektroniczny', weightKg: 18000, pallets: 28 },
-      dates: { pickup: '2024-01-12', delivery: '2024-01-13' },
+      dates: { pickup: generateDate(22), delivery: generateDate(21) },
       financials: {
         freightPrice: 2100,
         currency: 'EUR',
@@ -352,9 +360,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-008',
       clientName: 'BASF',
-      route: { from: 'Lodz, PL', to: 'Koln, DE', distanceKm: 940, eta: '2024-02-19 17:00' },
+      route: { from: 'Lodz, PL', to: 'Koln, DE', distanceKm: 940, eta: generateDate(30) + ' 17:00' },
       cargo: { description: 'Chemia przemysłowa', weightKg: 20000, pallets: 30 },
-      dates: { pickup: '2024-02-18', delivery: '2024-02-19' },
+      dates: { pickup: generateDate(31), delivery: generateDate(30) },
       financials: {
         freightPrice: 1750,
         currency: 'EUR',
@@ -374,9 +382,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-009',
       clientName: 'Nestle DE',
-      route: { from: 'Frankfurt, DE', to: 'Vienna, AT', distanceKm: 720, eta: '2024-03-06 12:00' },
+      route: { from: 'Frankfurt, DE', to: 'Vienna, AT', distanceKm: 720, eta: generateDate(45) + ' 12:00' },
       cargo: { description: 'Żywność pakowana', weightKg: 16000, pallets: 26 },
-      dates: { pickup: '2024-03-05', delivery: '2024-03-06' },
+      dates: { pickup: generateDate(46), delivery: generateDate(45) },
       financials: {
         freightPrice: 1450,
         currency: 'EUR',
@@ -396,9 +404,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-010',
       clientName: 'IKEA SE',
-      route: { from: 'Gdansk, PL', to: 'Stockholm, SE', distanceKm: 980, eta: '2024-04-16 20:00' },
+      route: { from: 'Gdansk, PL', to: 'Stockholm, SE', distanceKm: 980, eta: generateDate(60) + ' 20:00' },
       cargo: { description: 'Meble płaskopaki', weightKg: 17000, pallets: 30 },
-      dates: { pickup: '2024-04-15', delivery: '2024-04-16' },
+      dates: { pickup: generateDate(61), delivery: generateDate(60) },
       financials: {
         freightPrice: 1920,
         currency: 'EUR',
@@ -416,9 +424,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-011',
       clientName: 'ZF Friedrichshafen',
-      route: { from: 'Poznan, PL', to: 'Turin, IT', distanceKm: 1180, eta: '2024-06-03 18:00' },
+      route: { from: 'Poznan, PL', to: 'Turin, IT', distanceKm: 1180, eta: generateDate(90) + ' 18:00' },
       cargo: { description: 'Podzespoły automotive', weightKg: 19000, pallets: 29 },
-      dates: { pickup: '2024-06-02', delivery: '2024-06-03' },
+      dates: { pickup: generateDate(91), delivery: generateDate(90) },
       financials: {
         freightPrice: 2250,
         currency: 'EUR',
@@ -438,9 +446,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2024-012',
       clientName: 'Carrefour FR',
-      route: { from: 'Lille, FR', to: 'Lyon, FR', distanceKm: 720, eta: '2024-06-16 10:00' },
+      route: { from: 'Lille, FR', to: 'Lyon, FR', distanceKm: 720, eta: generateDate(120) + ' 10:00' },
       cargo: { description: 'FMCG paletowe', weightKg: 15000, pallets: 25 },
-      dates: { pickup: '2024-06-15', delivery: '2024-06-16' },
+      dates: { pickup: generateDate(121), delivery: generateDate(120) },
       financials: {
         freightPrice: 1380,
         currency: 'EUR',
@@ -457,9 +465,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2023-201',
       clientName: 'Volkswagen',
-      route: { from: 'Hannover, DE', to: 'Bratislava, SK', distanceKm: 900, eta: '2023-11-23 17:00' },
+      route: { from: 'Hannover, DE', to: 'Bratislava, SK', distanceKm: 900, eta: generateDate(365) + ' 17:00' },
       cargo: { description: 'Moduły silników', weightKg: 19500, pallets: 30 },
-      dates: { pickup: '2023-11-22', delivery: '2023-11-23' },
+      dates: { pickup: generateDate(366), delivery: generateDate(365) },
       financials: {
         freightPrice: 1820,
         currency: 'EUR',
@@ -477,9 +485,9 @@ export const MOCK_ORDERS: Order[] = [
   {
       id: 'ORD-2023-202',
       clientName: 'Bosch',
-      route: { from: 'Stuttgart, DE', to: 'Prague, CZ', distanceKm: 520, eta: '2023-12-11 14:00' },
+      route: { from: 'Stuttgart, DE', to: 'Prague, CZ', distanceKm: 520, eta: generateDate(400) + ' 14:00' },
       cargo: { description: 'Elementy mechaniczne', weightKg: 14000, pallets: 22 },
-      dates: { pickup: '2023-12-10', delivery: '2023-12-11' },
+      dates: { pickup: generateDate(401), delivery: generateDate(400) },
       financials: {
         freightPrice: 1180,
         currency: 'EUR',

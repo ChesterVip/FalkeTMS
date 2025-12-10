@@ -3,108 +3,6 @@ import { MOCK_DRIVERS, MOCK_VEHICLES, MOCK_ORDERS } from '../constants';
 import { MapPin, Navigation, Truck, User, AlertTriangle, Route as RouteIcon } from 'lucide-react';
 
 const FleetMap: React.FC = () => {
-    const [mapUrl, setMapUrl] = useState<string | null>(null);
-
-    // Generujemy realistyczną mapę Europy Środkowej z trasami DE-CH
-    useEffect(() => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1400;
-        canvas.height = 900;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // Tło - gradient nieba
-        const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        skyGrad.addColorStop(0, '#e0f2fe');
-        skyGrad.addColorStop(1, '#f0f9ff');
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Rysuj główne miasta i trasy
-        const cities = [
-            { name: 'Berlin', x: 520, y: 280, size: 8, color: '#1e40af' },
-            { name: 'München', x: 480, y: 450, size: 7, color: '#1e40af' },
-            { name: 'Stuttgart', x: 420, y: 420, size: 6, color: '#1e40af' },
-            { name: 'Frankfurt', x: 380, y: 360, size: 6, color: '#1e40af' },
-            { name: 'Zürich', x: 390, y: 520, size: 8, color: '#059669' },
-            { name: 'Bern', x: 350, y: 540, size: 7, color: '#059669' },
-            { name: 'Basel', x: 340, y: 500, size: 6, color: '#059669' },
-            { name: 'Genève', x: 260, y: 560, size: 6, color: '#059669' },
-            { name: 'Włoszyn (PL)', x: 720, y: 360, size: 5, color: '#dc2626' },
-        ];
-
-        // Rysuj autostrady (linie)
-        ctx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
-        ctx.lineWidth = 3;
-        ctx.setLineDash([8, 4]);
-        
-        // A3 Berlin-München
-        ctx.beginPath();
-        ctx.moveTo(520, 280);
-        ctx.lineTo(480, 450);
-        ctx.stroke();
-        
-        // A8 München-Zürich
-        ctx.beginPath();
-        ctx.moveTo(480, 450);
-        ctx.lineTo(390, 520);
-        ctx.stroke();
-        
-        // A5 Frankfurt-Basel
-        ctx.beginPath();
-        ctx.moveTo(380, 360);
-        ctx.lineTo(340, 500);
-        ctx.stroke();
-        
-        // A1 Basel-Bern-Genève
-        ctx.beginPath();
-        ctx.moveTo(340, 500);
-        ctx.lineTo(350, 540);
-        ctx.lineTo(260, 560);
-        ctx.stroke();
-        
-        ctx.setLineDash([]);
-
-        // Rysuj miasta
-        cities.forEach(city => {
-            // Punkt miasta
-            ctx.fillStyle = city.color;
-            ctx.beginPath();
-            ctx.arc(city.x, city.y, city.size, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // Nazwa miasta
-            ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 13px Arial';
-            ctx.fillText(city.name, city.x + city.size + 5, city.y + 4);
-        });
-
-        // Oznaczenia geograficzne
-        ctx.fillStyle = 'rgba(100, 116, 139, 0.3)';
-        ctx.font = 'bold 48px Arial';
-        ctx.fillText('NIEMCY', 450, 200);
-        ctx.fillText('SZWAJCARIA', 200, 650);
-        ctx.fillText('POLSKA', 750, 280);
-
-        // Legenda
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(30, 30, 250, 120);
-        ctx.strokeStyle = '#cbd5e1';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(30, 30, 250, 120);
-        
-        ctx.fillStyle = '#1e293b';
-        ctx.font = 'bold 14px Arial';
-        ctx.fillText('Monitoring Floty DBK', 40, 55);
-        
-        ctx.font = '12px Arial';
-        ctx.fillStyle = '#64748b';
-        ctx.fillText('● Niemcy (DE)', 40, 80);
-        ctx.fillText('● Szwajcaria (CH)', 40, 100);
-        ctx.fillText('● Polska (PL)', 40, 120);
-
-        setMapUrl(canvas.toDataURL('image/png'));
-    }, []);
 
     // Realistyczne pozycje GPS dla tras cross-trade DE-CH
     const vehiclePositions = [
@@ -215,32 +113,50 @@ const FleetMap: React.FC = () => {
 
             {/* Map Area - Top on Mobile, Right on Desktop */}
             <div
-                className="flex-1 relative overflow-hidden group h-1/2 md:h-full min-h-[420px] bg-slate-200"
-                style={
-                    mapUrl
-                        ? { backgroundImage: `url(${mapUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                        : undefined
-                }
+                className="flex-1 relative overflow-hidden group h-1/2 md:h-full min-h-[420px]"
+                style={{
+                    background: 'linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #dbeafe 100%)'
+                }}
             >
-                {!mapUrl && (
-                    <div className="absolute inset-0 flex items-center justify-center text-slate-500 text-sm font-medium">
-                        Generowanie mapy...
-                    </div>
-                )}
+                {/* Simplified Map Background */}
+                <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#94a3b8" strokeWidth="1" opacity="0.3"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
 
-                {/* Decorative Map Elements */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl md:text-8xl font-black text-slate-300/50 pointer-events-none select-none tracking-widest">
-                    MAPA
+                {/* Geographic Labels */}
+                <div className="absolute top-[20%] left-[40%] text-4xl md:text-6xl font-black text-blue-900/20 select-none">
+                    NIEMCY
                 </div>
-                <div className="absolute bottom-4 right-4 text-[10px] text-slate-500 bg-white/80 backdrop-blur px-2 py-1 rounded shadow-sm">© OpenStreetMap Contributors</div>
+                <div className="absolute top-[60%] left-[20%] text-3xl md:text-5xl font-black text-emerald-900/20 select-none">
+                    SZWAJCARIA
+                </div>
+                <div className="absolute top-[25%] right-[15%] text-3xl md:text-5xl font-black text-red-900/20 select-none">
+                    POLSKA
+                </div>
+
+                {/* Legend */}
+                <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-3 rounded-xl shadow-lg border border-slate-200">
+                    <h3 className="text-sm font-bold text-slate-700 mb-2 flex items-center">
+                        <Navigation className="mr-2 text-blue-600" size={16} />
+                        Monitoring Floty DBK
+                    </h3>
+                    <div className="space-y-1 text-xs text-slate-600">
+                        <div className="flex items-center"><span className="w-2 h-2 rounded-full bg-blue-600 mr-2"></span>Niemcy (DE)</div>
+                        <div className="flex items-center"><span className="w-2 h-2 rounded-full bg-emerald-600 mr-2"></span>Szwajcaria (CH)</div>
+                        <div className="flex items-center"><span className="w-2 h-2 rounded-full bg-red-600 mr-2"></span>Polska (PL)</div>
+                    </div>
+                </div>
+                
+                <div className="absolute bottom-4 right-4 text-[10px] text-slate-500 bg-white/80 backdrop-blur px-2 py-1 rounded shadow-sm">
+                    © DBK Fleet Management
+                </div>
 
                 {/* Vehicles on Map */}
-                {positions.length === 0 && (
-                    <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-medium space-x-2">
-                        <AlertTriangle size={16} className="text-amber-500" />
-                        <span>Brak danych GPS (tryb demo)</span>
-                    </div>
-                )}
                 {positions.map(pos => (
                     <div 
                         key={pos.id}
