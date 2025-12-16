@@ -7,8 +7,6 @@
 [![React](https://img.shields.io/badge/React-18.3-61dafb)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.4-646cff)](https://vitejs.dev/)
 
----
-
 ## 📋 O Projekcie
 
 FalkeTMS to kompleksowy system zarządzania transportem międzynarodowym, opracowany jako część pracy magisterskiej **"Wielowymiarowa Ocena Kosztów w Przedsiębiorstwie Logistycznym z Wykorzystaniem Systemów Informatycznych"** (Uniwersytet WSB Merito, kierunek: Zarządzanie Finansami i Rachunkowość, 2024).
