@@ -246,28 +246,28 @@ const Simulation: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
+        <div className="table-shell">
+          <table className="table-base">
+            <thead className="table-head border-b border-slate-200">
               <tr>
-                <th className="px-6 py-3">Zlecenie</th>
-                <th className="px-6 py-3">Trasa</th>
-                <th className="px-6 py-3 text-right">Planowana marża</th>
-                <th className="px-6 py-3 text-right">Rzeczywista marża</th>
-                <th className="px-6 py-3 text-right">Odchylenie</th>
-                <th className="px-6 py-3">Komentarz AI</th>
+                <th className="table-cell">Zlecenie</th>
+                <th className="table-cell">Trasa</th>
+                <th className="table-cell text-right">Planowana marża</th>
+                <th className="table-cell text-right">Rzeczywista marża</th>
+                <th className="table-cell text-right">Odchylenie</th>
+                <th className="table-cell">Komentarz AI</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {exPostCases.map((row) => (
                 <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-3 font-mono text-slate-600">{row.id}</td>
-                  <td className="px-6 py-3 text-slate-700">{row.route}</td>
-                  <td className="px-6 py-3 text-right text-slate-500">{(row.plannedMargin * 100).toFixed(1)}%</td>
-                  <td className="px-6 py-3 text-right font-bold text-slate-800">
+                  <td className="table-cell font-mono text-slate-600">{row.id}</td>
+                  <td className="table-cell text-slate-700">{row.route}</td>
+                  <td className="table-cell text-right text-slate-500">{(row.plannedMargin * 100).toFixed(1)}%</td>
+                  <td className="table-cell text-right font-bold text-slate-800">
                     {(row.actualMargin * 100).toFixed(1)}%
                   </td>
-                  <td className="px-6 py-3 text-right">
+                  <td className="table-cell text-right">
                     <span
                       className={`px-2 py-1 rounded text-xs font-bold ${
                         row.delta < -0.05
@@ -280,7 +280,7 @@ const Simulation: React.FC = () => {
                       {(row.delta * 100).toFixed(1)} pp
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-slate-700">{row.rootCause}</td>
+                  <td className="table-cell text-slate-700">{row.rootCause}</td>
                 </tr>
               ))}
             </tbody>
@@ -403,23 +403,23 @@ const Simulation: React.FC = () => {
           </div>
         </div>
         <div className="px-6 pb-6">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
+          <div className="table-shell">
+            <table className="table-base">
+              <thead className="table-head border-b border-slate-200">
                 <tr>
-                  <th className="px-4 py-2">Zlecenie</th>
-                  <th className="px-4 py-2">Trasa</th>
-                  <th className="px-4 py-2 text-right">Marża bazowa</th>
-                  <th className="px-4 py-2 text-right">Marża po +10% paliwa</th>
+                  <th className="table-cell">Zlecenie</th>
+                  <th className="table-cell">Trasa</th>
+                  <th className="table-cell text-right">Marża bazowa</th>
+                  <th className="table-cell text-right">Marża po +10% paliwa</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {impacted.map((row) => (
                   <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-4 py-2 font-mono text-slate-600">{row.id}</td>
-                    <td className="px-4 py-2 text-slate-700">{row.route}</td>
-                    <td className="px-4 py-2 text-right text-slate-500">{(row.margin * 100).toFixed(1)}%</td>
-                    <td className="px-4 py-2 text-right font-bold text-red-700">
+                    <td className="table-cell font-mono text-slate-600">{row.id}</td>
+                    <td className="table-cell text-slate-700">{row.route}</td>
+                    <td className="table-cell text-right text-slate-500">{(row.margin * 100).toFixed(1)}%</td>
+                    <td className="table-cell text-right font-bold text-red-700">
                       {(row.adjustedMargin * 100).toFixed(1)}%
                     </td>
                   </tr>

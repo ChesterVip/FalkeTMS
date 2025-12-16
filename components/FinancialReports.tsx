@@ -428,18 +428,18 @@ const FinancialReports: React.FC = () => {
              <div className="px-6 py-5 border-b border-slate-200 bg-slate-50">
                 <h3 className="font-bold text-slate-800">Szczegółowy Rejestr Zleceń (Managerial P&L)</h3>
              </div>
-             <div className="overflow-x-auto">
-                 <table className="w-full text-sm text-left whitespace-nowrap">
-                     <thead className="bg-white text-slate-500 font-bold uppercase text-xs tracking-wider border-b border-slate-100">
+             <div className="table-shell">
+                 <table className="table-base">
+                     <thead className="table-head text-slate-500 font-bold tracking-wider border-b border-slate-100">
                          <tr>
-                             <th className="px-6 py-4">ID Zlecenia</th>
-                             <th className="px-6 py-4">Data</th>
-                             <th className="px-6 py-4 text-right">Fracht</th>
-                             <th className="px-6 py-4 text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
-                            <th className="px-6 py-4 text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
-                            <th className="px-6 py-4 text-right text-purple-600 bg-purple-50/30">K. Stałe</th>
-                             <th className="px-6 py-4 text-right font-black">EBIT</th>
-                             <th className="px-6 py-4 text-center">ROS %</th>
+                             <th className="table-cell">ID Zlecenia</th>
+                             <th className="table-cell">Data</th>
+                             <th className="table-cell text-right">Fracht</th>
+                             <th className="table-cell text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
+                            <th className="table-cell text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
+                            <th className="table-cell text-right text-purple-600 bg-purple-50/30">K. Stałe</th>
+                             <th className="table-cell text-right font-black">EBIT</th>
+                             <th className="table-cell text-center">ROS %</th>
                          </tr>
                      </thead>
                      <tbody className="divide-y divide-slate-50">
@@ -453,16 +453,16 @@ const FinancialReports: React.FC = () => {
 
                             return (
                                 <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                                    <td className="px-6 py-4 font-mono text-slate-500">{o.id}</td>
-                                    <td className="px-6 py-4 text-slate-600">{o.dates.delivery}</td>
-                                    <td className="px-6 py-4 text-right font-bold">{o.financials.freightPrice}</td>
-                                    <td className="px-6 py-4 text-right text-amber-700 bg-amber-50/10">{varCost.toFixed(0)}</td>
-                                    <td className="px-6 py-4 text-right font-bold text-emerald-700 bg-emerald-50/10">{cm1.toFixed(0)}</td>
-                                    <td className="px-6 py-4 text-right text-purple-700 bg-purple-50/10">{fixCost.toFixed(0)}</td>
-                                    <td className={`px-6 py-4 text-right font-black ${orderEbit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
+                                    <td className="table-cell font-mono text-slate-500">{o.id}</td>
+                                    <td className="table-cell text-slate-600">{o.dates.delivery}</td>
+                                    <td className="table-cell text-right font-bold">{o.financials.freightPrice}</td>
+                                    <td className="table-cell text-right text-amber-700 bg-amber-50/10">{varCost.toFixed(0)}</td>
+                                    <td className="table-cell text-right font-bold text-emerald-700 bg-emerald-50/10">{cm1.toFixed(0)}</td>
+                                    <td className="table-cell text-right text-purple-700 bg-purple-50/10">{fixCost.toFixed(0)}</td>
+                                    <td className={`table-cell text-right font-black ${orderEbit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
                                         {orderEbit.toFixed(0)}
                                     </td>
-                                    <td className="px-6 py-4 text-center">
+                                    <td className="table-cell text-center">
                                          <span className={`px-2 py-1 rounded text-xs font-bold ${ros > 10 ? 'bg-emerald-100 text-emerald-700' : ros > 0 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
                                             {ros.toFixed(1)}%
                                         </span>

@@ -105,11 +105,11 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order: initialOrder, onBack
 
       {/* Workflow Action Bar */}
       {order.status !== 'COMPLETED' && (
-          <div className="bg-blue-50 border-b border-blue-100 px-4 py-3 flex items-center justify-between overflow-x-auto whitespace-nowrap">
-              <span className="text-xs font-bold text-blue-800 mr-4 flex items-center">
+          <div className="bg-blue-50 border-b border-blue-100 px-4 py-3 flex flex-wrap md:flex-nowrap items-center gap-3 overflow-x-auto whitespace-nowrap">
+              <span className="text-xs font-bold text-blue-800 flex items-center">
                   <BrainCircuit size={14} className="mr-1"/> Sugestia AI:
               </span>
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
                   {order.status === 'NEW' && (
                       <button onClick={() => handleStatusChange(OrderStatus.PLANNED, 'Zweryfikowano i przydzielono kierowcę')} className="action-btn bg-white text-blue-600 border border-blue-200 hover:bg-blue-100">
                           <CheckCircle size={14} className="mr-1"/> Przydziel Kierowcę (AI)
@@ -377,7 +377,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order: initialOrder, onBack
                 </div>
 
                 <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pb-8">
-                    <button className="px-6 py-3 border border-slate-300 rounded-xl text-slate-700 hover:bg-slate-50 text-sm font-bold transition-colors w-full sm:w-auto">
+                    <button className="btn btn-ghost px-6 py-3 rounded-xl text-sm font-bold w-full sm:w-auto">
                         Eksportuj do PDF
                     </button>
                 </div>

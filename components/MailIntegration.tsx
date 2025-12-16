@@ -28,14 +28,14 @@ const MailIntegration: React.FC = () => {
     };
 
     return (
-        <div className="flex h-full bg-slate-50 border-t border-slate-200">
+        <div className="flex flex-col md:flex-row h-full bg-slate-50 border-t border-slate-200">
             {/* Sidebar / Inbox List */}
-            <div className="w-full md:w-80 bg-white border-r border-slate-200 flex flex-col">
+            <div className="w-full md:w-80 bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
                 <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
                     <h2 className="font-bold text-slate-800 flex items-center">
                         <Mail className="mr-2 text-blue-600" size={20}/> Skrzynka Odbiorcza
                     </h2>
-                    <button className="p-2 hover:bg-slate-200 rounded-full text-slate-500">
+                    <button className="btn btn-ghost p-2 h-9 w-9 !rounded-full text-slate-500">
                         <RefreshCw size={16}/>
                     </button>
                 </div>
@@ -72,7 +72,7 @@ const MailIntegration: React.FC = () => {
             </div>
 
             {/* Main Content / Email Preview */}
-            <div className="flex-1 flex flex-col bg-white md:bg-slate-50 overflow-hidden relative">
+            <div className="flex-1 flex flex-col bg-white md:bg-slate-50 overflow-hidden relative w-full">
                 {selectedEmail ? (
                     <div className="flex flex-col h-full">
                         {/* Email Header */}
@@ -96,7 +96,7 @@ const MailIntegration: React.FC = () => {
                                         <button 
                                             onClick={handleProcessAI}
                                             disabled={isProcessing}
-                                            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold shadow-md hover:shadow-lg transition-all flex items-center disabled:opacity-70"
+                                            className="btn btn-primary px-4 py-2 rounded-lg font-bold shadow-md hover:shadow-lg transition-all flex items-center disabled:opacity-70"
                                         >
                                             {isProcessing ? (
                                                 <RefreshCw className="animate-spin mr-2" size={18}/> 

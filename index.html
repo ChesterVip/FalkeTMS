@@ -12,32 +12,89 @@
           extend: {
             colors: {
               brand: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                800: '#075985',
-                900: '#0c4a6e',
-              }
-            }
-          }
-        }
-      }
+                50: '#eef7ff',
+                100: '#d8ecff',
+                200: '#b7ddff',
+                500: '#1d7ed6',
+                600: '#1367b0',
+                700: '#0f4f8a',
+                800: '#0c3e6c',
+              },
+              accent: {
+                50: '#f3f5ff',
+                100: '#e4e9ff',
+                500: '#5563f0',
+                600: '#3f4ae0',
+                700: '#323cc0',
+              },
+              success: {
+                50: '#e9f7ef',
+                500: '#16a34a',
+                600: '#15803d',
+              },
+              warning: {
+                50: '#fff6e6',
+                500: '#f59e0b',
+                600: '#d97706',
+              },
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      };
     </script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #f8fafc;
+        background-color: #f7fafc;
+        color: #0f172a;
       }
       /* Custom scrollbar for chat windows */
       .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+        display: none;
       }
       .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      @layer components {
+        .btn {
+          @apply inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 disabled:opacity-60 disabled:cursor-not-allowed;
+        }
+        .btn-primary {
+          @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700;
+        }
+        .btn-ghost {
+          @apply btn bg-white text-slate-700 border border-slate-200 hover:bg-slate-50;
+        }
+        .input {
+          @apply w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:ring-2 focus:ring-brand-100 focus:border-brand-300 transition-shadow;
+        }
+        .input-error {
+          @apply border-red-300 focus:ring-red-100 focus:border-red-300;
+        }
+        .input-success {
+          @apply border-emerald-300 focus:ring-emerald-100 focus:border-emerald-300;
+        }
+        .badge {
+          @apply inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide;
+        }
+        .table-shell {
+          @apply overflow-x-auto bg-white border border-slate-200 rounded-2xl shadow-sm;
+        }
+        .table-base {
+          @apply w-full text-sm text-left whitespace-nowrap;
+        }
+        .table-head {
+          @apply bg-slate-50 text-slate-500 font-semibold uppercase text-xs tracking-wider;
+        }
+        .table-cell {
+          @apply px-4 md:px-6 py-3;
+        }
       }
     </style>
   <script type="importmap">

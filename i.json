@@ -1,0 +1,14 @@
+{
+    "model": "gpt-4",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Jesteś asystentem ekstraktorującym dane z emaili o zleceniach transportowych."
+      },
+      {
+        "role": "user",
+        "content": "Email: 'Prosimy o przewóz 20 palet z Warszawy do Berlina, załadunek 15.01, dostawa 16.01, stawka 2000 EUR'. Wyciągnij: skąd, dokąd, daty, stawka."
+      }
+    ],
+    "temperature": 0.2
+  }

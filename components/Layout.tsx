@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
   };
 
   return (
-    <div className="flex h-screen w-full bg-slate-50 overflow-hidden text-slate-800 font-sans">
+    <div className="flex min-h-screen w-full bg-slate-50 overflow-hidden text-slate-800 font-sans">
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-slate-900 z-50 flex items-center justify-between px-4 shadow-md">
         <div className="flex items-center space-x-2">
@@ -40,7 +40,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
         </div>
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-          className="text-white p-2 focus:outline-none"
+          className="text-white p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-200 rounded-lg"
+          aria-label="Otwórz nawigację"
+          aria-expanded={isMobileMenuOpen}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -71,26 +73,30 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto mt-16 md:mt-0">
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => handleNavigate(item.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group relative ${
-                activePage === item.id 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-900/30' 
-                  : 'hover:bg-slate-800 hover:text-white'
-              }`}
-            >
-              <span className={`relative z-10 ${activePage === item.id ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>
-                {item.icon}
-              </span>
-              <span className="font-medium relative z-10">{item.label}</span>
-              {activePage === item.id && (
-                  <div className="absolute right-3 w-2 h-2 bg-white rounded-full shadow-glow animate-pulse"></div>
-              )}
-            </button>
-          ))}
+        <nav className="flex-1 p-4 overflow-y-auto mt-16 md:mt-0" aria-label="Główne">
+          <ul className="space-y-2">
+            {navItems.map(item => (
+              <li key={item.id}>
+                <button
+                  onClick={() => handleNavigate(item.id)}
+                  aria-current={activePage === item.id ? 'page' : undefined}
+                  className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group relative focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300 ${
+                    activePage === item.id 
+                      ? 'bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-lg shadow-blue-900/30' 
+                      : 'hover:bg-slate-800 hover:text-white'
+                  }`}
+                >
+                  <span className={`relative z-10 ${activePage === item.id ? 'text-white' : 'text-slate-400 group-hover:text-white'}`}>
+                    {item.icon}
+                  </span>
+                  <span className="font-medium relative z-10">{item.label}</span>
+                  {activePage === item.id && (
+                      <div className="absolute right-3 w-2 h-2 bg-white rounded-full shadow-glow animate-pulse"></div>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
         </nav>
 
         {/* User Profile */}
