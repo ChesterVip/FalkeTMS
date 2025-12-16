@@ -862,18 +862,18 @@ const Architecture: React.FC = () => {
                 <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
                   <h3 className="text-lg font-bold text-slate-800">Przykładowa analiza kosztów (mock data)</h3>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="bg-slate-100 text-slate-600 font-bold uppercase text-xs">
+                <div className="table-shell">
+                  <table className="table-base">
+                    <thead className="table-head">
                       <tr>
-                        <th className="px-4 py-3 text-left">Zlecenie</th>
-                        <th className="px-4 py-3 text-left">Trasa</th>
-                        <th className="px-4 py-3 text-right">Przychód</th>
-                        <th className="px-4 py-3 text-right text-amber-700">K. Zmienne</th>
-                        <th className="px-4 py-3 text-right text-emerald-700">Marża I</th>
-                        <th className="px-4 py-3 text-right text-purple-700">K. Stałe</th>
-                        <th className="px-4 py-3 text-right font-black">EBIT</th>
-                        <th className="px-4 py-3 text-center">ROS %</th>
+                        <th className="table-cell text-left">Zlecenie</th>
+                        <th className="table-cell text-left hidden sm:table-cell">Trasa</th>
+                        <th className="table-cell text-right">Przychód</th>
+                        <th className="table-cell text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
+                        <th className="table-cell text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
+                        <th className="table-cell text-right text-purple-600 bg-purple-50/30 hidden md:table-cell">K. Stałe</th>
+                        <th className="table-cell text-right font-black">EBIT</th>
+                        <th className="table-cell text-center">ROS %</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -885,15 +885,15 @@ const Architecture: React.FC = () => {
                         const ros = (ebit / row.revenue) * 100;
                         
                         return (
-                          <tr key={row.id} className="hover:bg-slate-50">
-                            <td className="px-4 py-3 font-mono text-slate-600">{row.id}</td>
-                            <td className="px-4 py-3 text-slate-700">{row.relation}</td>
-                            <td className="px-4 py-3 text-right font-semibold">{row.revenue} EUR</td>
-                            <td className="px-4 py-3 text-right text-amber-700">{varCost} EUR</td>
-                            <td className="px-4 py-3 text-right font-bold text-emerald-700">{cm1} EUR</td>
-                            <td className="px-4 py-3 text-right text-purple-700">{fixCost} EUR</td>
-                            <td className="px-4 py-3 text-right font-black text-slate-800">{ebit.toFixed(0)} EUR</td>
-                            <td className="px-4 py-3 text-center">
+                          <tr key={row.id} className="hover:bg-slate-50 transition-colors">
+                            <td className="table-cell font-mono text-slate-600">{row.id}</td>
+                            <td className="table-cell text-slate-700 hidden sm:table-cell">{row.relation}</td>
+                            <td className="table-cell text-right font-semibold">{row.revenue} EUR</td>
+                            <td className="table-cell text-right text-amber-700 bg-amber-50/10">{varCost} EUR</td>
+                            <td className="table-cell text-right font-bold text-emerald-700 bg-emerald-50/10">{cm1} EUR</td>
+                            <td className="table-cell text-right text-purple-700 bg-purple-50/10 hidden md:table-cell">{fixCost} EUR</td>
+                            <td className="table-cell text-right font-black text-slate-800">{ebit.toFixed(0)} EUR</td>
+                            <td className="table-cell text-center">
                               <span className={`px-2 py-1 rounded text-xs font-bold ${
                                 ros >= 15 ? 'bg-emerald-100 text-emerald-700' :
                                 ros >= 8 ? 'bg-amber-100 text-amber-700' :

@@ -8,7 +8,6 @@ import FinancialReports from './components/FinancialReports';
 import FleetMap from './components/FleetMap';
 import MailIntegration from './components/MailIntegration';
 import Architecture from './components/Architecture';
-import Simulation from './components/Simulation';
 import DriverSettlements from './components/DriverSettlements';
 import Thesis from './components/Thesis';
 import Settings from './components/Settings';
@@ -18,8 +17,11 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  // Blokada kopiowania na całej stronie
+  // Blokada kopiowania tylko w środowisku demonstracyjnym
   useEffect(() => {
+    // Usuń blokadę w środowisku produkcyjnym
+    if (process.env.NODE_ENV === 'production') return;
+
     const preventCopy = (e: ClipboardEvent) => {
       e.preventDefault();
       return false;
@@ -30,38 +32,12 @@ const App: React.FC = () => {
       return false;
     };
 
-    const preventSelectStart = (e: Event) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Dodaj event listenery
-    document.addEventListener('copy', preventCopy);
-    document.addEventListener('cut', preventCopy);
+    // Dodaj event listenery tylko dla prawokliku (bez blokowania zaznaczania)
     document.addEventListener('contextmenu', preventContextMenu);
-    document.addEventListener('selectstart', preventSelectStart);
-
-    // Dodaj style CSS blokujące zaznaczanie
-    const style = document.createElement('style');
-    style.innerHTML = `
-      * {
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
-      }
-    `;
-    document.head.appendChild(style);
 
     // Cleanup
     return () => {
-      document.removeEventListener('copy', preventCopy);
-      document.removeEventListener('cut', preventCopy);
       document.removeEventListener('contextmenu', preventContextMenu);
-      document.removeEventListener('selectstart', preventSelectStart);
-      if (style.parentNode) {
-        style.parentNode.removeChild(style);
-      }
     };
   }, []);
 
@@ -88,8 +64,6 @@ const App: React.FC = () => {
         return <FinancialReports />;
       case 'settlements':
         return <DriverSettlements />;
-      case 'simulation':
-        return <Simulation />;
       case 'architecture':
         return <Architecture />;
       case 'settings':

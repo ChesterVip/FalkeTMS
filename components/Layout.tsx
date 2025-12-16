@@ -18,7 +18,6 @@ const Layout: React.FC<LayoutProps> = ({ children, activePage, onNavigate }) => 
     { id: 'mail', label: 'Poczta & API', icon: <Mail size={20} /> },
     { id: 'fleet', label: 'Flota i GPS', icon: <Truck size={20} /> },
     { id: 'finance', label: 'Raporty', icon: <PieChart size={20} /> },
-    { id: 'simulation', label: 'Symulacje (4.x)', icon: <FlaskConical size={20} /> },
     { id: 'architecture', label: 'Praca & Architektura', icon: <GraduationCap size={20} /> },
     { id: 'settings', label: 'Ustawienia', icon: <Settings size={20} /> },
   ];

@@ -276,21 +276,32 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order: initialOrder, onBack
                         ))
                     )}
                 </div>
-                <div className="p-3 border-t border-slate-200 bg-white flex space-x-2 items-center">
-                    <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
-                        <Paperclip size={20} />
-                    </button>
-                    <input 
-                        type="text" 
-                        value={chatMessage}
-                        onChange={(e) => setChatMessage(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                        placeholder="Napisz wiadomość..."
-                        className="flex-1 bg-slate-100 border-0 rounded-full px-4 text-sm focus:ring-2 focus:ring-blue-100 focus:outline-none py-2.5 transition-shadow"
-                    />
-                    <button onClick={handleSendMessage} className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-md">
-                        <Send size={18} />
-                    </button>
+                <div className="p-3 border-t border-slate-200 bg-white">
+                    <label htmlFor="chatMessage" className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">
+                        Wiadomość do kierowcy
+                    </label>
+                    <div className="flex space-x-2 items-center">
+                        <button className="p-2 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0">
+                            <Paperclip size={20} />
+                        </button>
+                        <input
+                            id="chatMessage"
+                            type="text"
+                            value={chatMessage}
+                            onChange={(e) => setChatMessage(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                            placeholder="Wpisz wiadomość do kierowcy..."
+                            className="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-4 text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-300 focus:outline-none py-2.5 transition-shadow"
+                            aria-label="Wpisz wiadomość do kierowcy"
+                        />
+                        <button
+                            onClick={handleSendMessage}
+                            className="p-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-md flex-shrink-0"
+                            aria-label="Wyślij wiadomość"
+                        >
+                            <Send size={18} />
+                        </button>
+                    </div>
                 </div>
             </div>
         )}

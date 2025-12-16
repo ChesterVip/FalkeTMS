@@ -138,8 +138,8 @@ const FinancialReports: React.FC = () => {
         {/* Header & Controls */}
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-slate-800">Rachunkowość Zarządcza</h1>
-                <p className="text-slate-500 mt-1">Analiza marż pokrycia, kosztów stałych i zmiennych</p>
+                <h1 className="page-header">Rachunkowość Zarządcza</h1>
+                <p className="page-subtitle">Analiza marż pokrycia, kosztów stałych i zmiennych</p>
             </div>
             <div className="flex flex-col items-start md:items-end space-y-2">
                 <div className="flex bg-white rounded-lg p-1 border border-slate-200 shadow-sm overflow-x-auto">
@@ -160,49 +160,51 @@ const FinancialReports: React.FC = () => {
         </header>
 
         {/* Executive Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="bg-white p-3 md:p-4 lg:p-5 rounded-xl md:rounded-2xl border border-slate-100 shadow-sm">
                 <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Przychód (Fracht)</p>
                 <div className="flex justify-between items-end">
-                    <p className="text-2xl font-black text-slate-800">{totalRevenue.toLocaleString()} <span className="text-sm font-normal text-slate-400">EUR</span></p>
-                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg"><DollarSign size={20}/></div>
+                    <p className="text-lg md:text-xl lg:text-2xl font-black text-slate-800">{totalRevenue.toLocaleString()} <span className="text-xs md:text-sm font-normal text-slate-400">EUR</span></p>
+                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg flex-shrink-0"><DollarSign size={18} className="md:w-5 md:h-5"/></div>
                 </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-emerald-50 to-transparent"></div>
+            <div className="bg-white p-3 md:p-4 lg:p-5 rounded-xl md:rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-12 md:w-16 h-full bg-gradient-to-l from-emerald-50 to-transparent"></div>
                 <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Marża Pokrycia I (CM1)</p>
                 <div className="flex justify-between items-end relative z-10">
-                    <div>
-                        <p className="text-2xl font-black text-emerald-600">{contributionMargin1.toLocaleString()} <span className="text-sm font-normal text-emerald-400">EUR</span></p>
-                        <p className="text-xs font-bold text-emerald-500 mt-1">{cm1Percent.toFixed(1)}% Przychodu</p>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-lg md:text-xl lg:text-2xl font-black text-emerald-600 truncate">{contributionMargin1.toLocaleString()} <span className="text-xs md:text-sm font-normal text-emerald-400">EUR</span></p>
+                        <p className="text-xs font-bold text-emerald-500 mt-1 hidden sm:block">{cm1Percent.toFixed(1)}% Przychodu</p>
                     </div>
-                    <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><Activity size={20}/></div>
+                    <div className="p-2 bg-emerald-50 text-emerald-600 rounded-lg flex-shrink-0 ml-2"><Activity size={18} className="md:w-5 md:h-5"/></div>
                 </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+            <div className="bg-white p-3 md:p-4 lg:p-5 rounded-xl md:rounded-2xl border border-slate-100 shadow-sm">
                 <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Koszty Stałe (Struktura)</p>
                 <div className="flex justify-between items-end">
-                    <div>
-                        <p className="text-2xl font-black text-purple-600">{totalFixedCosts.toLocaleString()} <span className="text-sm font-normal text-purple-400">EUR</span></p>
-                        <p className="text-xs text-slate-400 mt-1">Leasing, Ubezp., Biuro</p>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-lg md:text-xl lg:text-2xl font-black text-purple-600 truncate">{totalFixedCosts.toLocaleString()} <span className="text-xs md:text-sm font-normal text-purple-400">EUR</span></p>
+                        <p className="text-xs text-slate-400 mt-1 hidden sm:block">Leasing, Ubezp., Biuro</p>
                     </div>
-                    <div className="p-2 bg-purple-50 text-purple-600 rounded-lg"><Wallet size={20}/></div>
+                    <div className="p-2 bg-purple-50 text-purple-600 rounded-lg flex-shrink-0 ml-2"><Wallet size={18} className="md:w-5 md:h-5"/></div>
                 </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm border-l-4 border-l-slate-800">
+            <div className="bg-white p-3 md:p-4 lg:p-5 rounded-xl md:rounded-2xl border border-slate-100 shadow-sm border-l-4 border-l-slate-800">
                 <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">Zysk Operacyjny (EBIT)</p>
                 <div className="flex justify-between items-end">
-                    <p className={`text-2xl font-black ${ebit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
-                        {ebit.toLocaleString()} <span className="text-sm font-normal text-slate-400">EUR</span>
-                    </p>
-                    <div className={`p-2 rounded-lg ${ebit > 0 ? 'bg-slate-100 text-slate-700' : 'bg-red-50 text-red-600'}`}>
-                        {ebit > 0 ? <TrendingUp size={20}/> : <TrendingDown size={20}/>}
+                    <div className="flex-1 min-w-0">
+                        <p className={`text-lg md:text-xl lg:text-2xl font-black truncate ${ebit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
+                            {ebit.toLocaleString()} <span className="text-xs md:text-sm font-normal text-slate-400">EUR</span>
+                        </p>
+                    </div>
+                    <div className={`p-2 rounded-lg flex-shrink-0 ml-2 ${ebit > 0 ? 'bg-slate-100 text-slate-700' : 'bg-red-50 text-red-600'}`}>
+                        {ebit > 0 ? <TrendingUp size={18} className="md:w-5 md:h-5"/> : <TrendingDown size={18} className="md:w-5 md:h-5"/>}
                     </div>
                 </div>
-                <p className="text-xs font-bold text-slate-400 mt-1">{ebitMargin.toFixed(1)}% ROS</p>
+                <p className="text-xs font-bold text-slate-400 mt-1 hidden sm:block">{ebitMargin.toFixed(1)}% ROS</p>
             </div>
         </div>
 
@@ -425,24 +427,24 @@ const FinancialReports: React.FC = () => {
 
         {/* Detailed Table */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-             <div className="px-6 py-5 border-b border-slate-200 bg-slate-50">
-                <h3 className="font-bold text-slate-800">Szczegółowy Rejestr Zleceń (Managerial P&L)</h3>
+             <div className="px-4 md:px-6 py-4 md:py-5 border-b border-slate-200 bg-slate-50">
+                <h3 className="font-bold text-slate-800 text-sm md:text-base">Szczegółowy Rejestr Zleceń (Managerial P&L)</h3>
              </div>
-             <div className="table-shell">
-                 <table className="table-base">
-                     <thead className="table-head text-slate-500 font-bold tracking-wider border-b border-slate-100">
+             <div className="overflow-x-auto scrollbar-hide">
+                 <table className="w-full text-xs md:text-sm text-left whitespace-nowrap">
+                     <thead className="bg-slate-50 text-slate-500 font-semibold uppercase text-xs tracking-wider border-b border-slate-100">
                          <tr>
-                             <th className="table-cell">ID Zlecenia</th>
-                             <th className="table-cell">Data</th>
-                             <th className="table-cell text-right">Fracht</th>
-                             <th className="table-cell text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
-                            <th className="table-cell text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
-                            <th className="table-cell text-right text-purple-600 bg-purple-50/30">K. Stałe</th>
-                             <th className="table-cell text-right font-black">EBIT</th>
-                             <th className="table-cell text-center">ROS %</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-left">ID Zlecenia</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-left hidden sm:table-cell">Data</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-right">Fracht</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-right text-amber-600 bg-amber-50/30">K. Zmienne</th>
+                            <th className="px-3 md:px-4 py-2 md:py-3 text-right text-emerald-700 bg-emerald-50/30">Marża I</th>
+                            <th className="px-3 md:px-4 py-2 md:py-3 text-right text-purple-600 bg-purple-50/30 hidden md:table-cell">K. Stałe</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-right font-black">EBIT</th>
+                             <th className="px-3 md:px-4 py-2 md:py-3 text-center">ROS %</th>
                          </tr>
                      </thead>
-                     <tbody className="divide-y divide-slate-50">
+                     <tbody className="divide-y divide-slate-100">
                         {relevantOrders.map(o => {
                             const c = o.financials.costs;
                             const varCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.crossBorderAllowance + c.nightRestAllowance + c.corridorPay + c.maintenance;
@@ -453,17 +455,17 @@ const FinancialReports: React.FC = () => {
 
                             return (
                                 <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                                    <td className="table-cell font-mono text-slate-500">{o.id}</td>
-                                    <td className="table-cell text-slate-600">{o.dates.delivery}</td>
-                                    <td className="table-cell text-right font-bold">{o.financials.freightPrice}</td>
-                                    <td className="table-cell text-right text-amber-700 bg-amber-50/10">{varCost.toFixed(0)}</td>
-                                    <td className="table-cell text-right font-bold text-emerald-700 bg-emerald-50/10">{cm1.toFixed(0)}</td>
-                                    <td className="table-cell text-right text-purple-700 bg-purple-50/10">{fixCost.toFixed(0)}</td>
-                                    <td className={`table-cell text-right font-black ${orderEbit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 font-mono text-slate-500 text-xs md:text-sm">{o.id}</td>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-slate-600 hidden sm:table-cell">{o.dates.delivery}</td>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-right font-bold text-xs md:text-sm">{o.financials.freightPrice}</td>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-right text-amber-700 bg-amber-50/10 text-xs md:text-sm">{varCost.toFixed(0)}</td>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-right font-bold text-emerald-700 bg-emerald-50/10 text-xs md:text-sm">{cm1.toFixed(0)}</td>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-right text-purple-700 bg-purple-50/10 hidden md:table-cell">{fixCost.toFixed(0)}</td>
+                                    <td className={`px-3 md:px-4 py-2 md:py-3 text-right font-black text-xs md:text-sm ${orderEbit > 0 ? 'text-slate-800' : 'text-red-600'}`}>
                                         {orderEbit.toFixed(0)}
                                     </td>
-                                    <td className="table-cell text-center">
-                                         <span className={`px-2 py-1 rounded text-xs font-bold ${ros > 10 ? 'bg-emerald-100 text-emerald-700' : ros > 0 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
+                                    <td className="px-3 md:px-4 py-2 md:py-3 text-center">
+                                         <span className={`px-1 md:px-2 py-1 rounded text-xs font-bold ${ros > 10 ? 'bg-emerald-100 text-emerald-700' : ros > 0 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
                                             {ros.toFixed(1)}%
                                         </span>
                                     </td>

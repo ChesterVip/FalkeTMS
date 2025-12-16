@@ -343,21 +343,21 @@ const DriverSettlements: React.FC = () => {
           <h3 className="font-bold text-slate-800">Szczegóły zleceń ({currentSettlement.orders.length})</h3>
           <p className="text-xs text-slate-500 mt-1">Wszystkie zlecenia wykonane w okresie rozliczeniowym</p>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left whitespace-nowrap">
-            <thead className="bg-white text-slate-500 font-bold uppercase text-xs tracking-wider border-b border-slate-100">
+        <div className="table-shell">
+          <table className="table-base">
+            <thead className="table-head">
               <tr>
-                <th className="px-6 py-4">ID Zlecenia</th>
-                <th className="px-6 py-4">Trasa</th>
-                <th className="px-6 py-4 text-right">Dystans</th>
-                <th className="px-6 py-4">Data</th>
-                <th className="px-6 py-4 text-right">Fracht</th>
-                <th className="px-6 py-4 text-right">Koszty</th>
-                <th className="px-6 py-4 text-right">Zysk</th>
-                <th className="px-6 py-4 text-center">Marża %</th>
+                <th className="table-cell">ID Zlecenia</th>
+                <th className="table-cell hidden sm:table-cell">Trasa</th>
+                <th className="table-cell text-right hidden md:table-cell">Dystans</th>
+                <th className="table-cell hidden lg:table-cell">Data</th>
+                <th className="table-cell text-right">Fracht</th>
+                <th className="table-cell text-right">Koszty</th>
+                <th className="table-cell text-right">Zysk</th>
+                <th className="table-cell text-center">Marża %</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-100">
               {currentSettlement.orders.map(order => {
                 const c = order.financials.costs;
                 const totalCost = c.fuel + c.adBlue + c.tolls + c.driverDiems + c.crossBorderAllowance + 
@@ -368,8 +368,8 @@ const DriverSettlements: React.FC = () => {
 
                 return (
                   <tr key={order.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-slate-500 text-xs">{order.id}</td>
-                    <td className="px-6 py-4">
+                    <td className="table-cell font-mono text-slate-500 text-xs">{order.id}</td>
+                    <td className="table-cell hidden sm:table-cell">
                       <div className="flex items-center space-x-2">
                         <Truck size={16} className="text-blue-500"/>
                         <div>
@@ -378,17 +378,17 @@ const DriverSettlements: React.FC = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right font-mono text-slate-600">{order.route.distanceKm} km</td>
-                    <td className="px-6 py-4 text-slate-600 text-xs">{order.dates.delivery}</td>
-                    <td className="px-6 py-4 text-right font-bold text-slate-800">{order.financials.freightPrice} EUR</td>
-                    <td className="px-6 py-4 text-right text-amber-700">{totalCost.toFixed(0)} EUR</td>
-                    <td className={`px-6 py-4 text-right font-bold ${profit > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                    <td className="table-cell text-right font-mono text-slate-600 hidden md:table-cell">{order.route.distanceKm} km</td>
+                    <td className="table-cell text-slate-600 text-xs hidden lg:table-cell">{order.dates.delivery}</td>
+                    <td className="table-cell text-right font-bold text-slate-800">{order.financials.freightPrice} EUR</td>
+                    <td className="table-cell text-right text-amber-700 bg-amber-50/10">{totalCost.toFixed(0)} EUR</td>
+                    <td className={`table-cell text-right font-bold ${profit > 0 ? 'text-emerald-600' : 'text-red-600'} bg-slate-50/10`}>
                       {profit.toFixed(0)} EUR
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="table-cell text-center">
                       <span className={`px-2 py-1 rounded text-xs font-bold ${
-                        margin >= 15 ? 'bg-emerald-100 text-emerald-700' : 
-                        margin >= 8 ? 'bg-amber-100 text-amber-700' : 
+                        margin >= 15 ? 'bg-emerald-100 text-emerald-700' :
+                        margin >= 8 ? 'bg-amber-100 text-amber-700' :
                         'bg-red-100 text-red-700'
                       }`}>
                         {margin.toFixed(1)}%

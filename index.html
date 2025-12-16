@@ -83,6 +83,21 @@
         .badge {
           @apply inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wide;
         }
+        .action-btn {
+          @apply inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 shadow-sm;
+        }
+        .card {
+          @apply bg-white rounded-xl border border-slate-200 shadow-sm p-6;
+        }
+        .section-spacing {
+          @apply space-y-4 md:space-y-6;
+        }
+        .page-header {
+          @apply text-2xl md:text-3xl font-bold text-slate-800 mb-2;
+        }
+        .page-subtitle {
+          @apply text-slate-500 mt-1 text-sm md:text-base;
+        }
         .table-shell {
           @apply overflow-x-auto bg-white border border-slate-200 rounded-2xl shadow-sm;
         }
@@ -97,17 +112,18 @@
         }
       }
     </style>
+  <!-- Import map tylko dla developmentu AI Studio -->
   <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
+  {
+    "imports": {
+      "react/": "https://aistudiocdn.com/react@^19.2.1/",
+      "react": "https://aistudiocdn.com/react@^19.2.1",
+      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+      "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+      "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
+    }
   }
-}
-</script>
+  </script>
 </head>
   <body>
     <div id="root"></div>

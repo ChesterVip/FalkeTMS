@@ -9,7 +9,7 @@
 
 ## 📋 O Projekcie
 
-FalkeTMS to kompleksowy system zarządzania transportem międzynarodowym, opracowany jako część pracy magisterskiej **"Wielowymiarowa Ocena Kosztów w Przedsiębiorstwie Logistycznym z Wykorzystaniem Systemów Informatycznych"** (Uniwersytet WSB Merito, kierunek: Zarządzanie Finansami i Rachunkowość, 2024).
+FalkeTMS to kompleksowy system zarządzania transportem międzynarodowym, opracowany jako część pracy magisterskiej **"Wielowymiarowa Ocena Kosztów w Przedsiębiorstwie Logistycznym z Wykorzystaniem Systemów Informatycznych"** (Akademia WSB Dąbrowa Górnicza, kierunek: Zarządzanie Finansami i Rachunkowość, 2024).
 
 System został zaprojektowany dla mikroprzedsiębiorstwa FG Falke Sp. z o.o., specjalizującego się w międzynarodowym transporcie drogowym (cross-trade: relacje Niemcy-Szwajcaria), operującego flotą 3 pojazdów.
 
@@ -275,7 +275,7 @@ Aplikacja zawiera **rzeczywiste dane operacyjne** z I kwartału 2023:
 
 **Mariusz Sokołowski**  
 Student kierunku: Zarządzanie Finansami i Rachunkowość  
-Uniwersytet WSB Merito  
+Akademia WSB Dąbrowa Górnicza  
 Promotor: dr Karolina Rybicka
 
 ---
@@ -315,7 +315,7 @@ SOFTWARE.
 Specjalne podziękowania dla:
 - **FG Falke Sp. z o.o.** - za udostępnienie danych operacyjnych do badań
 - **dr Karolina Rybicka** - za merytoryczne wsparcie i promotorstwo pracy magisterskiej
-- **Uniwersytet WSB Merito** - za możliwość realizacji projektu badawczego
+- **Akademia WSB Dąbrowa Górnicza** - za możliwość realizacji projektu badawczego
 
 ---
 

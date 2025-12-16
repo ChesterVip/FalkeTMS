@@ -26,12 +26,12 @@ const Dashboard: React.FC = () => {
   const runningIntegrations = MOCK_INTEGRATIONS.filter(i => i.status !== 'DOWN').length;
 
   const KPICard = ({ title, value, icon: Icon, colorClass, bgClass, trend }: any) => (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between hover:shadow-md transition-shadow duration-300">
+    <div className="card flex items-start justify-between hover:shadow-md transition-shadow duration-300">
       <div>
-        <p className="text-sm font-medium text-slate-500 mb-1">{title}</p>
+        <p className="text-sm font-medium text-slate-500 mb-2">{title}</p>
         <p className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">{value}</p>
         {trend && (
-            <div className="flex items-center mt-2 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-0.5 rounded-full">
+            <div className="flex items-center mt-3 text-xs font-medium text-emerald-600 bg-emerald-50 w-fit px-2 py-1 rounded-full">
                 <ArrowUpRight size={12} className="mr-1" /> {trend}
             </div>
         )}
@@ -43,10 +43,10 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="p-4 md:p-8 space-y-6 md:space-y-8 max-w-7xl mx-auto">
+    <div className="p-4 md:p-8 section-spacing max-w-7xl mx-auto">
       <header className="mb-6 md:mb-10">
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-800">Panel Zarządzania</h1>
-        <p className="text-slate-500 mt-1">Przegląd operacyjny floty i finansów (Real-time)</p>
+        <h1 className="page-header">Panel Zarządzania</h1>
+        <p className="page-subtitle">Przegląd operacyjny floty i finansów (Real-time)</p>
       </header>
 
       {/* KPI Cards */}
@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <div className="card">
           <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center">
             <div className="w-2 h-6 bg-blue-500 rounded mr-3"></div>
             Analiza Finansowa Zleceń
