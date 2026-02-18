@@ -4,11 +4,11 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import OrderList from './components/OrderList';
 import OrderDetails from './components/OrderDetails';
-import FinancialReports from './components/FinancialReports';
 import FleetMap from './components/FleetMap';
 import MailIntegration from './components/MailIntegration';
 import Architecture from './components/Architecture';
 import DriverSettlements from './components/DriverSettlements';
+import Reports from './components/Reports';
 import Thesis from './components/Thesis';
 import Settings from './components/Settings';
 import { Order } from './types';
@@ -60,8 +60,8 @@ const App: React.FC = () => {
         return <MailIntegration />;
       case 'fleet':
         return <FleetMap />;
-      case 'finance':
-        return <FinancialReports />;
+      case 'reports':
+        return <Reports />;
       case 'settlements':
         return <DriverSettlements />;
       case 'architecture':

@@ -209,7 +209,6 @@ FalkeTMS/
 │   ├── Dashboard.tsx        # Pulpit główny z KPI
 │   ├── OrderList.tsx        # Lista zleceń transportowych
 │   ├── OrderDetails.tsx     # Szczegóły pojedynczego zlecenia
-│   ├── FinancialReports.tsx # Raporty finansowe i analiza marż
 │   ├── FleetMap.tsx         # Mapa floty z GPS
 │   ├── DriverSettlements.tsx # Rozliczenia kierowców
 │   ├── MailIntegration.tsx  # Integracja e-mail
