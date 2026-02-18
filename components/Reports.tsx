@@ -31,16 +31,16 @@ const Reports: React.FC = () => {
     let revenue = 0;
     let totalCost = 0;
     const costByCategory: Record<string, number> = {
-      Paliwo: 0,
-      AdBlue: 0,
-      Opłaty drogowe: 0,
-      Diety: 0,
-      Dodatki (transgr., nocleg, korytarz): 0,
-      Eksploatacja: 0,
-      Wynagrodzenie + ZUS: 0,
-      Leasing: 0,
-      Ubezpieczenia: 0,
-      Koszty biura: 0,
+      'Paliwo': 0,
+      'AdBlue': 0,
+      'Opłaty drogowe': 0,
+      'Diety': 0,
+      'Dodatki (transgr., nocleg, korytarz)': 0,
+      'Eksploatacja': 0,
+      'Wynagrodzenie + ZUS': 0,
+      'Leasing': 0,
+      'Ubezpieczenia': 0,
+      'Koszty biura': 0,
     };
     completedOrders.forEach((o) => {
       const c = o.financials.costs;
